@@ -1,13 +1,13 @@
 -- Deactivate Perl Provider
-vim.g.loaded_perl_provider = 0
+vim.g.loaded_perl_provider = 1
 -- vim.g.perl_host_prog = '/usr/bin/perl'
 
 -- Deactivate Ruby Provider
-vim.g.loaded_ruby_provider = 0
+vim.g.loaded_ruby_provider = 1
 -- vim.g.ruby_host_prog = '/usr/bin/ruby'
 
 -- Deactivate Node Provider
-vim.g.loaded_node_provider = 0
+vim.g.loaded_node_provider = 1
 -- vim.g.node_host_prog = '/usr/bin/node'
 
 -- Deactivate Python 2 Provider
@@ -15,7 +15,8 @@ vim.g.loaded_python_provider = 0
 
 -- Load Python 3 Provider
 -- vim.g.loaded_python3_provider = 1
-vim.g.python3_host_prog = '/usr/bin/python'
+-- vim.g.python3_host_prog = '/usr/bin/python'
+vim.g.python3_host_prog = 'python'
 
 -- Deactivate plugins in $RUNTIME
 vim.g.loaded_tutor = 1
@@ -45,4 +46,4 @@ vim.g.vimsyn_embed = 1
 vim.g.did_load_filetypes = 1
 
 -- Set Shell
-vim.g.shell = '/usr/bin/zsh'
+-- vim.g.shell = '/usr/bin/zsh'
