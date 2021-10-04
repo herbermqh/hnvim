@@ -1,0 +1,27 @@
+--2021-06-25 23:23:15--  https://github.com/richin13/dotfiles/blob/develop/dotfiles/.config/nvim/lua/plugins/status-line.lua-O
+Loaded CA certificate '/etc/ssl/certs/ca-certificates.crt'
+Resolving github.com (github.com)... 140.82.113.4
+Connecting to github.com (github.com)|140.82.113.4|:443... connected.
+HTTP request sent, awaiting response... 404 Not Found
+2021-06-25 23:23:17 ERROR 404: Not Found.
+
+/home/userh/.oh-my-zsh/custom/themes/hyperzsh.zsh-theme: Scheme missing.
+--2021-06-25 23:23:17--  https://raw.githubusercontent.com/herbermqh/hyperzsh/master/hyperzsh.zsh-theme
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.111.133, 185.199.110.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... Read error (Connection timed out) in headers.
+Retrying.
+
+--2021-06-26 00:25:51--  (try: 2)  https://raw.githubusercontent.com/herbermqh/hyperzsh/master/hyperzsh.zsh-theme
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3094 (3.0K) [text/plain]
+Saving to: ‘hyperzsh.zsh-theme’
+
+     0K ...                                                   100% 16.1M=0s
+
+2021-06-26 00:25:52 (16.1 MB/s) - ‘hyperzsh.zsh-theme’ saved [3094/3094]
+
+FINISHED --2021-06-26 00:25:52--
+Total wall clock time: 1h 2m 36s
+Downloaded: 1 files, 3.0K in 0s (16.1 MB/s)
