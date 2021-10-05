@@ -83,17 +83,17 @@ require('packer').startup(function(use)
         requires = {'kyazdani42/nvim-web-devicons', opt = true}
     })
 
-    use({
-      'glepnir/spaceline.vim',
+    --[[ use({
+      'herbermqh/spaceline.vim',
       config = function()
         vim.g.spaceline_seperate_style = "curve"
-        -- vim.g.spaceline_custom_vim_status = {"n": "Normal","V": "Visual","v":"🅥 ","\<C-v>":"🅥 ","i":"🅘 ","R":"🅡 ","s":"🅢 ","t":"🅣 ","c":"🅒","!":"SE"}
       end,
       requires = {'kyazdani42/nvim-web-devicons', opt = true}
-    })
+    }) ]]
     use({'ryanoasis/vim-devicons'})
     use('p00f/nvim-ts-rainbow')
     use('akinsho/nvim-bufferline.lua')
+    -- use('powerline/fonts')
 
     -- Themes
     use({'marko-cerovac/material.nvim', opt = false, as = 'material'})
