@@ -197,7 +197,7 @@ gls.left[17] = {
     provider = 'DiagnosticInfo',
     icon = '  ',
     highlight = {colors.blue,colors.bg},
-    separator = '▋',
+    separator = ' ',
     separator_highlight = { colors.section_bg, colors.bg },
   }
 }

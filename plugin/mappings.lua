@@ -3,7 +3,6 @@ local mapper = function(mode, key, result)
   vim.api.nvim_set_keymap(mode, key, result, { noremap = true, silent = true, expr = false })
 end
 
--- Expressive Mapping helper
 local expressive_mapper = function(mode, key, result)
   vim.api.nvim_set_keymap(mode, key, result, { silent = true, expr = true })
 end
@@ -43,17 +42,19 @@ mapper('n', '<leader>n', ':set nu! rnu!<CR>')
 -- Get out of the Terminal
 -- mapper('t', '<Esc>', '<C-\\><C-n>')
 
-
 -- Copy to OS clipboard.
--- mapper('n', '<Leader>y', '"+y')
--- mapper('v', '<Leader>y', '"+y')
--- mapper('n', '<Leader>yy', '"+yy')
+mapper('v', 'y', '"+y')
+mapper('n', 'yy', '"+yy')
+
+-- delete line to Os clipboard
+mapper('v', 'd', '"+d')
+mapper('n', 'dd', '"+dd')
 
 -- Paste from OS clipboard
-mapper('n', '<Leader>p', '"+p')
-mapper('n', '<Leader>P', '"+P')
-mapper('v', '<Leader>p', '"+p')
-mapper('v', '<Leader>P', '"+P"`"`"')
+mapper('n', 'p', '"+p')
+-- mapper('n', '<Leader>P', '"+P')
+mapper('v', 'p', '"+p')
+-- mapper('v', '<Leader>P', '"+P"`"`"')
 
 mapper('n', 'J', 'mzJ`z')
 
