@@ -92,8 +92,12 @@ require('packer').startup(function(use)
     }) ]]
     use({'ryanoasis/vim-devicons'})
     use('p00f/nvim-ts-rainbow')
-    use('akinsho/nvim-bufferline.lua')
+    -- use('akinsho/nvim-bufferline.lua')
     -- use('powerline/fonts')
+    use {
+      'romgrk/barbar.nvim',
+      requires = {'kyazdani42/nvim-web-devicons'}
+    }
 
     -- Themes
     use({'marko-cerovac/material.nvim', opt = false, as = 'material'})

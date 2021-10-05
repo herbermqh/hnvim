@@ -58,10 +58,10 @@ mapper('v', '<Leader>P', '"+P"`"`"')
 mapper('n', 'J', 'mzJ`z')
 
 -- buffers
-mapper('n', '<C-Right>', ':BufferLineCycleNext <CR>')
-mapper('n', '<C-l>', ':BufferLineCycleNext <CR>')
-mapper('n', '<C-Left>', ':BufferLineCyclePrev <CR>')
-mapper('n', '<C-h', ':BufferLineCyclePrev <CR>')
+mapper('n', '<C-Right>', ':BufferNext<CR>')
+mapper('n', '<C-l>', ':BufferNext<CR>')
+mapper('n', '<C-Left>', ':BufferPrevious<CR>')
+mapper('n', '<C-h', ':BufferPrevious<CR>')
 
 -- start inkscape
 vim.cmd([[
