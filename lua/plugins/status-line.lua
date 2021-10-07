@@ -102,6 +102,7 @@ gls.left[4] ={
 gls.left[5] = {
   icon = {
     provider = function () return ' ' end,
+    condition = buffer_not_empty,
     highlight = {colors.section_bg,colors.bg},
   }
 }
