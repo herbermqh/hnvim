@@ -59,21 +59,35 @@ end
 gls.left[1] = {
   FirstElement = {
     provider = function() return '▋' end,
-    highlight = { colors.cyan}
+    highlight = {colors.cyan}
   },
 }
+-- system os detecto
+if package.config:sub(1,1)== '/' then
+  alias_mode_vim = {
+    n = '  􎉵  ',
+    i = '  􎉰  ',
+    c = '  􎉦  ',
+    V = '  􎊂  ',
+    [''] = '  􎊂  ',
+    v = '  􎊂  ',
+    R = '  􎉺  ',
+  }
+else
+  alias_mode_vim = {
+    n = '  N  ',
+    i = '  I  ',
+    c = '  C  ',
+    V = '  V  ',
+    [''] = '  V  ',
+    v = '  V  ',
+    R = '  R  ',
+  }
+end
 gls.left[2] = {
   ViMode = {
     provider = function()
-      local alias = {
-        n = '  􎉵  ',
-        i = '  􎉰  ',
-        c = '  􎉦  ',
-        V = '  􎊂  ',
-        [''] = '  􎊂  ',
-        v = '  􎊂  ',
-        R = '  􎉺  ',
-      }
+      local alias = alias_mode_vim
       vim.api.nvim_command('hi GalaxyViMode guifg='..mode_color())
       local alias_mode = alias[vim.fn.mode()]
       if alias_mode == nil then
