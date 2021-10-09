@@ -33,7 +33,7 @@ vim.g.bufferline = {
   icon_custom_colors = false,
 
   -- Configure icons on the bufferline.
-  icon_separator_active = ' ',
+  icon_separator_active = '  ',
   icon_separator_inactive = '',
   icon_close_tab = '',
   icon_close_tab_modified = '',
@@ -66,3 +66,14 @@ vim.g.bufferline = {
   no_name_title = nil,
 }
 
+local tree ={}
+tree.open = function ()
+   require'bufferline.state'.set_offset(31, 'FileTree')
+   require'nvim-tree'.find_file(true)
+end
+
+tree.close = function ()
+   require'bufferline.state'.set_offset(0)
+   require'nvim-tree'.close()
+end
+return tree

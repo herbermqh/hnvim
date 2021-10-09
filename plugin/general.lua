@@ -144,7 +144,8 @@ vim.o.errorformat = vim.o.errorformat .. ',%f'
 vim.cmd('filetype plugin indent on')
 
 -- Visually select and copy without line numbers
-vim.o.mouse = 'a'
+-- vim.o.mouse = 'a'
+vim.cmd('set mouse+=a')
 
 -- Don't redraw while executing macros
 vim.o.ttyfast = true
