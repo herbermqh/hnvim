@@ -11,7 +11,7 @@ let g:vimtex_compiler_latexmk = {
       \ 'hooks' : [],
       \ 'options' : [
       \   '-verbose',
-      \   '-shell-escape',
+      \   '--shell-escape',
       \   '-pdf',
       \   '-enable-write18',
       \   '-verbose',

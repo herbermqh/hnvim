@@ -105,9 +105,12 @@
     \ '18'    :['BufferGoto 18'            , 'pestaña 18'],
     \ '19'    :['BufferGoto 19'            , 'pestaña 19'],
     \ }
-  let g:which_key_map.d = {
-      \ 'name'  :   'build and debug',
-      \ 'l' :   [':VimtexCompile'  ,   'LaTeX'],
+  let g:which_key_map.l = {
+      \ 'name'  : 'LaTeX',
+      \ 'c' :   [':VimtexCompile'  ,   'compile'],
+      \ 's' :   [':VimtexStop'  ,   'stop compile'],
+      \ 'e' :   [':VimtexErrors'  ,   'errors'],
+      \ 'v' :   [':VimtexView'  ,   'view pdf'],
       \ }
 " Register which key map
   call which_key#register('<Space>', "g:which_key_map")
