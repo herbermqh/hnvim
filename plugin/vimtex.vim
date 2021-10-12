@@ -23,20 +23,20 @@ let g:vimtex_compiler_latexmk = {
 
 let g:vimtex_syntax_enabled = 1
 let g:vimtex_quickfix_open_on_warning = 0
-       " let g:xwindow_id = system('xdotool getactivewindow')
 if has('win32')
   let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
   let g:vimtex_view_general_options
         \ = '-reuse-instance -forward-search @tex @line @pdf'
   let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 else
+  let g:xwindow_id = system('xdotool getactivewindow')
   let g:vimtex_view_method = 'zathura'
+  let g:vimtex_view_zathura_hook_view = 'MyHook'
+  let g:vimtex_view_zathura_hook_callback = 'MyHook'
+  function! MyHook()
+  silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
+  endfunction
 endif
-" let g:vimtex_view_zathura_hook_view = 'MyHook'
-" let g:vimtex_view_zathura_hook_callback = 'MyHook'
-" function! MyHook()
-" silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
-" endfunction
-let g:vimtex_fold_enabled=1
 
+let g:vimtex_fold_enabled=1
 let g:vimtex_syntax_conceal_default = 0

@@ -34,7 +34,7 @@ vim.bo.autoindent = true
 -- vim.o.smartcase = true
 
 -- Swapfiles are nice
--- vim.o.swapfile = true
+vim.o.swapfile = true
 
 -- Swapfile config
 vim.o.shortmess = vim.o.shortmess .. 'c'
@@ -52,7 +52,7 @@ vim.o.undofile = true
 vim.o.undodir = vim.fn.expand(vim.fn.stdpath('data') .. '/undo//')
 
 -- Shows the effects of a command incrementally, as you type
--- vim.o.inccommand = 'split'
+vim.o.inccommand = 'split'
 
 -- WildIgnore Stuff
 --[[ local wildignored = {
@@ -79,7 +79,7 @@ end
 
 -- Suffixes Stuff
 -- Get a lower priority when multiple files match a wildcard
---[[ local suffixesed = {
+local suffixesed = {
   '.aux',
   '.log',
   '.dvi',
@@ -114,7 +114,7 @@ end
 
 -- Finally, set suffixesed...
 vim.o.suffixes = suffixes
- ]]
+
 --  When set case is ignored when completing file names and directories
 vim.o.wildignorecase = true
 vim.o.wildcharm = 26

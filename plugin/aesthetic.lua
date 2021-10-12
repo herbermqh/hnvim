@@ -35,6 +35,8 @@ vim.wo.cursorcolumn = true
 
 -- colorscheme
 vim.cmd('colorscheme material')
+vim.cmd[[lua require('material.functions').change_style("deep ocean")]]
+
 
 --lightline
 vim.cmd('set noshowmode')
