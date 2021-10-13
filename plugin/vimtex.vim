@@ -29,12 +29,12 @@ if has('win32')
         \ = '-reuse-instance -forward-search @tex @line @pdf'
   let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 else
-  let g:xwindow_id = system('xdotool getactivewindow')
+  let g:xwindow_id = system('xdotool getactivewindow') 
   let g:vimtex_view_method = 'zathura'
-  let g:vimtex_view_zathura_hook_view = 'MyHook'
-  let g:vimtex_view_zathura_hook_callback = 'MyHook'
+  " let g:vimtex_view_zathura_hook_view = 'MyHook'
+  " let g:vimtex_view_zathura_hook_callback = 'MyHook'
   function! MyHook()
-  silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
+    silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
   endfunction
 endif
 
