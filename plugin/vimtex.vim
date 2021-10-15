@@ -39,4 +39,4 @@ else
 endif
 
 let g:vimtex_fold_enabled=1
-let g:vimtex_syntax_conceal_default = 0
+let g:vimtex_syntax_conceal_disable=1
