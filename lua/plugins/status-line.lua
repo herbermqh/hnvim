@@ -9,14 +9,15 @@ gl.short_line_list = { 'defx', 'packager', 'vista' }
 local colors = {
   bg = 'guibg',
   fg = 'guifg',
-  section_bg = '#790e8b',
-  yellow = '#ffff8b',
-  cyan = '#6ff9ff',
-  green = '#80e27e',
-  orange = '#ffd95b',
-  magenta = '#ff94c2',
-  blue = '#80d6ff',
-  red = '#ef5350'
+  section_bg = '#82ada9',
+  yellow = '#fff176',
+  cyan = '#00b8d4',
+  green = '#81c784',
+  orange = '#ffb74d',
+  magenta = '#ba68c8',
+  blue = '#7986cb',
+  red = '#e57373',
+  black = '#000000'
 }
 
 -- Local helper functions
@@ -68,6 +69,7 @@ if package.config:sub(1,1)== '/' then
     n = '  􎉵  ',
     i = '  􎉰  ',
     c = '  􎉦  ',
+    t = '  T  ',
     V = '  􎊂  ',
     [''] = '  􎊂  ',
     v = '  􎊂  ',
@@ -78,6 +80,7 @@ else
     n = '  N  ',
     i = '  I  ',
     c = '  C  ',
+    t = '  T  ',
     V = '  V  ',
     [''] = '  V  ',
     v = '  V  ',
@@ -110,7 +113,7 @@ gls.left[4] ={
   FileIcon = {
     provider = 'FileIcon',
     condition = buffer_not_empty,
-    highlight = { require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg},
+    highlight = {require('galaxyline.provider_fileinfo').get_file_icon_color, colors.bg},
   },
 }
 gls.left[5] = {
@@ -124,7 +127,7 @@ gls.left[6] = {
   FileName = {
     provider = 'FileName',
     condition = buffer_not_empty,
-    highlight = { colors.blue, colors.section_bg },
+    highlight = { colors.black, colors.section_bg },
     separator = "",
     separator_highlight = {colors.section_bg, colors.bg},
   }
@@ -220,7 +223,7 @@ gls.left[17] = {
 gls.right[1]= {
   FileFormat = {
     provider = function() return vim.bo.filetype end,
-    highlight = { colors.blue,colors.section_bg },
+    highlight = { colors.black,colors.section_bg },
     separator = '',
     separator_highlight = { colors.section_bg,colors.bg },
   }
@@ -228,7 +231,7 @@ gls.right[1]= {
 gls.right[2] = {
   LineInfo = {
     provider = 'LineColumn',
-    highlight = { colors.blue, colors.section_bg },
+    highlight = { colors.black, colors.section_bg },
     separator = '▋',
     separator_highlight = { colors.section_bg, colors.fg},
   },
@@ -246,8 +249,8 @@ gls.right[2] = {
 gls.short_line_left[1] = {
   BufferType = {
     provider = 'FileTypeName',
-    highlight = { colors.fg, colors.section_bg },
-    separator = '▋',
+    highlight = { colors.black, colors.section_bg },
+    separator = "",
     separator_highlight = { colors.section_bg, colors.bg },
   }
 }
@@ -256,7 +259,7 @@ gls.short_line_right[1] = {
   BufferIcon = {
     provider= 'BufferIcon',
     highlight = { colors.yellow, colors.section_bg },
-    separator = '▋',
+    separator = '',
     separator_highlight = { colors.section_bg, colors.bg },
   }
 }

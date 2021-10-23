@@ -55,7 +55,7 @@ vim.o.undodir = vim.fn.expand(vim.fn.stdpath('data') .. '/undo//')
 vim.o.inccommand = 'split'
 
 -- WildIgnore Stuff
---[[ local wildignored = {
+local wildignored = {
   'tags',
   '*/__pycache__/*',
   'build/*',
@@ -67,15 +67,15 @@ vim.o.inccommand = 'split'
   '*.jpeg',
   '*/migrations/*',
   '*/.git/*',
-} ]]
---[[
+}
+
 local wildignore = ''
 for i = 1, #wildignored do
   wildignore = wildignore .. wildignored[i] .. ','
 end
- ]]
+
 -- Finally, set wildignore...
--- vim.o.wildignore = wildignore
+vim.o.wildignore = wildignore
 
 -- Suffixes Stuff
 -- Get a lower priority when multiple files match a wildcard

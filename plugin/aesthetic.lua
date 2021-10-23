@@ -35,7 +35,7 @@ vim.wo.cursorcolumn = true
 
 -- colorscheme
 vim.cmd('colorscheme material')
-vim.cmd[[lua require('material.functions').change_style("deep ocean")]]
+vim.cmd[[lua require('material.functions').change_style("darker")]]
 
 
 --lightline

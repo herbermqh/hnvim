@@ -11,7 +11,11 @@ require('packer').startup(function(use)
 
     --autocomplete
     use('sirver/ultisnips')
-    use('herbermqh/vim-snippets')
+    -- use('herbermqh/vim-snippets')
+    -- use 'dcampos/nvim-snippy'
+    use 'hrsh7th/vim-vsnip'
+    use 'hrsh7th/vim-vsnip-integ'
+
 
     -- LaTeX
     use({'lervag/vimtex'})
@@ -101,16 +105,33 @@ require('packer').startup(function(use)
 
     -- Themes
     use({'marko-cerovac/material.nvim', opt = false, as = 'material'})
-    use({'morhetz/gruvbox'})
-    use({'shinchu/lightline-gruvbox.vim'})
-    use({'romgrk/doom-one.vim'})
-    use({'shaunsingh/moonlight.nvim'})
     use({'folke/tokyonight.nvim'})
-    use({'navarasu/onedark.nvim'})
-    use({'sainnhe/edge'})
-    use({'sonph/onehalf'})
-    use({'arcticicestudio/nord-vim'})
-    use({'dylanaraps/wal'})
+    use 'bluz71/vim-moonfly-colors'
+    use 'bluz71/vim-nightfly-guicolors'
+    use({'christianchiarulli/nvcode-color-schemes.vim'})
+    --[[ use{
+      'PHSix/nvim-hybrid',
+      config = function()
+        require('hybrid')
+      end
+    } ]]
+    use 'Th3Whit3Wolf/space-nvim'
+    use 'yonlu/omni.vim'
+    use 'ray-x/aurora'
+    use 'nekonako/xresources-nvim'
+		use 'shaunsingh/nord.nvim'
+		use {'MordechaiHadad/nvim-papadark', requires = {'rktjmp/lush.nvim'}}
+		use 'shaunsingh/moonlight.nvim'
+		use 'navarasu/onedark.nvim'
+		use 'yashguptaz/calvera-dark.nvim'
+		use {'nxvu699134/vn-night.nvim'}
+		use "projekt0n/github-nvim-theme"
+		use({'rose-pine/neovim'})
+		use "Pocco81/Catppuccino.nvim"
+		use 'frenzyexists/aquarium-vim'
+		use 'EdenEast/nightfox.nvim'
+		use { 'mangeshrex/uwu.vim' }
+    -- use 'olimorris/onedark.nvim'
 
     -- IDE
     use({'frazrepo/vim-rainbow'})
@@ -128,7 +149,6 @@ require('packer').startup(function(use)
     use({'voldikss/vim-floaterm'})
     use({'liuchengxu/vim-which-key'})
     use({'liuchengxu/vim-clap'})
-    use({'christianchiarulli/nvcode-color-schemes.vim'})
 
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
