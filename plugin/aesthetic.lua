@@ -30,14 +30,23 @@ vim.o.emoji = true
 
 -- Highlight the screen line of the cursor with CursorLine
 vim.wo.cursorline = true
-vim.wo.cursorcolumn = true
+vim.wo.cursorcolumn = false
 
 
 -- colorscheme
 vim.cmd('colorscheme material')
 vim.cmd[[lua require('material.functions').change_style("darker")]]
-
-
+vim.cmd[[
+  augroup vim-colors-xcode
+    autocmd!
+  augroup END
+  autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
+  autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
+  if !has('nvim')
+    let &t_ZH="\e[3m"
+    let &t_ZR="\e[23m"
+  endif
+]]
 --lightline
 vim.cmd('set noshowmode')
 

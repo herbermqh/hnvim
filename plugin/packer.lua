@@ -20,7 +20,7 @@ require('packer').startup(function(use)
     -- LaTeX
     use({'lervag/vimtex'})
     -- use('herbermqh/vim-latex')
-    -- use({'KeitaNakamura/tex-conceal.vim'})
+    -- use({'KeitaNakamura/tex-conceal.vim',ft='tex'})
 
     -- Utilities
     use({'Pocco81/AutoSave.nvim', opt = true})

@@ -12,3 +12,7 @@ require 'nvim-treesitter.configs'.setup{
     extended_mode = true,
   },
 }
+
+
+
+

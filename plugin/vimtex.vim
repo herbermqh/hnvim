@@ -1,7 +1,7 @@
 let g:vimtex_view_general_viewer = 'zathura'
 let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 let g:vimtex_view_general_options_latexmk = '--unique'
-" let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_compiler_latexmk = {
       \ 'backend' : 'nvim',
       \ 'background' : 1,
@@ -29,15 +29,24 @@ if has('win32')
         \ = '-reuse-instance -forward-search @tex @line @pdf'
   let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 else
-  let g:xwindow_id = system('xdotool getactivewindow') 
+  " let g:xwindow_id = system('xdotool getactivewindow') 
   let g:vimtex_view_method = 'zathura'
   " let g:vimtex_view_zathura_hook_view = 'MyHook'
   " let g:vimtex_view_zathura_hook_callback = 'MyHook'
-  function! MyHook()
-    silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
-  endfunction
+  " function! MyHook()
+  "   silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
+  " endfunction
 endif
 
 let g:vimtex_fold_enabled=1
 let g:vimtex_imaps_enabled=0
 let g:vimtex_syntax_conceal_disable=1
+
+
+
+" let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
+" let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
+" let g:tex_conceal_frac=1
+" set conceallevel=2
+" let g:tex_conceal="abdgm"
+
