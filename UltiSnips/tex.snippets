@@ -204,6 +204,12 @@ snippet enumi "Enumerate" b
 \end{enumerate}
 endsnippet
 
+snippet premisa "Enumerate" b
+\begin{premisa}[p]
+  \item $0
+\end{premisa}
+endsnippet
+
 # Itemize
 snippet item "Itemize" b
 \begin{itemize}
@@ -231,12 +237,23 @@ snippet "\s\sit" "item" riA
 \item[$1] $0
 endsnippet
 
+context "env('listDescription')"
+snippet "\s\sit" "item" riA
+\item[$1] $0
+endsnippet
 
 #description
 snippet desc "Description" b
 \begin{description}
   \item[$1] $0
 \end{description}
+endsnippet
+
+#list description
+snippet ldesc "Description" b
+\begin{listDescription}
+  \item[$1] $0
+\end{listDescription}
 endsnippet
 
 #otra entornos de enumeracion o listas
@@ -262,34 +279,22 @@ endsnippet
 #capitulo y secciones
 snippet chapter "chapter" iA
 \chapter{$1}
-\label{cha:$1}
 $0
-
-%End chapter $1
 endsnippet
 
 snippet SSE "section" iA
 \section{$1}
-\label{sec:$1}
 $0
-
-%End section $1
 endsnippet
 
 snippet SSS "subsection" iA
 \subsection{$1}
-\label{sub:$1}
 $0
-
-%End subsection $1
 endsnippet
 
 snippet SS2 "subsubsection" iA
 \subsubsection{$1}
-\label{ssub:$1}
 $0
-
-%End subsubsection $1
 endsnippet
 
 #referencia
@@ -425,7 +430,7 @@ endsnippet
 #modo matematico 
 snippet $ "modo matematico en linea" wA
 $${1}$`!p
-if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ', ':']:
     snip.rv = ' '
 else:
     snip.rv = ''
@@ -436,7 +441,7 @@ endsnippet
 
 #Subindices
 snippet __ "subscript" iA
-_{$1} $0
+_{$1}$0
 endsnippet
 
 context "math()"
@@ -481,22 +486,23 @@ endsnippet
 
 context "math()"
 snippet '(?<!i)ts' "text subscript" irA
-_{\text{$1}} $0
+_{\text{$1}}$0
 endsnippet
 
 context "math()"
 snippet '(?<!i)cs' "chemin subscript" irA
-_{{\ce{$1}}} $0
+_{{\ce{$1}}}$0
 endsnippet
+
 # context "math()"
-# snippet '([A-Za-z])(\d)' "auto subscript" wrA
+# snippet '([A-Za-z])_(\d)' "auto subscript" wrA
 # `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
 # endsnippet
 
-# context "math()"
-# snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
-# `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
-# endsnippet
+context "math()"
+snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
 
 #Superindices
 context "math()"
@@ -524,14 +530,14 @@ snippet '([A-Za-z])(\d)' "auto supscript" wrA
 `!p snip.rv = match.group(1)`^`!p snip.rv = match.group(2)`
 endsnippet
 
-context "math()"
-snippet '([A-Za-z])_(\d\d)' "auto supscript2" wrA
-`!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2)`}
-endsnippet
+# context "math()"
+# snippet '([A-Za-z])(\d\d)' "auto supscript2" wrA
+# `!p snip.rv = match.group(1)`^{`!p snip.rv = match.group(2)`}
+# endsnippet
 
 context "math()"
 snippet ^^ "Description" iA
-^{$1} $0
+^{$1}$0
 endsnippet
 
 #Tamaño natural
@@ -580,12 +586,12 @@ endsnippet
 #raices
 context "math()"
 snippet sq "\sqrt{}" iA
-\sqrt{${1:${VISUAL}}} $0
+\sqrt{${1:${VISUAL}}}$0
 endsnippet
 
 context "math()"
 snippet `2 "\sqrt{}" iA
-\sqrt{${1:${VISUAL}}} $0
+\sqrt{${1:${VISUAL}}}$0
 endsnippet
 
 
@@ -620,20 +626,13 @@ endsnippet
 
 priority 100
 context "math()"
-snippet ** "cdot" iA
-\cdot 
-endsnippet
-
-
-priority 100
-context "math()"
 snippet ... "ldots" iA
 \ldots 
 endsnippet
 
-priority 100
+priority 500
 context "math()"
-snippet ··· "cdot" iA
+snippet *** "cdot" iA
 \cdots 
 endsnippet
 
@@ -652,22 +651,22 @@ endsnippet
 
 context "math()"
 snippet (( "left( right)" iA
-\left( ${1:${VISUAL}} \right) $0
+\left( ${1:${VISUAL}} \right)$0
 endsnippet
 
 context "math()"
 snippet || "left| right|" iA
-\left| ${1:${VISUAL}} \right| $0
+\left| ${1:${VISUAL}} \right|$0
 endsnippet
 
 context "math()"
 snippet {{ "left\{ right\}" iA
-\left\\{ ${1:${VISUAL}} \right\\} $0
+\left\\{ $1 \right\\}$0
 endsnippet
 
 context "math()"
 snippet [[ "left[ right]" iA
-\left[ ${1:${VISUAL}} \right] $0
+\left[ ${1:${VISUAL}} \right]$0
 endsnippet
 
 context "math()"
@@ -677,7 +676,7 @@ endsnippet
 
 context "math()"
 snippet .| "left. right|" iA
-\left. ${1:${VISUAL}} \right| $0
+\left. ${1:${VISUAL}} \right|$0
 endsnippet
 
 #delimitadores amstmath
@@ -688,7 +687,7 @@ endsnippet
 
 context "math()"
 snippet floor "floor" iA
-\left\lfloor $1 \right\rfloor$0
+\left\lfloor $1 \right\rfloor $0
 endsnippet
 
 #barras horizontales
@@ -703,10 +702,19 @@ snippet bar "overline" iA
 \overline{$1}$0
 endsnippet
 
-priority 100
+# context "math()"
+# snippet "(\s|\$)(\w+)\b" "overline" riA
+# `!p snip.rv ="$" if match.group(1)=="$" else " "`\overline{`!p snip.rv=match.group(2)`}$0
+# endsnippet
+
 context "math()"
-snippet "\sb(\w+)\b\s" "overline" riA
-\overline{`!p snip.rv=match.group(1)`} $0
+snippet "ſ(\w|\d)" "overline" riA
+\overline{`!p snip.rv=match.group(1)`}$0
+endsnippet 
+
+context "math()"
+snippet "(\w+)ſ" "overline" riA
+\overline{`!p snip.rv=match.group(1)`}$0
 endsnippet
 
 #llaves
@@ -728,9 +736,14 @@ endsnippet
 
 #vectores a,.
 context "math()"
-snippet "→(\w|\d+)" "Vector postfix" riA
+snippet "@(\w|\d+)" "Vector postfix" riA
 \vec{`!p snip.rv=match.group(1)`}$0
-endsnippet 
+endsnippet
+
+context "math()"
+snippet "(\w+)@" "Vector postfix" riA
+\vec{`!p snip.rv=match.group(1)`}$0
+endsnippet
 
 # context "math()"
 # snippet "\s(\w+)v" "vector" irA 
@@ -839,8 +852,13 @@ endsnippet
 
 #letra griegas
 context "math()"   
-snippet `a "letra griega minuscula" iA
-\alpha $0
+snippet `a "letra griega minuscula" wA
+\alpha`!p
+if t[1] and t[1][0] not in ['_', '^']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+`$1
 endsnippet
 
 context "math()"   
@@ -1337,7 +1355,7 @@ endsnippet
 
 
 #simbolos del paquete amssymb
-snippet "\|(R|Q|Z|I)" "mathbb R Q Z I" riA
+snippet "\\(R|Q|Z|I|N)" "mathbb R Q Z I" riA
 \\mathbb{`!p snip.rv=match.group(1)`}
 endsnippet
 
