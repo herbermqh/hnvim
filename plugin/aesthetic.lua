@@ -22,8 +22,6 @@ vim.o.splitright = true
 -- Enables 24-bit RGB color in TUI
 vim.o.termguicolors = true
 
--- Dark Background
--- vim.o.background = 'dark'
 
 -- Use Emoji
 vim.o.emoji = true
@@ -32,10 +30,26 @@ vim.o.emoji = true
 vim.wo.cursorline = true
 vim.wo.cursorcolumn = false
 
+-- colorscheme material
+-- vim.cmd[[lua require('material.functions').change_style("darker")]]
+-- vim.o.background = 'dark'
 
--- colorscheme
-vim.cmd('colorscheme material')
-vim.cmd[[lua require('material.functions').change_style("darker")]]
+-- colorscheme tokyonight
+vim.cmd('colorscheme tokyonight')
+vim.o.background = 'dark'
+vim.g.tokyonight_style = "night"
+vim.g.tokyonight_terminal_colors="true"
+vim.g.tokyonight_italic_comments="true"
+vim.g.tokyonight_italic_keywords="true"
+vim.g.tokyonight_italic_functions="true"
+vim.g.tokyonight_italic_variables="true"
+vim.g.tokyonight_transparent="true"
+vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+
+
+
+
+
 vim.cmd[[
   augroup vim-colors-xcode
     autocmd!

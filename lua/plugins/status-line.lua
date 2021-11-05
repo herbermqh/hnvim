@@ -59,21 +59,21 @@ end
 -- Left side
 gls.left[1] = {
   FirstElement = {
-    provider = function() return '▋' end,
+    provider = function() return '▋ ' end,
     highlight = {colors.cyan}
   },
 }
 -- system os detecto
 if package.config:sub(1,1)== '/' then
   alias_mode_vim = {
-    n = '  􎉵  ',
-    i = '  􎉰  ',
-    c = '  􎉦  ',
+    n = '  N  ',
+    i = '  I  ',
+    c = '  C  ',
     t = '  T  ',
-    V = '  􎊂  ',
-    [''] = '  􎊂  ',
-    v = '  􎊂  ',
-    R = '  􎉺  ',
+    V = '  V  ',
+    [''] = '  V  ',
+    v = '  V  ',
+    R = '  R  ',
   }
 else
   alias_mode_vim = {
@@ -134,7 +134,7 @@ gls.left[6] = {
 }
 gls.left[7] = {
   GitIcon = {
-    provider = function() return '  ' end,
+    provider = function() return ' 󰘬 ' end,
     condition = in_git_repo,
     highlight = {colors.orange,colors.bf},
   }

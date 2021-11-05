@@ -105,7 +105,8 @@ require('packer').startup(function(use)
 
     -- Themes
     use({'marko-cerovac/material.nvim', opt = false, as = 'material'})
-    use({'folke/tokyonight.nvim'})
+    -- use({'folke/tokyonight.nvim'})
+    use 'herbermqh/tokyonight.nvim'
     use 'bluz71/vim-moonfly-colors'
     use 'bluz71/vim-nightfly-guicolors'
     use({'christianchiarulli/nvcode-color-schemes.vim'})

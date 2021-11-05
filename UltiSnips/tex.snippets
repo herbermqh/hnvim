@@ -52,6 +52,17 @@ def add_row(snip):
 
 	snip.expand_anon(final_str)
 
+
+def after_greek_letter():
+  if t[1] and t[1][0] not in ['_', '^', ' ']:
+      space = ' '
+      return space
+  else:
+      no_space = ''
+      return no_space
+
+
+
 endglobal
 
 
@@ -546,15 +557,17 @@ snippet dm "Math" wA
 endsnippet
 
 #Fracciones
-context "math()"
-snippet // "Fraction" iA
-\\frac{$1}{$2}$0
-endsnippet
+# context "math()"
+# snippet // "Fraction" iA
+# \\frac{$1}{$2}$0
+# endsnippet 
 
-snippet / "Fraction" i
-\\frac{${VISUAL}}{$1}$0
-endsnippet
+# context "math()"
+# snippet / "Fraction" i
+# \\frac{${VISUAL}}{$1}$0
+# endsnippet
 
+priority 300
 context "math()"
 snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
 \\frac{`!p snip.rv = match.group(1)`}{$1}$0
@@ -576,24 +589,52 @@ snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
 `{$1}$0
 endsnippet
 
+#raices
+# context "math()"
+# snippet sq "\sqrt{}" iA
+# \sqrt{${1:${VISUAL}}}$0
+# endsnippet
+
+priority 100
+context "math()"
+snippet `2 "\sqrt{}" iA
+\sqrt{$1}$0
+endsnippet
+
+priority 100
+context "math()"
+snippet `2 "\sqrt{}" i
+\sqrt{$1}$0
+endsnippet
+
+priority 500
+context "math()"
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)`2' "sqrt" wrA
+\\sqrt{`!p snip.rv = match.group(1)`}$0
+endsnippet
+
+priority 1000
+context "math()"
+snippet "^.*\)2" "() sqrt" wrA
+`!p
+stripped = match.string[:-1]
+depth = 0
+i = len(stripped) - 1
+while True:
+	if stripped[i] == ')': depth += 1
+	if stripped[i] == '(': depth -= 1
+	if depth == 0: break;
+	i-=1
+snip.rv = stripped[0:i] + "\\sqrt{" + stripped[i+1:-1] + "}"
+`$0
+endsnippet
+
 #integrales
 priority 300
 context "math()"
 snippet dint "integral" wA
 \int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
 endsnippet
-
-#raices
-context "math()"
-snippet sq "\sqrt{}" iA
-\sqrt{${1:${VISUAL}}}$0
-endsnippet
-
-context "math()"
-snippet `2 "\sqrt{}" iA
-\sqrt{${1:${VISUAL}}}$0
-endsnippet
-
 
 #sumatoria
 context "math()"
@@ -852,63 +893,58 @@ endsnippet
 
 #letra griegas
 context "math()"   
-snippet `a "letra griega minuscula" wA
-\alpha`!p
-if t[1] and t[1][0] not in ['_', '^']:
-    snip.rv = ' '
-else:
-    snip.rv = ''
-`$1
+snippet `a "letra griega minuscula" iA
+\alpha`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"   
 snippet à "letra griega minuscula" iA
-\alpha $0
+\alpha`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"   
 snippet `b "letra griega minuscula" iA
-\beta $0
+\beta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `c "letra griega minuscula" iA
-\chi $0
+\chi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `d "letra griega minuscula" iA
-\delta $0
+\delta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `e "letra griega minuscula" iA
-\epsilon $0
+\epsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet è "letra griega minuscula" iA
-\epsilon $0
+\epsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"   
 snippet `f "letra griega minuscula" iA
-\phi $0
+\phi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `g "letra griega minuscula" iA
-\gamma $0
+\gamma`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `h "letra griega minuscula" iA
-\eta $0 
+\eta`!p snip.rv = after_greek_letter()`$1 
 endsnippet  
 
 context "math()"   
 snippet `i "letra griega minuscula" iA
-\iota $0
+\iota`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 # context "math()"   
@@ -918,22 +954,22 @@ endsnippet
 
 context "math()"   
 snippet `k "letra griega minuscula" iA
-\kappa $0
+\kappa`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `l "letra griega minuscula" iA
-\lambda $0 
+\lambda`!p snip.rv = after_greek_letter()`$1 
 endsnippet  
 
 context "math()"   
 snippet `m "letra griega minuscula" iA
-\mu $0
+\mu`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `n "letra griega minuscula" iA
-\nu $0
+\nu`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 #context "math()"   
@@ -943,122 +979,122 @@ endsnippet
 
 context "math()"   
 snippet `p "letra griega minuscula" iA
-\pi $0 
+\pi`!p snip.rv = after_greek_letter()`$1 
 endsnippet  
 
 context "math()"   
 snippet `q "letra griega minuscula" iA
-\theta $0
+\theta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `r "letra griega minuscula" iA
-\rho $0
+\rho`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `s "letra griega minuscula" iA
-\sigma $0
+\sigma`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `t "letra griega minuscula" iA
-\tau $0
+\tau`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `u "letra griega minuscula" iA
-\upsilon $0
+\upsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet ù "letra griega minuscula" iA
-\upsilon $0
+\upsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"   
 snippet `v "letra griega minuscula" iA
-\varsigma $0
+\varsigma`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `w "letra griega minuscula" iA
-\omega $0
+\omega`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `x "letra griega minuscula" iA
-\xi $0 
+\xi`!p snip.rv = after_greek_letter()`$1 
 endsnippet  
 
 context "math()"   
 snippet `y "letra griega minuscula" iA
-\psi $0
+\psi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
 snippet `z "letra griega minuscula" iA
-\zeta $0
+\zeta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `A "letra griega mayuscula" iA
-\Alpha $0
+\Alpha`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet À "letra griega mayuscula" iA
-\Alpha $0
+\Alpha`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `B "letra griega mayuscula" iA
-\Beta $0
+\Beta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `C "letra griega mayuscula" iA
-\Chi $0
+\Chi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `D "letra griega mayuscula" iA
-\Delta $0
+\Delta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `E "letra griega mayuscula" iA
-\Varepsilon $0
+\Varepsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet È "letra griega mayuscula" iA
-\Varepsilon $0
+\Varepsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `F "letra griega mayuscula" iA
-\Varphi $0
+\Varphi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `G "letra griega mayuscula" iA
-\Gamma $0
+\Gamma`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `H "letra griega mayuscula" iA
-\Eta $0
+\Eta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `I "letra griega mayuscula" iA
-\Iota $0
+\Iota`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet Ì "letra griega mayuscula" iA
-\Iota $0
+\Iota`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 #context "math()"  
@@ -1068,87 +1104,87 @@ endsnippet
    
 context "math()"  
 snippet `K "letra griega mayuscula" iA
-\Kappa $0
+\Kappa`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"  
 snippet `L "letra griega mayuscula" iA
-\Lambda $0
+\Lambda`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `M "letra griega mayuscula" iA
-\Mu $0
+\Mu`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `N "letra griega mayuscula" iA
-\Nu $0
+\Nu`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `O "letra griega mayuscula" iA
-\Omicron $0
+\Omicron`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `P "letra griega mayuscula" iA
-\Pi $0
+\Pi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `Q "letra griega mayuscula" iA
-\Theta $0
+\Theta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `R "letra griega mayuscula" iA
-\Rho $0
+\Rho`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `S "letra griega mayuscula" iA
-\Sigma $0
+\Sigma`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `T "letra griega mayuscula" iA
-\Tau $0
+\Tau`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `U "letra griega mayuscula" iA
-\Upsilon $0
+\Upsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet Ù "letra griega mayuscula" iA
-\Upsilon $0
+\Upsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"  
 snippet `V "letra griega mayuscula" iA
-\Varsigma $0
+\Varsigma`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `W "letra griega mayuscula" iA
-\Omega $0
+\Omega`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `X "letra griega mayuscula" iA
-\Xi $0
+\Xi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `Y "letra griega mayuscula" iA
-\Psi $0
+\Psi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"  
 snippet `Z "letra griega mayuscula" iA
-\Zeta $0
+\Zeta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 
@@ -1338,7 +1374,7 @@ endsnippet
 priority 200
 context "math()"
 snippet '(?<!\\|a)(sin|cos|tan|sec|csc|cot|ln|log)' "functions math" rwA
-\\`!p snip.rv = match.group(1)`\left( $1 \right) $0
+\\`!p snip.rv = match.group(1)``!p snip.rv="" if t[1] in ["^"] else "\left("` $1 `!p snip.rv="" if t[1] in ["^"] else "\\right)"`
 endsnippet
 
 priority 100
@@ -1350,9 +1386,7 @@ snip.rv="arc"+function_trig
 `\left( $1 \right) $0
 endsnippet
 
-
 #especiales
-
 
 #simbolos del paquete amssymb
 snippet "\\(R|Q|Z|I|N)" "mathbb R Q Z I" riA
