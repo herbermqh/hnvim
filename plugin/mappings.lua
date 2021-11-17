@@ -24,7 +24,7 @@ mapper('n', 'q', ':x! <CR>')
 mapper('n', 'Q', ':q! <CR>')
 
 -- Nice
-mapper('n', 'ZE', ':qa!<CR>')
+-- mapper('n', 'ZE', ':qa!<CR>')
 
 -- mayuscula y minuscula la primera letra
 mapper('n', 'A-U', 'gewvgUwb')
@@ -55,7 +55,6 @@ mapper('n', 'p', '"+p')
 -- mapper('n', '<Leader>P', '"+P')
 mapper('v', 'p', '"+p')
 -- mapper('v', '<Leader>P', '"+P"`"`"')
-
 mapper('n', 'J', 'mzJ`z')
 
 -- buffers

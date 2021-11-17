@@ -13,12 +13,13 @@ require('packer').startup(function(use)
     use('sirver/ultisnips')
     -- use('herbermqh/vim-snippets')
     -- use 'dcampos/nvim-snippy'
-    use 'hrsh7th/vim-vsnip'
+    use 'herbermqh/vim-vsnip'
     use 'hrsh7th/vim-vsnip-integ'
 
 
     -- LaTeX
-    use({'lervag/vimtex'})
+    -- use({'lervag/vimtex'})
+    use({'herbermqh/vimtex'})
     -- use('herbermqh/vim-latex')
     -- use({'KeitaNakamura/tex-conceal.vim',ft='tex'})
 
