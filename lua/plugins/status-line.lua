@@ -134,7 +134,7 @@ gls.left[6] = {
 }
 gls.left[7] = {
   GitIcon = {
-    provider = function() return ' 󰘬 ' end,
+    provider = function() return '  ' end,
     condition = in_git_repo,
     highlight = {colors.orange,colors.bf},
   }
