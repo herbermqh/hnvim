@@ -54,7 +54,7 @@ def add_row(snip):
 
 
 def after_greek_letter():
-  if t[1] and t[1][0] not in ['_', '^', ' ']:
+  if t[1] and t[1][0] not in ['_', '^', ' ', '+', '-']:
       space = ' '
       return space
   else:
