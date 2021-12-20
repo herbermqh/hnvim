@@ -14,6 +14,33 @@ vim.g.dashboard_custom_header = {
   '╚═╝  ╚═╝    ╚══════╝    ╚═════╝     ╚══════╝    ╚═╝  ╚═╝',
 }
 
+--[[ vim.g.dashboard_custom_header = {
+'                       ```                        ',
+'                    ./sssss+-                     ',
+'                  `/syyyyyyyys-                   ',
+'                 `oyyyyyyyyyyyy+`                 ',
+'                -syyyyyyyyyyyyyyo.                ',
+'               :syyyyyyyyyyyyyyyys-               ',
+'             `+yyyyyyyyso+osyyyyyys:              ',
+'            `oyyyyyyys:`   `:syyyyyy+`            ',
+'           .syyyyyyyo.       `+yyyyyyo`           ',
+'          :syyyyyyy+`     .--../yyyyyys-          ',
+'        `/yyyyyyys:     .o+.`:o--syyyyys:         ',
+'       `+yyyyyyys-     :s/   .:` .oyyyyyy/`       ',
+'      .oyyyyyyyo.     /y/         `+yyyyyy+`      ',
+'     -syyyyyyy+`     /y/            /yyyyyyo.     ',
+'    /yyyyyyys/     `+y/    ```       :syyyyys-    ',
+'  `+yyyyyyys-     `+y/   -+:://`      .syyyyyy/   ',
+' .oyyyyyyyo.     `+y/   `s.   :o``...` `oyyyyyy+` ',
+'`syyyyyyyo`     `+s:     +/---:so:--:+- `+yyyyyyo`',
+'+yyyyyyys`.:`  `+s-       `---..s.   :o   +yyyyyy+',
+'syyyyyyy+ :o. .o+.              .+/:/+.   :yyyyyys',
+':syyyyyyy/..--:.                  `.`   .:syyyyys-',
+' ./ossssssssooooooooooooooooooooooooooosssssso/-` ',
+'      `````````````````````````````````````       ',
+} ]]
+
+
 -- Dashboard Sections
 vim.g.dashboard_custom_section = {
   a = {
