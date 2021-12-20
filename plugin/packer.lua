@@ -129,7 +129,7 @@ require('packer').startup(function(use)
 		use {'nxvu699134/vn-night.nvim'}
 		use "projekt0n/github-nvim-theme"
 		use({'rose-pine/neovim'})
-		use "Pocco81/Catppuccino.nvim"
+		-- use "Pocco81/Catppuccino.nvim"
 		use 'frenzyexists/aquarium-vim'
 		use 'EdenEast/nightfox.nvim'
 		use { 'mangeshrex/uwu.vim' }
