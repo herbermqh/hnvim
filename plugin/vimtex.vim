@@ -50,3 +50,5 @@ let g:vimtex_syntax_conceal_disable=1
 " set conceallevel=2
 " let g:tex_conceal="abdgm"
 
+
+
