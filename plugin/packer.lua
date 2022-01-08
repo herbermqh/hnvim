@@ -151,6 +151,7 @@ require('packer').startup(function(use)
     use({'voldikss/vim-floaterm'})
     use({'liuchengxu/vim-which-key'})
     use({'liuchengxu/vim-clap'})
+    use {"akinsho/toggleterm.nvim"}
 
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
