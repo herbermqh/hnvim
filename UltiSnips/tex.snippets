@@ -789,12 +789,12 @@ endsnippet
 
 #vectores a,.
 context "math()"
-snippet "@(\w|\d+)" "Vector postfix" riA
+snippet "→(\w|\d+)" "Vector postfix" riA
 \vec{`!p snip.rv=match.group(1)`}$0
 endsnippet
 
 context "math()"
-snippet "(\w+)@" "Vector postfix" riA
+snippet "(\w+)→" "Vector postfix" riA
 \vec{`!p snip.rv=match.group(1)`}$0
 endsnippet
 
