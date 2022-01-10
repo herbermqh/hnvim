@@ -64,9 +64,6 @@ mapper('n', '<C-Left>', ':BufferPrevious<CR>')
 mapper('n', '<C-h', ':BufferPrevious<CR>')
 
 -- start inkscape
-
-
-
 vim.cmd([[
   inoremap <A-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
   nnoremap <A-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
