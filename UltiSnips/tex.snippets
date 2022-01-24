@@ -1314,9 +1314,9 @@ snippet "<=>|sss" "leftrightarrow" riA
 \Leftrightarrow $0
 endsnippet
 
-priority 100
+priority -1000
 context "math()"
-snippet '(?<!\\|n)(leq|geq|in|parallel|equiv|approx|cong|propto|perp)' "symb relations math" rwA
+snippet '(?<!\\|n|\w)(leq|geq|in|parallel|equiv|approx|cong|propto|perp)' "symb relations math" rwA
 \\`!p snip.rv = match.group(1)` $0
 endsnippet
 

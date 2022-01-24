@@ -65,8 +65,9 @@ mapper('n', '<C-h', ':BufferPrevious<CR>')
 
 -- start inkscape
 vim.cmd([[
-  inoremap <A-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
-  nnoremap <A-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+  inoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
+  nnoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
+  nnoremap <A-fgh> : silent exec '!inkscape-figures edit "'.b:vimtex.tex.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 ]])
 
 -- Plugins Mappings ↓
