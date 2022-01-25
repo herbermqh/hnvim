@@ -146,6 +146,13 @@ vim.cmd('filetype plugin indent on')
 -- Visually select and copy without line numbers
 -- vim.o.mouse = 'a'
 vim.cmd('set mouse+=a')
+vim.cmd([[
+  " trigger `autoread` when files changes on disk
+  set autoread
+  autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+  " notification after file change
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+]])
 
 -- Don't redraw while executing macros
 vim.o.ttyfast = true
