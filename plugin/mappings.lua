@@ -70,6 +70,12 @@ vim.cmd([[
   nnoremap <A-fgh> : silent exec '!inkscape-figures edit "'.b:vimtex.tex.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 ]])
 
+-- identation latex
+vim.cmd([[
+  inoremap <C-A-l> <Esc>:w<CR>:silent execute '!latexindent -w '.b:vimtex.tex.''<CR>i
+  nnoremap <C-A-l> :w<CR>:silent execute '!latexindent -w '.b:vimtex.tex.''<CR>
+]])
+
 -- Plugins Mappings ↓
 -- vim latex
 mapper('n', '<F8>', ']sz=') -- error ortorgrafico

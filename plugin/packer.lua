@@ -75,6 +75,7 @@ require('packer').startup(function(use)
     -- Syntax Highlighting
     use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
     -- use({'airblade/vim-gitgutter'})
+    use({'sbdchd/neoformat'})
 
 
     -- UI Plugins

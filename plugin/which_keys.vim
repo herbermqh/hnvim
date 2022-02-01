@@ -71,7 +71,7 @@
         \ ';' : [':FloatermNew --wintype=popup --height=6'        , 'terminal'],
         \ 'f' : [':FloatermNew fzf'                               , 'fzf'],
         \ 'g' : [':FloatermNew lazygit'                           , 'git'],
-        \ 'd' : [':FloatermNew lazydocker'                        , 'docker'],
+   \ 'd' : [':FloatermNew lazydocker'                        , 'docker'],
         \ 'n' : [':FloatermNew node'                              , 'node'],
         \ 'N' : [':FloatermNew nnn'                               , 'nnn'],
         \ 'p' : [':FloatermNew python'                            , 'python'],
@@ -115,6 +115,7 @@
 " Register which key map
   call which_key#register('<Space>', "g:which_key_map")
 
+  "---------------------------------
   let g:which_key_map.fa = 'which_key_ignore'
   let g:which_key_map.fb = 'which_key_ignore'
   let g:which_key_map.ff = 'which_key_ignore'
