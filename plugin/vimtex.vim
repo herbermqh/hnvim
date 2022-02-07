@@ -12,7 +12,6 @@ let g:vimtex_compiler_latexmk = {
       \ 'options' : [
       \   '-verbose',
       \   '--shell-escape',
-      \   '-pdf',
       \   '-enable-write18',
       \   '-verbose',
       \   '-file-line-error',
@@ -20,6 +19,18 @@ let g:vimtex_compiler_latexmk = {
       \   '-interaction=nonstopmode',
       \ ],
       \}
+
+let g:vimtex_compiler_latexmk_engines = {
+        \ '_'                : '-xelatex',
+        \ 'pdflatex'         : '-pdf',
+        \ 'dvipdfex'         : '-pdfdvi',
+        \ 'lualatex'         : '-lualatex',
+        \ 'xelatex'          : '-xelatex',
+        \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
+        \ 'context (luatex)' : '-pdf -pdflatex=context',
+        \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
+        \}
+
 
 let g:vimtex_syntax_enabled = 1
 let g:vimtex_quickfix_open_on_warning = 0
@@ -38,9 +49,12 @@ else
   " endfunction
 endif
 
+let g:vimtex_compiler_engine = 'lualatex'
 let g:vimtex_fold_enabled=1
 let g:vimtex_imaps_enabled=0
 let g:vimtex_syntax_conceal_disable=1
+
+
 
 
 

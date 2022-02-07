@@ -65,15 +65,19 @@ mapper('n', '<C-h', ':BufferPrevious<CR>')
 
 -- start inkscape
 vim.cmd([[
-  inoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
-  nnoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
-  nnoremap <A-fgh> : silent exec '!inkscape-figures edit "'.b:vimtex.tex.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+  inoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
+  nnoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
 ]])
+  -- nnoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
+  -- inoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
+  -- nnoremap <A-fgh> : silent exec '!inkscape-figures edit "'.b:vimtex.tex.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
 
 -- identation latex
+  -- inoremap <C-A-l> <Esc>:w<CR>:silent execute '!latexindent -w '.b:vimtex.tex.''<CR>i
+  -- nnoremap <C-A-l> :w<CR>:silent execute '!latexindent -w '.b:vimtex.tex.''<CR>
 vim.cmd([[
-  inoremap <C-A-l> <Esc>:w<CR>:silent execute '!latexindent -w '.b:vimtex.tex.''<CR>i
-  nnoremap <C-A-l> :w<CR>:silent execute '!latexindent -w '.b:vimtex.tex.''<CR>
+  inoremap <C-A-l> <Esc>:w<CR>:silent execute '!latexindent -w '@%<CR>:e<CR>i
+  nnoremap <C-A-l> :w<CR>:silent execute '!latexindent -w '@%<CR>:e<CR>
 ]])
 
 -- Plugins Mappings ↓

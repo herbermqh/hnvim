@@ -1496,27 +1496,33 @@ snippet htabular "htabular"
 endsnippet
 
 #figure
-snippet fig "Figura tikz escalado" b
-\begin{center}
-	\begin{scaletikzpicturetowidth}{7cm}
-		\begin{tikzpicture}[scale=\tikzscale]
-			$0
-		\end{tikzpicture}
-	\end{scaletikzpicturetowidth}
-\end{center}
+snippet fig "Figura tikz en el margen" b
+\begin{figure}[H]
+  \centering
+  \begin{scaletikzpicturetowidth}{\marginparwidth}
+    \begin{tikzpicture}[scale=\tikzscale]
+      $3
+    \end{tikzpicture}
+  \end{scaletikzpicturetowidth}
+  \caption{$2}
+  \label{fig:$1}
+\end{figure}
+$0
 endsnippet
 
 snippet figm "Figura tikz en el margen" b
 figura \ref{fig:$1}
 \marginote{
-	\begin{figure}[H]
-		\centering
-		\begin{tikzpicture}
-			\draw (-2,-2) rectangle (2,2);
-		\end{tikzpicture}
-		\caption{}
-		\label{fig:$1}
-	\end{figure}
+  \begin{figure}[H]
+    \centering
+    \begin{scaletikzpicturetowidth}{\marginparwidth}
+      \begin{tikzpicture}[scale=\tikzscale]
+        $3
+      \end{tikzpicture}
+    \end{scaletikzpicturetowidth}
+    \caption{$2}
+    \label{fig:$1}
+  \end{figure}
 }
 $0
 endsnippet
