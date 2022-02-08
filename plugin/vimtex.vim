@@ -6,7 +6,7 @@ let g:vimtex_compiler_latexmk = {
       \ 'backend' : 'nvim',
       \ 'background' : 1,
       \ 'callback' : 1,
-      \ 'continuous' : 1,
+      \ 'continuous' : 0,
       \ 'executable' : 'latexmk',
       \ 'hooks' : [],
       \ 'options' : [
@@ -25,7 +25,7 @@ let g:vimtex_compiler_latexmk_engines = {
         \ 'pdflatex'         : '-pdf',
         \ 'dvipdfex'         : '-pdfdvi',
         \ 'lualatex'         : '-lualatex',
-        \ 'xelatex'          : '-xelatex',
+        \ 'xelatex-dev'      : '-xelatex',
         \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
         \ 'context (luatex)' : '-pdf -pdflatex=context',
         \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
