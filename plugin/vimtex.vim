@@ -25,7 +25,7 @@ let g:vimtex_compiler_latexmk_engines = {
         \ 'pdflatex'         : '-pdf',
         \ 'dvipdfex'         : '-pdfdvi',
         \ 'lualatex'         : '-lualatex',
-        \ 'xelatex-dev'      : '-xelatex',
+        \ 'xelatex-dev -synctex=1 -interaction=nonstopmode --enable-write18 --shell-escape %O %S' : '-xelatex',
         \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
         \ 'context (luatex)' : '-pdf -pdflatex=context',
         \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',

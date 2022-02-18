@@ -439,25 +439,25 @@ endsnippet
 #  TEXTO EN MODO MATEMATICO  #
 #############################
 #modo matematico 
-priority 100
-snippet "\$" "modo matematico en linea" wrA
-$${1}$`!p
-if t[2] and t[2][0] not in [',', '.', '?', '-', ' ', ':']:
-    snip.rv = ' '
-else:
-    snip.rv = ''
-`$2
-endsnippet
+# priority 100
+# snippet "\$" "modo matematico en linea" wrA
+# $${1}$`!p
+# if t[2] and t[2][0] not in [',', '.', '?', '-', ' ', ':']:
+#     snip.rv = ' '
+# else:
+#     snip.rv = ''
+# `$2
+# endsnippet
 
-priority 500
-snippet "(\w+|\w+,\w+)\$" "modo matematico en linea" riA
-$`!p snip.rv = match.group(1)`$ 
-endsnippet
+# priority 500
+# snippet "(\w+|\w+,\w+)\$" "modo matematico en linea" riA
+# $`!p snip.rv = match.group(1)`$ 
+# endsnippet
 
-priority 600
-snippet "\$(\w+|\w+,\w+)\$" "modo matematico en linea" riA
-$`!p snip.rv = match.group(1)`$ 
-endsnippet
+# priority 600
+# snippet "\$(\w+|\w+,\w+)\$" "modo matematico en linea" riA
+# $`!p snip.rv = match.group(1)`$ 
+# endsnippet
 
 #Potencias 
 
@@ -1487,8 +1487,8 @@ snippet htabular "htabular"
 \begin{table}[H]
 	\centering
 	\begin{htabular}{${0}}
-		\tw{}  &\tw{}					\\ \midrule
-						&               \\ \midrule
+		\tw{}  &\tw{}					\\\ \midrule
+						&               \\\ \midrule
 						&
 	\end{htabular}
 	\caption{}
@@ -1698,8 +1698,7 @@ endsnippet
 
 # \begin{listing}
 snippet "mint(ed)?( (\S+))?" "Minted code typeset" br
-\begin{minted}[linenos,numbersep=-1mm,frame=lines,framesep=2mm]{${1:`!p
-snip.rv = match.group(3) if match.group(2) is not None else "language"`}}
+\begin{minted}{${1:`!p snip.rv = match.group(3) if match.group(2) is not None else "language"`}}
   ${0:${VISUAL:code}}
 \end{minted}
 endsnippet
