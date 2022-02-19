@@ -107,18 +107,18 @@ mapper('n', '<F5>', ':Format<CR>')
 
 -- plug_mapper('n', '<leader>rn', '<Plug>(coc-rename)')
 
-plug_mapper('n', 'gd', '<Plug>(coc-definition)')
+--[[ plug_mapper('n', 'gd', '<Plug>(coc-definition)')
 plug_mapper('n', 'gr', '<Plug>(coc-references)')
 
 plug_mapper('n', '<leader>ca', '<Plug>(coc-codeaction)')
 plug_mapper('n', '<leader>ga', '<Plug>(coc-codeaction-cursor)')
 plug_mapper('x', '<leader>ga', '<Plug>(coc-codeaction-selected)')
 plug_mapper('n', '<leader>kf', '<Plug>(coc-fix-current)')
-
+ ]]
 -- plug_mapper('n', '<Right>', '<Plug>(coc-diagnostic-prev)')
 -- plug_mapper('n', '<Left>', '<Plug>(coc-diagnostic-next)')
 
-expressive_mapper('i', '<C-space>', 'coc#refresh()')
+-- expressive_mapper('i', '<C-space>', 'coc#refresh()')
 
 -- TODO: Pass to Lua
 vim.cmd([[

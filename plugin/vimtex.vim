@@ -32,8 +32,6 @@ let g:vimtex_compiler_latexmk_engines = {
         \}
 
 
-let g:vimtex_syntax_enabled = 1
-let g:vimtex_quickfix_open_on_warning = 0
 if has('win32')
   let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
   let g:vimtex_view_general_options
@@ -49,11 +47,12 @@ else
   " endfunction
 endif
 
-" let g:vimtex_compiler_engine = 'lualatex'
-let g:vimtex_fold_enabled=1
+
+let g:vimtex_quickfix_open_on_warning = 0
+let g:vimtex_syntax_enabled = 0
+let g:vimtex_fold_enabled=0
 let g:vimtex_imaps_enabled=0
 let g:vimtex_syntax_conceal_disable=1
-
 
 
 

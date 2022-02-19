@@ -2,7 +2,7 @@ require('packer').startup(function()
     -- Packer Itself
     use('wbthomason/packer.nvim')
 
-    -- LSP Provider
+    -- LSP
     --[[ use({
         'neoclide/coc.nvim',
         branch = 'master',
