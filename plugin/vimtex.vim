@@ -49,18 +49,19 @@ endif
 
 
 let g:vimtex_quickfix_open_on_warning = 0
-let g:vimtex_syntax_enabled = 0
-let g:vimtex_fold_enabled=0
+let g:vimtex_syntax_enabled = 1
+let g:vimtex_fold_enabled=1
 let g:vimtex_imaps_enabled=0
 let g:vimtex_syntax_conceal_disable=1
 
 
 
-" let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
-" let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
-" let g:tex_conceal_frac=1
-" set conceallevel=2
-" let g:tex_conceal="abdgm"
+
+let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
+let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
+let g:tex_conceal_frac=1
+set conceallevel=2
+let g:tex_conceal="abdgm"
 
 
 
