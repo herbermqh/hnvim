@@ -21,8 +21,8 @@ require('packer').startup(function()
     use('quangnguyen30192/cmp-nvim-ultisnips')
     -- use('herbermqh/vim-snippets')
     -- use 'dcampos/nvim-snippy'
-    use 'herbermqh/vim-vsnip'
-    -- use 'hrsh7th/vim-vsnip-integ'
+    use 'hrsh7th/vim-vsnip'
+    use 'hrsh7th/vim-vsnip-integ'
     use 'neovim/nvim-lspconfig'
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
@@ -46,7 +46,6 @@ require('packer').startup(function()
     -- use({'lervag/vimtex'})
     use({'herbermqh/vimtex'})
     -- use('herbermqh/vim-latex')
-    -- use({'KeitaNakamura/tex-conceal.vim',ft='tex'})
 
     -- Utilities
     use({'Pocco81/AutoSave.nvim', opt = true})

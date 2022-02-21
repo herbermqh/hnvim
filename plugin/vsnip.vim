@@ -25,3 +25,10 @@ xmap        S   <Plug>(vsnip-cut-text)
 let g:vsnip_filetypes = {}
 let g:vsnip_filetypes.javascriptreact = ['javascript']
 let g:vsnip_filetypes.typescriptreact = ['typescript']
+
+if has('win32')
+  let g:vsnip_snippet_dir = "C:\Users\heber\AppData\Local\nvim\vsnip"
+else
+  let g:vsnip_snippet_dir = "/home/userh/.config/nvim/vsnip"
+endif
+
