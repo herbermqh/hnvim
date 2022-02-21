@@ -10,6 +10,7 @@ require('packer').startup(function()
     }) ]]
     use 'neovim/nvim-lspconfig'
     use 'hrsh7th/nvim-compe'
+    use 'onsails/lspkind-nvim'
     --[[ use({
       'neoclide/coc.nvim',
       branch='release'
@@ -17,12 +18,55 @@ require('packer').startup(function()
 
     --autocomplete
     use('sirver/ultisnips')
+    use('quangnguyen30192/cmp-nvim-ultisnips')
     -- use('herbermqh/vim-snippets')
     -- use 'dcampos/nvim-snippy'
     use 'herbermqh/vim-vsnip'
-    use 'hrsh7th/vim-vsnip-integ'
-
-
+    -- use 'hrsh7th/vim-vsnip-integ'
+    use 'neovim/nvim-lspconfig'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-buffer'
+    use({
+      'hrsh7th/nvim-cmp',
+      requires = {
+        "quangnguyen30192/cmp-nvim-ultisnips",
+        config = function()
+          require("cmp_nvim_ultisnips").setup{}
+        end,
+      }
+    })
+    config = function()
+        local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+        require("cmp").setup({
+          snippet = {
+            expand = function(args)
+              vim.fn["UltiSnips#Anon"](args.body)
+            end,
+          },
+          sources = {
+            { name = "ultisnips" },
+            -- more sources
+          },
+          -- recommended configuration for <Tab> people:
+          mapping = {
+            ["<Tab>"] = cmp.mapping(
+              function(fallback)
+                cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
+              end,
+              { "i", "s", [[ "c" (to enable the mapping in command mode) ]] }
+            ),
+            ["<S-Tab>"] = cmp.mapping(
+              function(fallback)
+                cmp_ultisnips_mappings.jump_backwards(fallback)
+              end,
+              { "i", "s", [[ "c" (to enable the mapping in command mode) ]] }
+            ),
+          },
+        })
+      end,
+    -- use 'hrsh7th/cmp-path'
+    -- use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/cmp-vsnip'
     -- LaTeX
     -- use({'lervag/vimtex'})
     use({'herbermqh/vimtex'})
@@ -128,18 +172,18 @@ require('packer').startup(function()
     use 'yonlu/omni.vim'
     use 'ray-x/aurora'
     use 'nekonako/xresources-nvim'
-		use 'shaunsingh/nord.nvim'
-		use {'MordechaiHadad/nvim-papadark', requires = {'rktjmp/lush.nvim'}}
-		use 'shaunsingh/moonlight.nvim'
-		use 'navarasu/onedark.nvim'
-		use 'yashguptaz/calvera-dark.nvim'
-		use {'nxvu699134/vn-night.nvim'}
-		use "projekt0n/github-nvim-theme"
-		use({'rose-pine/neovim'})
-		-- use "Pocco81/Catppuccino.nvim"
-		use 'frenzyexists/aquarium-vim'
-		use 'EdenEast/nightfox.nvim'
-		use { 'mangeshrex/uwu.vim' }
+    use 'shaunsingh/nord.nvim'
+    use {'MordechaiHadad/nvim-papadark', requires = {'rktjmp/lush.nvim'}}
+    use 'shaunsingh/moonlight.nvim'
+    use 'navarasu/onedark.nvim'
+    use 'yashguptaz/calvera-dark.nvim'
+    use {'nxvu699134/vn-night.nvim'}
+    use "projekt0n/github-nvim-theme"
+    use({'rose-pine/neovim'})
+    -- use "Pocco81/Catppuccino.nvim"
+    use 'frenzyexists/aquarium-vim'
+    use 'EdenEast/nightfox.nvim'
+    use { 'mangeshrex/uwu.vim' }
     -- use 'olimorris/onedark.nvim'
 
     -- IDE

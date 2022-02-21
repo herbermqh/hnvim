@@ -1,3 +1,4 @@
--- require('lsp/cmp')
--- require('lsp/diagnostic_signs')
+require('lsp/cmp-config')
+require('lsp/UI')
 require('lsp/language_servers')
+
