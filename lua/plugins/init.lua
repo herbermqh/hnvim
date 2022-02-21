@@ -9,7 +9,7 @@ require('packer').startup(function()
         run = 'yarn install --frozen-lockfile'
     }) ]]
     use 'neovim/nvim-lspconfig'
-    use 'hrsh7th/nvim-compe'
+    -- use 'hrsh7th/nvim-compe'
     use 'onsails/lspkind-nvim'
     --[[ use({
       'neoclide/coc.nvim',
@@ -30,42 +30,17 @@ require('packer').startup(function()
       'hrsh7th/nvim-cmp',
       requires = {
         "quangnguyen30192/cmp-nvim-ultisnips",
+        "kdheepak/cmp-latex-symbols",
         config = function()
           require("cmp_nvim_ultisnips").setup{}
         end,
+      },
+      sources = {
+        {name = "latex_symbols"}
       }
     })
-    config = function()
-        local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
-        require("cmp").setup({
-          snippet = {
-            expand = function(args)
-              vim.fn["UltiSnips#Anon"](args.body)
-            end,
-          },
-          sources = {
-            { name = "ultisnips" },
-            -- more sources
-          },
-          -- recommended configuration for <Tab> people:
-          mapping = {
-            ["<Tab>"] = cmp.mapping(
-              function(fallback)
-                cmp_ultisnips_mappings.expand_or_jump_forwards(fallback)
-              end,
-              { "i", "s", [[ "c" (to enable the mapping in command mode) ]] }
-            ),
-            ["<S-Tab>"] = cmp.mapping(
-              function(fallback)
-                cmp_ultisnips_mappings.jump_backwards(fallback)
-              end,
-              { "i", "s", [[ "c" (to enable the mapping in command mode) ]] }
-            ),
-          },
-        })
-      end,
-    -- use 'hrsh7th/cmp-path'
-    -- use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
     use 'hrsh7th/cmp-vsnip'
     -- LaTeX
     -- use({'lervag/vimtex'})
@@ -102,7 +77,7 @@ require('packer').startup(function()
     -- use({'nacro90/numb.nvim', config = function() require('numb').setup() end})
 
     -- folders
-    use({'francoiscabrol/ranger.vim'})
+    -- use({'francoiscabrol/ranger.vim'})
     use({'rbgrouleff/bclose.vim'})
     use({'nvim-lua/popup.nvim'})
     use({'nvim-lua/plenary.nvim'})
@@ -156,6 +131,7 @@ require('packer').startup(function()
     }
 
     -- Themes
+    use 'norcalli/nvim-colorizer.lua'
     use({'marko-cerovac/material.nvim', opt = false, as = 'material'})
     -- use({'folke/tokyonight.nvim'})
     use 'herbermqh/tokyonight.nvim'

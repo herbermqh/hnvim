@@ -4,4 +4,3 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 let g:UltiSnipsSnippetsDir = "~/UltiSnips"
 
 
-

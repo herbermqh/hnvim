@@ -23,10 +23,12 @@ require('gui')
 
 require('hgalaxyline')
 
-require('compe-config')
+-- require('compe-config')
 
 require('cmp-ultisnips-config')
 require('autopairs-config')
 
 require('lspkind-config')
 require('lsp')
+
+require('colorizer-config')

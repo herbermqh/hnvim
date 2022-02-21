@@ -59,8 +59,4 @@ vim.g.dashboard_custom_section = {
     description = { ' Change Color sheme  ' },
     command = 'Telescope colorscheme',
   },
-  e = {
-    description = { '  Settings           ' },
-    command = ':e ~/.config/nvim/init.lua',
-  },
 }
