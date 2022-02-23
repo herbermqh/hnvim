@@ -36,9 +36,6 @@ npairs.setup({
     },
 })
 
-
-
-
 -- Add spaces between parentheses
 npairs.add_rules {
   Rule(' ', ' ')
@@ -65,7 +62,5 @@ npairs.add_rules {
       end)
       :use_key(']')
 }
-
-
 
 

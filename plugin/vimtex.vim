@@ -52,9 +52,12 @@ let g:vimtex_quickfix_open_on_warning = 0
 let g:vimtex_syntax_enabled = 1
 let g:vimtex_fold_enabled=1
 let g:vimtex_imaps_enabled=0
+let g:vimtex_mappings_enabled=0
 let g:vimtex_syntax_conceal_disable=1
 
 
+let g:vimtex_indent_enabled=0
+ 
 
 let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
 let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"

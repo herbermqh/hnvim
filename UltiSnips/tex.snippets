@@ -90,24 +90,23 @@ snip.rv = match.group(3) if match.group(2) is not None else "something"`}}
 endsnippet
 
 
-
 ##################
 #  TEXTO NORMAL  #
 ##################
 #smart quotes
-snippet "\"$\"" "smart quotes" iAr
-\`\`$1'' $0
+snippet "\"(.+)\b\"\s" "smart quotes" Ar
+\`\``!p snip.rv = match.group(1)`'' $0
 endsnippet
 
-context "math()"
-snippet " "smart quotes" iA
-"
-endsnippet
+# context "math()"
+# snippet " "smart quotes" iA
+# "
+# endsnippet
 
-context "env('tikzpicture')"
-snippet " "smart quotes" iA
-"
-endsnippet
+# context "env('tikzpicture')"
+# snippet " "smart quotes" iA
+# "
+# endsnippet
 
 
 #caracteres especiales
@@ -690,46 +689,46 @@ snippet *** "cdot" iA
 endsnippet
 
 #delimitadores
-snippet () "simple parent" iA
-($1)$0
-endsnippet
+# snippet () "simple parent" iA
+# ($1)$0
+# endsnippet
 
-snippet [] "simple bracket" iA
-[$1]$0
-endsnippet
+# snippet [] "simple bracket" iA
+# [$1]$0
+# endsnippet
 
-snippet {} "simple brace" iA
-{$1}$0
-endsnippet
+# snippet {} "simple brace" iA
+# {$1}$0
+# endsnippet
 
 context "math()"
-snippet (( "left( right)" iA
-\left( ${1:${VISUAL}} \right)$0
+snippet )) "left( right)" iA 
+\left($1\right)$0
 endsnippet
 
 context "math()"
 snippet || "left| right|" iA
-\left| ${1:${VISUAL}} \right|$0
+\left|$1\right|$0
 endsnippet
 
 context "math()"
-snippet {{ "left\{ right\}" iA
-\left\\{ $1 \right\\}$0
+snippet }} "left\{ right\}" iA
+\left\\{$1\right\\}$0
 endsnippet
 
 context "math()"
-snippet [[ "left[ right]" iA
-\left[ ${1:${VISUAL}} \right]$0
+snippet ]] "left[ right]" iA
+\left[$1\right]$0
 endsnippet
 
 context "math()"
-snippet norm "norm" iA
-\left\| $1\right \|$0
+snippet n| "norm" iA
+\left\|$1\right\|$0
 endsnippet
 
 context "math()"
 snippet .| "left. right|" iA
-\left. ${1:${VISUAL}} \right|$0
+\left. $1\right|$0
 endsnippet
 
 #delimitadores amstmath

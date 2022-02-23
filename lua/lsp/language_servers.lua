@@ -24,3 +24,7 @@ require'lspconfig'.tsserver.setup{
 require'lspconfig'.bashls.setup{
   capabilities = capabilities
 }
+
+require'lspconfig'.vimls.setup{
+  capabilities = capabilities
+}
