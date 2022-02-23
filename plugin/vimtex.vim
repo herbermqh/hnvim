@@ -55,15 +55,35 @@ let g:vimtex_imaps_enabled=0
 let g:vimtex_mappings_enabled=0
 let g:vimtex_syntax_conceal_disable=1
 
-
 let g:vimtex_indent_enabled=0
  
-
 let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
 let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
 let g:tex_conceal_frac=1
 set conceallevel=2
 let g:tex_conceal="abdgm"
+" hi Conceal guifg=white
 
 
 
+" let g:vimtex_syntax_custom_cmds = [
+"       \ {'name': 'vect', 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
+"       \ {'name': 'vec', 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
+"       \ {'name': 'mat' , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
+"       \ {'name': 'bm'  , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
+"       \ {'name': 'pmb' , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
+"       \ {'name': 'textbf', 'mathmode': 0, 'argstyle': 'bold', 'conceal': 1},
+"       \ {'name': 'keyw', 'mathmode': 0, 'argstyle': 'boldital' , 'conceal': 1},
+"       \ {'name': 'Prob'    , 'mathmode': 1, 'concealchar': 'ℙ'},
+"       \ {'name': 'Expect'  , 'mathmode': 1, 'concealchar': '𝔼'},
+"       \ {'name': 'Var'     , 'mathmode': 1, 'concealchar': '𝕍'},
+"       \ {'name': 'pdf'     , 'mathmode': 1, 'concealchar': '𝕡'},
+"       \ {'name': 'qdf'     , 'mathmode': 1, 'concealchar': '𝕢'},
+"       \ {'name': 'NormDist', 'mathmode': 1, 'concealchar': '𝒩'},
+"       \ {'name': 'Reals'   , 'mathmode': 1, 'concealchar': 'ℝ'},
+"       \ {'name': 'Imags'   , 'mathmode': 1, 'concealchar': '𝕀'},
+"       \ {'name': 'Naturals', 'mathmode': 1, 'concealchar': 'ℕ'},
+"       \ {'name': 'Integers', 'mathmode': 1, 'concealchar': 'ℤ'},
+"       \ {'name': 'ones'    , 'mathmode': 1, 'concealchar': '𝟙'},
+"       \ {'name': 'bigO'    , 'mathmode': 1, 'concealchar': '𝒪'},
+"       \]

@@ -32,3 +32,5 @@ require('lspkind-config')
 require('lsp')
 
 require('colorizer-config')
+
+require('indentline')

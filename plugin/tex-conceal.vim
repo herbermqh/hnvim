@@ -17,6 +17,9 @@ syn match texMathSymbol '\\implies\>' contained conceal cchar=⇒
 syn match texMathSymbol '\\geqslant\>' contained conceal cchar=⩾
 syn match texMathSymbol '\\leqslant\>' contained conceal cchar=⩽
 
+" \Heber
+syn match texMathSymbol '\\limits' contained conceal cchar= 
+
 " \mathbb characters
 syn match texMathSymbol '\\mathbb{\s*A\s*}' contained conceal cchar=𝔸
 syn match texMathSymbol '\\mathbb{\s*B\s*}' contained conceal cchar=𝔹
@@ -193,7 +196,7 @@ syn match texStatement '\\qquad' contained conceal cchar=
 "syn match texStatement '\\\]' contained conceal cchar=⟧
 syn match texDelimiter '\\{' contained conceal cchar={
 syn match texDelimiter '\\}' contained conceal cchar=}
-syn match texMathSymbol '\\setminus\>' contained conceal cchar=\
+" syn match texMathSymbol '\\setminus\>' contained conceal cchar=\
 syn match texMathSymbol '\\coloneqq\>' contained conceal cchar=≔
 syn match texMathSymbol '\\colon\>' contained conceal cchar=:
 syn match texMathSymbol '\\:' contained conceal cchar= 

@@ -168,7 +168,7 @@ require('packer').startup(function()
     use({'micha/vim-colors-solarized'})
     use({'mg979/vim-visual-multi'})
     use({'arzg/vim-colors-xcode'})
-    use({'Yggdroot/indentLine'})
+    use "lukas-reineke/indent-blankline.nvim"
     use({'windwp/nvim-autopairs'})
     use({'tpope/vim-sensible'})
     use({'tpope/vim-unimpaired'})
@@ -182,18 +182,6 @@ require('packer').startup(function()
 
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
-
-    use({
-        'lukas-reineke/indent-blankline.nvim',
-        opt = true,
-        config = function()
-            require('indent_blankline').setup({
-                char = '|',
-                buftype_exclude = {'terminal', 'dashboard'}
-            })
-        end
-    })
-
     use({'Pocco81/TrueZen.nvim', opt = true})
 
     use({
