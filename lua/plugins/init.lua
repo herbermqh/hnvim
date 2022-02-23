@@ -130,6 +130,7 @@ require('packer').startup(function()
     }
 
     -- Themes
+    use 'mhinz/vim-startify'
     use 'norcalli/nvim-colorizer.lua'
     use({'marko-cerovac/material.nvim', opt = false, as = 'material'})
     -- use({'folke/tokyonight.nvim'})
