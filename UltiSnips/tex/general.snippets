@@ -136,10 +136,7 @@ snippet overline "overline text" b
 endsnippet
 
 
-
 #tamanos letras
-
-
 
 #centrado
 snippet center "center" b
@@ -1730,6 +1727,8 @@ snip.rv = eval('latex(' + match.group(1).replace('\\', '').replace('^', '**').re
 `
 endsnippet
 
+
+
 #########################
 #  MATEMATICA SOFTWARE  #
 #########################
@@ -1748,21 +1747,5 @@ snip.rv = subprocess.check_output(['wolframscript', '-code', code])
 `
 endsnippet
 
-
-#############
-#  QUIMICA  #
-#############
-snippet ce "chemin" b
-\ce{`!p snip.rv=match.group(1)`}
-endsnippet
-
-snippet chemin "Nomenclatura inorgánica" b
-snippet chemin "Nomenclatura inorgánica" 
-	\chemin[$1]{
-		\ntra{$2}\\
-		\nsto{$3}\\
-		\niup{$0}
-}
-endsnippet
 
 

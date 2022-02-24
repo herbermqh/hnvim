@@ -1,0 +1,16 @@
+snippet matrixpy "matrix python" w
+matrixpy $1 matrixpy$0
+endsnippet
+
+priority 10000
+snippet "matrixpy(.*)matrixpy" "matrix python" wr
+`!p 
+from sympy import *
+init_printing()
+def producto_matriz(A,B):
+    _A = Matrix(A)
+    _B = Matrix(B)
+    return f'&= {latex(_A)}{latex(_B)}\\\\ \n &= {latex(_A*_B)}'
+snip.rv = eval(match.group(1))
+`
+endsnippet
