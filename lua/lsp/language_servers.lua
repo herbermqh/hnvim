@@ -28,3 +28,7 @@ require'lspconfig'.bashls.setup{
 require'lspconfig'.vimls.setup{
   capabilities = capabilities
 }
+
+
+
+

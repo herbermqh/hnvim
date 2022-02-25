@@ -17,12 +17,13 @@ require('packer').startup(function()
     }) ]]
 
     --autocomplete
-    use('sirver/ultisnips')
+    use('SirVer/ultisnips')
     use('quangnguyen30192/cmp-nvim-ultisnips')
     -- use('herbermqh/vim-snippets')
+    -- use('honza/vim-snippets')
     -- use 'dcampos/nvim-snippy'
-    use 'hrsh7th/vim-vsnip'
-    use 'hrsh7th/vim-vsnip-integ'
+    -- use 'hrsh7th/vim-vsnip'
+    -- use 'hrsh7th/vim-vsnip-integ'
     use 'neovim/nvim-lspconfig'
     use 'hrsh7th/cmp-nvim-lsp'
     use 'hrsh7th/cmp-buffer'
@@ -41,7 +42,8 @@ require('packer').startup(function()
     })
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/cmp-vsnip'
+    use 'hrsh7th/cmp-copilot'
+    use {'github/copilot.vim'}
     -- LaTeX
     -- use({'lervag/vimtex'})
     use({'herbermqh/vimtex'})
