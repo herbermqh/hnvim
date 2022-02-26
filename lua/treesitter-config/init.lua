@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup{
-  ensure_installed = {"python","lua","latex","html"},
+  ensure_installed = {"python","lua","latex","html", "css"},
   incremental_selection = {
     enable = false,
   },

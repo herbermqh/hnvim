@@ -29,6 +29,11 @@ require'lspconfig'.vimls.setup{
   capabilities = capabilities
 }
 
+require'lspconfig'.cssls.setup{
+  capabilities = capabilities
+}
+
+
 
 
 
