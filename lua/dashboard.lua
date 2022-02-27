@@ -44,12 +44,12 @@ vim.g.dashboard_custom_header = {
 -- Dashboard Sections
 vim.g.dashboard_custom_section = {
   a = {
-    description = { '  Find File          ' },
-    command = 'Telescope find_files',
-  },
-  b = {
     description = { '  Recently Used Files' },
     command = 'Telescope oldfiles',
+  },
+  b = {
+    description = { '  Find File          ' },
+    command = 'Telescope find_files',
   },
   c = {
     description = { '  Find Word          ' },
