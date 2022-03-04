@@ -87,3 +87,13 @@ hi Conceal guifg=white
 "       \ {'name': 'ones'    , 'mathmode': 1, 'concealchar': '𝟙'},
 "       \ {'name': 'bigO'    , 'mathmode': 1, 'concealchar': '𝒪'},
 "       \]
+
+
+nnoremap <localleader>lt :call vimtex#fzf#run()<cr>
+
+
+
+
+
+
+

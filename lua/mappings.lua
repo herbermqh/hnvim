@@ -66,7 +66,7 @@ mapper('n', '<C-h', ':BufferPrevious<CR>')
 -- start inkscape
 vim.cmd([[
   inoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
-  nnoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
+  nnoremap <A-f> <Esc>:exec '!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
 ]])
   -- nnoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
   -- inoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
@@ -79,6 +79,14 @@ vim.cmd([[
   inoremap <C-A-l> <Esc>:w<CR>:silent execute '!latexindent -w '@%<CR>:e<CR>i
   nnoremap <C-A-l> :w<CR>:silent execute '!latexindent -w '@%<CR>:e<CR>
 ]])
+
+-- create files latex
+vim.cmd([[
+  nnoremap <A-c> <Esc>:silent exec '.!python -m gestor-archivos-latex create "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
+  nnoremap <A-e> <Esc>:exec '!python -m gestor-archivos-latex edit "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
+]])
+
+
 
 -- Plugins Mappings ↓
 -- vim latex

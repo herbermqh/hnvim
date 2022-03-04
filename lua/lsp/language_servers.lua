@@ -11,8 +11,6 @@ require'lspconfig'.texlab.setup {
   filetypes = { "tex", "bib", "sty" },
 }
 
-
-
 --[[ require'lspconfig'.ltex.setup{
   capabilities = capabilities
 } ]]
@@ -41,7 +39,9 @@ require'lspconfig'.sumneko_lua.setup{
   capabilities = capabilities
 }
 
-
+require'lspconfig'.vimls.setup{
+  capabilities = capabilities
+}
 
 
 

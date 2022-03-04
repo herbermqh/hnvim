@@ -59,6 +59,7 @@ require('packer').startup(function()
             require('telescope').load_extension('neoclip')
         end
     })
+    -- use 'junegunn/fzf.vim'
 
     use({
       'lewis6991/gitsigns.nvim',

@@ -24,14 +24,17 @@ vim.bo.softtabstop = 2
 -- Autoident
 vim.o.autoindent = true
 vim.bo.autoindent = true
+vim.cmd([[
+  set breakindent
+]])
 
 -- Highlight all matches while searching
 
--- Ignorecase ins search pattern
--- vim.o.ignorecase = true
+-- Ignorecase in search pattern
+vim.o.ignorecase = true
 
 -- Override the 'ignorecase' option if the search pattern contains upper case characters
--- vim.o.smartcase = true
+vim.o.smartcase = true
 
 -- Swapfiles are nice
 vim.o.swapfile = true
