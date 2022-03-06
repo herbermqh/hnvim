@@ -22,8 +22,8 @@ vim.o.softtabstop = 2
 vim.bo.softtabstop = 2
 
 -- Autoident
-vim.o.autoindent = true
-vim.bo.autoindent = true
+vim.o.autoindent = false
+vim.bo.autoindent = false
 vim.cmd([[
   set breakindent
 ]])

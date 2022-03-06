@@ -79,7 +79,7 @@ hi Conceal guifg=white
 "       \ {'name': 'Var'     , 'mathmode': 1, 'concealchar': '𝕍'},
 "       \ {'name': 'pdf'     , 'mathmode': 1, 'concealchar': '𝕡'},
 "       \ {'name': 'qdf'     , 'mathmode': 1, 'concealchar': '𝕢'},
-"       \ {'name': 'NormDist', 'mathmode': 1, 'concealchar': '𝒩'},
+      " \ {'name': 'NormDist', 'mathmode': 1, 'concealchar': '𝒩'},
 "       \ {'name': 'Reals'   , 'mathmode': 1, 'concealchar': 'ℝ'},
 "       \ {'name': 'Imags'   , 'mathmode': 1, 'concealchar': '𝕀'},
 "       \ {'name': 'Naturals', 'mathmode': 1, 'concealchar': 'ℕ'},

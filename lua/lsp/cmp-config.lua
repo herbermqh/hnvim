@@ -102,7 +102,7 @@ cmp.setup({
       end
     end, { "i", "s" }), ]]
     -- ------ultisnips
-    ["<Tab>"] = cmp.mapping({
+    ["<C-n>"] = cmp.mapping({
             c = function()
                 if cmp.visible() then
                     cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
@@ -118,7 +118,7 @@ cmp.setup({
                 else
                     fallback()
                 end
-end,
+            end,
             s = function(fallback)
                 if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
                     vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
@@ -127,7 +127,7 @@ end,
                 end
             end
         }),
-        ["<S-Tab>"] = cmp.mapping({
+        ["<C-b"] = cmp.mapping({
             c = function()
                 if cmp.visible() then
                     cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
