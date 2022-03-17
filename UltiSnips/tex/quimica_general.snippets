@@ -1,13 +1,106 @@
+priority -50
+
+extends texmath
+
+global !p
+
+def math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def comment(): 
+	return vim.eval('vimtex#syntax#in_comment()') == '1'
+
+def env(name):
+	[x,y] = vim.eval("vimtex#env#is_inside('" + name + "')") 
+	return x != '0' and y != '0'
+
+def create_table(snip):
+	rows = snip.buffer[snip.line].split('x')[0]
+	cols = snip.buffer[snip.line].split('x')[1]
+
+	int_val = lambda string: int(''.join(s for s in string if s.isdigit()))
+
+	rows = int_val(rows)
+	cols = int_val(cols)
+
+	offset = cols + 1
+	old_spacing = snip.buffer[snip.line][:snip.buffer[snip.line].rfind('\t') + 1]
+
+	snip.buffer[snip.line] = ''
+
+	final_str = old_spacing + "\\begin{tabular}{|" + "|".join(['$' + str(i + 1) for i in range(cols)]) + "|}\n"
+
+	for i in range(rows):
+		final_str += old_spacing + '\t'
+		final_str += " & ".join(['$' + str(i * cols + j + offset) for j in range(cols)])
+
+		final_str += " \\\\\\\n"
+
+	final_str += old_spacing + "\\end{tabular}\n$0"
+
+	snip.expand_anon(final_str)
+
+def add_row(snip):
+	row_len = int(''.join(s for s in snip.buffer[snip.line] if s.isdigit()))
+	old_spacing = snip.buffer[snip.line][:snip.buffer[snip.line].rfind('\t') + 1]
+
+	snip.buffer[snip.line] = ''
+
+	final_str = old_spacing
+	final_str += " & ".join(['$' + str(j + 1) for j in range(row_len)])
+	final_str += " \\\\\\"
+
+	snip.expand_anon(final_str)
+
+
+def after_greek_letter():
+  if t[1] and t[1][0] not in ['_', '^', ' ', '+', '-']:
+      space = ' '
+      return space
+  else:
+      no_space = ''
+      return no_space
+
+def after_commands():
+  if t[1] and t[1][0] not in ['_', '^', ' ', '+', '-']:
+      space = ' '
+      return space
+  else:
+      no_space = ''
+      return no_space
+
+endglobal
+
+#fundamentales
+context "math()"
+snippet '(?<!i)sc' "chemin subscript" irA
+_{{\ce{$1}}}$0
+endsnippet
+
+#factores de conversion
+priority 100
+context "math()"
+snippet "([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z0-9]+)" "valor unidada sustancia" ir
+`!p snip.rv = match.group(1)+'\;\\unit{'+match.group(2)+'}\;\\ce{'+match.group(3)+'}'`
+endsnippet
+
+priority 1000
+context "math()"
+snippet "([a-zA-Z0-9\\;\{\},]+)>([a-zA-Z0-9\\;\{\},]+)" "factor conversor" ir
+`!p snip.rv = '\\frac{'+ match.group(2) +'}{'+ match.group(1)+'}'`
+endsnippet
+
+
+#nomenclatura
 snippet ce "chemin" i
 \ce{$1}
 endsnippet
 
 snippet chemin "Nomenclatura inorgánica" i
-snippet chemin "Nomenclatura inorgánica" 
-	\chemin[$1]{
-		\ntra{$2}\\
-		\nsto{$3}\\
-		\niup{$0}
+\chemin[$1]{
+  \ntra{$2}\\
+  \nsto{$3}\\
+  \niup{$0}
 }
 endsnippet
 

@@ -22,11 +22,15 @@ vim.o.softtabstop = 2
 vim.bo.softtabstop = 2
 
 -- Autoident
-vim.o.autoindent = false
-vim.bo.autoindent = false
+vim.o.autoindent = true
+vim.bo.autoindent = true
 vim.cmd([[
   set breakindent
 ]])
+
+
+-- vim.o.smartindent = true
+-- vim.bo.smartindent = true
 
 -- Highlight all matches while searching
 

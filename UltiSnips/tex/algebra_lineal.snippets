@@ -14,3 +14,21 @@ def producto_matriz(A,B):
 snip.rv = eval(match.group(1))
 `
 endsnippet
+
+snippet "Matrix(.*)" "matrix sympy" wr
+`!p
+from sympy import *
+init_printing()
+def matrix_elements_declarator_symbols(matrix):
+    for i in range(len(matrix)):
+        if isinstance(matrix[i], list):
+            for j in range(len(matrix[i])):
+                matrix[i][j] = symbols(f'{matrix[i][j]}')
+        else:
+            matrix[i] = symbols(f'{matrix[i]}')
+def matrix_print_latex(matrix):
+    matrix_elements_declarator_symbols(matrix)
+    return latex(Matrix(matrix))
+snip.rv = matrix_print_latex(eval(match.group(1)))
+`
+endsnippet

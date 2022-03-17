@@ -61,7 +61,13 @@ def after_greek_letter():
       no_space = ''
       return no_space
 
-
+def after_commands():
+  if t[1] and t[1][0] not in ['_', '^', ' ', '+', '-']:
+      space = ' '
+      return space
+  else:
+      no_space = ''
+      return no_space
 
 endglobal
 
@@ -94,7 +100,7 @@ endsnippet
 #  TEXTO NORMAL  #
 ##################
 #smart quotes
-snippet "\"([a-zA-Z_$]+)\b\"\s" "smart quotes" Ar
+snippet "\"([a-zA-Z_$\s]+)\b\"\s" "smart quotes" Ar
 \`\``!p snip.rv = match.group(1)`'' $0
 endsnippet
 
@@ -504,13 +510,8 @@ x_{m}
 endsnippet
 
 context "math()"
-snippet '(?<!i)ts' "text subscript" irA
+snippet '(?<!i)st' "text subscript" irA
 _{\text{$1}}$0
-endsnippet
-
-context "math()"
-snippet '(?<!i)cs' "chemin subscript" irA
-_{{\ce{$1}}}$0
 endsnippet
 
 # context "math()"
@@ -518,21 +519,21 @@ endsnippet
 # `!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
 # endsnippet
 
-context "math()"
-snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
-`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
-endsnippet
+# context "math()"
+# snippet '([A-Za-z])_(\d\d)' "auto subscript2" wrA
+# `!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+# endsnippet
 
 #Superindices
-context "math()"
-snippet sr "^2" iA
-^2
-endsnippet
+# context "math()"
+# snippet sr "^2" iA
+# ^2
+# endsnippet
 
-context "math()"
-snippet cb "^3" iA
-^3
-endsnippet
+# context "math()"
+# snippet cb "^3" iA
+# ^3
+# endsnippet
 
 # context "math()"
 # snippet td "to the ... power" iA
@@ -544,10 +545,11 @@ endsnippet
 # ^{($1)}$0
 # endsnippet
 
-context "math()"
-snippet '([A-Za-z])(\d)' "auto supscript" wrA
-`!p snip.rv = match.group(1)`^`!p snip.rv = match.group(2)`
-endsnippet
+
+# context "math()"
+# snippet '([A-Za-z])(\d)' "auto supscript" wrA
+# `!p snip.rv = match.group(1)`^`!p snip.rv = match.group(2)`
+# endsnippet
 
 # context "math()"
 # snippet '([A-Za-z])(\d\d)' "auto supscript2" wrA
@@ -670,19 +672,31 @@ endsnippet
 priority 100
 context "math()"
 snippet · "cdot" iA
-\cdot`!p snip.rv = after_greek_letter()`$1
+\cdot`!p snip.rv = after_commands()`$1
 endsnippet
 
 priority 100
 context "math()"
 snippet ... "ldots" iA
-\ldots`!p snip.rv = after_greek_letter()`$1
+\ldots`!p snip.rv = after_commands()`$1
 endsnippet
 
-priority 500
+priority 1000
 context "math()"
-snippet *** "cdot" iA
-\cdots`!p snip.rv = after_greek_letter()`$1 
+snippet v... "ldots" iA
+\vdots`!p snip.rv = after_commands()`$1
+endsnippet
+
+priority 1000
+context "math()"
+snippet d... "ldots" iA
+\ddots`!p snip.rv = after_commands()`$1
+endsnippet
+
+priority 1000
+context "math()"
+snippet c... "cdot" iA
+\cdots`!p snip.rv = after_commands()`$1
 endsnippet
 
 #delimitadores
@@ -699,32 +713,32 @@ endsnippet
 # endsnippet
 
 context "math()"
-snippet )) "left( right)" iA 
+snippet "(?<!t)(\)\))" "left( right)" iAr 
 \left($1\right)$0
 endsnippet
 
 context "math()"
-snippet || "left| right|" iA
+snippet "(?<!t)(\|\|)" "left| right|" iAr
 \left|$1\right|$0
 endsnippet
 
 context "math()"
-snippet }} "left\{ right\}" iA
+snippet "(?<!t)(\}\})" "left\{ right\}" iAr
 \left\\{$1\right\\}$0
 endsnippet
 
 context "math()"
-snippet ]] "left[ right]" iA
+snippet "(?<!t)(\]\])" "left[ right]" iAr
 \left[$1\right]$0
 endsnippet
 
 context "math()"
-snippet n| "norm" iA
+snippet "(?<!t)(n\|)" "norm" iAr
 \left\|$1\right\|$0
 endsnippet
 
 context "math()"
-snippet .| "left. right|" iA
+snippet "(?<!t)(\.\|)" "left. right|" iAr
 \left. $1\right|$0
 endsnippet
 
@@ -967,7 +981,7 @@ endsnippet
 
 context "math()"   
 snippet `l "letra griega minuscula" iA
-\lambda`!p snip.rv = after_greek_letter()`$1 
+\lambda`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
@@ -1312,7 +1326,7 @@ endsnippet
 
 priority -1000
 context "math()"
-snippet '(?<!\\|n|\w)(leq|geq|in|parallel|equiv|approx|cong|propto|perp)' "symb relations math" rwA
+snippet '(?<!\\|n|\w|\{|\})(leq|geq|parallel|in|equiv|approx|cong|propto|perp)' "symb relations math" rwA
 \\`!p snip.rv = match.group(1)` $0
 endsnippet
 
@@ -1339,12 +1353,12 @@ endsnippet
 #otros simbolos
 context "math()"
 snippet ell "l" iA
-\ell $0
+\ell`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"
 snippet `6 "partial" iA
-\partial $0 
+\partial`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"
@@ -1381,8 +1395,8 @@ endsnippet
 #funciones matematicos 
 priority 200
 context "math()"
-snippet '(?<!\\|a)(sin|cos|tan|sec|csc|cot|ln|log)' "functions math" rwA
-\\`!p snip.rv = match.group(1)``!p snip.rv="" if t[1] in ["^"] else "\left("` $1 `!p snip.rv="" if t[1] in ["^"] else "\\right)"`
+snippet '(?<!\\|a)(sin|cos|tan|sec|csc|cot|ln|log|adj)' "functions math" rwA
+\\`!p snip.rv = match.group(1)``!p snip.rv="" if t[1] in ["^"] else "\left("`$1`!p snip.rv="" if t[1] in ["^"] else "\\right)"`
 endsnippet
 
 priority 100
@@ -1391,7 +1405,7 @@ snippet '(?<!\\)(asin|acos|atan|asec|acss|acot)' "function trig inverse" rwA
 \\`!p 
 function_trig=match.group(1)[1:]
 snip.rv="arc"+function_trig
-`\left( $1 \right) $0
+`\left($1\right) $0
 endsnippet
 
 #especiales

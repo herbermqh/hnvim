@@ -6,7 +6,7 @@ let g:vimtex_compiler_latexmk = {
       \ 'backend' : 'nvim',
       \ 'background' : 1,
       \ 'callback' : 1,
-      \ 'continuous' : 0,
+      \ 'continuous' : 1,
       \ 'executable' : 'latexmk',
       \ 'hooks' : [],
       \ 'options' : [
