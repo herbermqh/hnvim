@@ -401,16 +401,13 @@ snippet ej "Ejemplo en una sola columna" i
 endsnippet
 
 snippet ej2 "Ejemplo en dos columna" i
-\begin{ej}
-	\begin{multicols}{2}
-		\begin{pre}
-			${1}
-		\end{pre}
-		\begin{sol}
-			${0}
-		\end{sol}
-	\end{multicols}
-\end{ej}
+\begin{example}
+  $1
+\end{example}
+\begin{exampleItem}
+  \tcbitem\consumeboxarray{1}$2
+\end{exampleItem}
+$0
 endsnippet
 
 snippet ell "Ejemplo ilustrativo" i
@@ -894,11 +891,11 @@ endsnippet
 
 
 
-#otros entornos matematicos
+#otros entornos matematico
 snippet form "Fórmula" i
-\begin{empheq}[box=\formeq]{align}
+\begin{hequation}
   $0
-\end{empheq}
+\end{hequation}
 endsnippet
 
 snippet resp "Respuesta" i

@@ -83,10 +83,13 @@ vim.cmd([[
 -- create files latex
 vim.cmd([[
   nnoremap <A-c> <Esc>:silent exec '.!python -m gestor-archivos-latex create "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
-  nnoremap <A-e> <Esc>:exec '!python -m gestor-archivos-latex edit "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
+  nnoremap <A-e> <Esc>:silent exec '!python -m gestor-archivos-latex edit "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
 ]])
 
-
+-- preabulo precompilador
+vim.cmd([[
+  nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble '@%<CR>
+]])
 
 -- Plugins Mappings ↓
 -- vim latex

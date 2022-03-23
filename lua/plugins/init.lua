@@ -15,6 +15,10 @@ require('packer').startup(function()
       'neoclide/coc.nvim',
       branch='release'
     }) ]]
+    use {
+    'neovim/nvim-lspconfig',
+    'williamboman/nvim-lsp-installer',
+    }
 
     --autocomplete
     use('SirVer/ultisnips')
