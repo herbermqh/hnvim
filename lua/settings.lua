@@ -161,6 +161,7 @@ vim.cmd([[
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 ]])
 
+
 -- Don't redraw while executing macros
 vim.o.ttyfast = true
 
@@ -171,4 +172,4 @@ vim.o.ff = 'unix'
 vim.g.history = 1000
 
 -- Add chars to '%'
-vim.bo.matchpairs = "(:),{:},[:],<:>,':'"
+vim.bo.matchpairs = "(:),{:},[:],<:>,':',$:$"

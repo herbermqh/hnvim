@@ -63,6 +63,7 @@ require('packer').startup(function()
             require('telescope').load_extension('neoclip')
         end
     })
+    -- use 'djoshea/vim-autoread' -- recargado automaticio
     -- use 'junegunn/fzf.vim'
 
     use({
