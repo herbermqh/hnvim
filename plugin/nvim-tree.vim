@@ -39,4 +39,3 @@ let g:nvim_tree_icons = {
           \   }
           \ }
 set termguicolors " this variable must be enabled for colors to be applied properly
-highlight NvimTreeFolderIcon guibg=blue

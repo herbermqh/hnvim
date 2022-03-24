@@ -30,34 +30,16 @@ vim.o.emoji = true
 vim.wo.cursorline = true
 vim.wo.cursorcolumn = false
 
--- colorscheme material
--- vim.cmd[[lua require('material.functions').change_style("darker")]]
--- vim.o.background = 'dark'
 
--- colorscheme tokyonight
-vim.cmd('colorscheme tokyonight')
-vim.o.background = 'dark'
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_terminal_colors="true"
-vim.g.tokyonight_italic_comments="true"
-vim.g.tokyonight_italic_keywords="true"
-vim.g.tokyonight_italic_functions="true"
-vim.g.tokyonight_italic_variables="true"
-vim.g.tokyonight_transparent="true"
-vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+-- Default options
 
 
-vim.cmd[[
-  augroup vim-colors-xcode
-    autocmd!
-  augroup END
-  autocmd vim-colors-xcode ColorScheme * hi Comment        cterm=italic gui=italic
-  autocmd vim-colors-xcode ColorScheme * hi SpecialComment cterm=italic gui=italic
-  if !has('nvim')
-    let &t_ZH="\e[3m"
-    let &t_ZR="\e[23m"
-  endif
-]]
+-- setup must be called before loading
+
+
+
+
+
 --lightline
 vim.cmd('set noshowmode')
 

@@ -15,13 +15,12 @@ require("notify").setup({
   timeout = 3000,
 
   -- Max number of columns for messages
-  max_width = 80,
+  max_width = nil,
   -- Max number of lines for a message
   max_height = nil,
 
   -- For stages that change opacity this is treated as the highlight behind the window
   -- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
-  background_colour = "Normal",
 
   -- Minimum width for notification windows
   minimum_width = 80,

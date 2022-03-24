@@ -1,4 +1,3 @@
-
 -- Setup Telescope
 require('telescope').setup({
   defaults = {
@@ -39,16 +38,16 @@ require('telescope').setup({
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
     buffer_previewer_maker = require'telescope.previewers'.buffer_previewer_maker,
-    extensions = {
-      fzy_native = {
-        override_generic_sorter = false,
-        override_file_sorter = true,
-      },
-    }
+    --extensions = {
+    --  fzy_native = {
+    --    override_generic_sorter = false,
+    --    override_file_sorter = true,
+    --  },
+    --}
   }
 })
 -- Load Telescope extensions
-require('telescope').load_extension('fzy_native')
+-- require('telescope').load_extension('fzy_native')
 
 
 
