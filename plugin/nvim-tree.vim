@@ -8,11 +8,6 @@ let g:nvim_tree_icon_padding = ' ' "one space by default, used for rendering the
 let g:nvim_tree_symlink_arrow = '  ' " defaults to ' ➛ '. used as a separator between symlinks' source and target.
 let g:nvim_tree_respect_buf_cwd = 1 "0 by default, will change cwd of nvim-tree to that of new buffer's when opening nvim-tree.
 let g:nvim_tree_create_in_closed_folder = 0 "1 by default, When creating files, sets the path of a file when cursor is on a closed folder to the parent folder when 0, and inside the folder when 1.
-let g:nvim_tree_refresh_wait = 500 "1000 by default, control how often the tree can be refreshed, 1000 means the tree can be refresh once per 1000ms.
-
-" Dictionary of buffer option names mapped to a list of option values that
-" indicates to the window picker that the buffer's window should not be
-" selectable.
 let g:nvim_tree_special_files = { 'README.md': 1, 'Makefile': 1, 'MAKEFILE': 1 } " List of filenames that gets highlighted with NvimTreeSpecialFile
 let g:nvim_tree_show_icons = {
       \ 'git': 1,
@@ -20,13 +15,6 @@ let g:nvim_tree_show_icons = {
       \ 'files': 1,
       \ 'folder_arrows': 1,
       \ }
-"If 0, do not show the icons for one of 'git' 'folder' and 'files'
-"1 by default, notice that if 'files' is 1, it will only display
-"if nvim-web-devicons is installed and on your runtimepath.
-"if folder is 1, you can also tell folder_arrows 1 to show small arrows next to the folder icons.
-"but this will not work when you set indent_markers (because of UI conflict) 
-" default will show icon by default if no icon is provided
-" default shows no icon by default
 let g:nvim_tree_icons = {
       \ 'default': '',
       \ 'symlink': '',
