@@ -11,10 +11,6 @@ require('packer').startup(function()
     use 'neovim/nvim-lspconfig'
     -- use 'hrsh7th/nvim-compe'
     use 'onsails/lspkind-nvim'
-    --[[ use({
-      'neoclide/coc.nvim',
-      branch='release'
-    }) ]]
     use {
     'williamboman/nvim-lsp-installer',
     }
@@ -63,7 +59,6 @@ require('packer').startup(function()
     })
     -- use 'djoshea/vim-autoread' -- recargado automaticio
     -- use 'junegunn/fzf.vim'
-
     use({
       'lewis6991/gitsigns.nvim',
       requires = {'nvim-lua/plenary.nvim'},
@@ -192,12 +187,6 @@ require('packer').startup(function()
 
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
-    use({'Pocco81/TrueZen.nvim', opt = true})
-
-    use({
-        'pwntester/octo.nvim',
-        opt = true,
-        config = function() require('octo').setup() end
-    })
+    -- use({'Pocco81/TrueZen.nvim', opt = true})
 end)
 
