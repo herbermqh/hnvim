@@ -80,6 +80,7 @@ require('packer').startup(function()
             require('kommentary.config').use_extended_mappings()
         end
     })
+    use 'rcarriga/nvim-notify'
 
     -- use({'nacro90/numb.nvim', config = function() require('numb').setup() end})
 
@@ -112,14 +113,12 @@ require('packer').startup(function()
 
     -- UI Plugins
     use('glepnir/dashboard-nvim')
-    use({
-        'glepnir/galaxyline.nvim',
-        branch = 'main',
-        -- your statusline
-        config = function() require'hgalaxyline' end,
-        -- some optional icons
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
-    })
+    --use({
+    --    'glepnir/galaxyline.nvim',
+    --    branch = 'main',
+    --    -- your statusline
+    --    config = function() require'hgalaxyline' end,
+    --})
 
     --[[ use({
       'herbermqh/spaceline.vim',
@@ -136,6 +135,7 @@ require('packer').startup(function()
       'romgrk/barbar.nvim',
       requires = {'kyazdani42/nvim-web-devicons'}
     }
+    use 'nvim-lualine/lualine.nvim'
 
     -- Themes
     use 'mhinz/vim-startify'
