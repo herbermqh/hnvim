@@ -88,7 +88,7 @@ vim.cmd([[
 
 -- preabulo precompilador
 vim.cmd([[
-  nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble '@%<CR>
+  nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble ' expand('%:p')<CR>
 ]])
 
 -- Plugins Mappings ↓

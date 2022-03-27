@@ -178,6 +178,7 @@ require('packer').startup(function()
     use({'tpope/vim-unimpaired'})
     use({'tpope/vim-obsession'})
     use({'tpope/vim-commentary'})
+    use 'tpope/vim-repeat'
 
     -- others
     use({'voldikss/vim-floaterm'})

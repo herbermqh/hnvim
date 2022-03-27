@@ -35,7 +35,7 @@ listkeys = {
 
 
 require'nvim-tree'.setup {
-  auto_close           = false,
+  auto_close           = true,
   auto_reload_on_write = true,
   disable_netrw        = false,
   hijack_cursor        = false,
