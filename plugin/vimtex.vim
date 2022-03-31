@@ -1,7 +1,5 @@
-let g:vimtex_view_general_viewer = 'zathura'
-let g:vimtex_view_general_options = '--unique @pdf\#src:@line@tex'
 " let g:vimtex_view_general_options_latexmk = '--unique'
-let g:vimtex_compiler_progname = 'nvr'
+" let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_compiler_latexmk = {
       \ 'backend' : 'nvim',
       \ 'background' : 1,
@@ -21,14 +19,8 @@ let g:vimtex_compiler_latexmk = {
       \}
 
 let g:vimtex_compiler_latexmk_engines = {
-        \ '_'                : '-xelatex',
-        \ 'pdflatex'         : '-pdf',
-        \ 'dvipdfex'         : '-pdfdvi',
-        \ 'lualatex'         : '-lualatex',
-        \ 'xelatex-dev -synctex=1 -interaction=nonstopmode --enable-write18 --shell-escape %O %S' : '-xelatex',
-        \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
-        \ 'context (luatex)' : '-pdf -pdflatex=context',
-        \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
+        \ '_'                : 'hlatex',
+        \ 'heberlatex'       : 'hlatex',
         \}
 
 
