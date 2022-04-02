@@ -49,7 +49,7 @@ require('packer').startup(function()
 
     -- Utilities
     -- use({'Pocco81/AutoSave.nvim', opt = true})
-
+    use 'kevinhwang91/nvim-bqf'
     use({
         'AckslD/nvim-neoclip.lua',
         config = function()
@@ -59,6 +59,7 @@ require('packer').startup(function()
     })
     -- use 'djoshea/vim-autoread' -- recargado automaticio
     -- use 'junegunn/fzf.vim'
+    use 'Shougo/denite.nvim'
     use({
       'lewis6991/gitsigns.nvim',
       requires = {'nvim-lua/plenary.nvim'},
