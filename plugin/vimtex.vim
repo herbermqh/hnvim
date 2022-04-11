@@ -31,7 +31,7 @@ let g:vimtex_syntax_enabled=1
 let g:vimtex_syntax_conceal_disable=0
 let g:vimtex_syntax_custom_cmds = [
       \ {'name': 'vect', 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
-      \ {'name': 'vec', 'mathmode': 1, 'argstyle': 'boldital', 'conceal': 1},
+      \ {'name': 'vec', 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
       \ {'name': 'mat' , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
       \ {'name': 'bm'  , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
       \ {'name': 'pmb' , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
@@ -83,7 +83,8 @@ if has('win32')
   let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
   let g:vimtex_view_general_options
         \ = '-reuse-instance -forward-search @tex @line @pdf'
-  " let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+  " let g:vimtex_view_general_viewer='okular'
+  " let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 else
   " let g:xwindow_id = system('xdotool getactivewindow') 
   let g:vimtex_view_method = 'zathura'
@@ -95,18 +96,5 @@ else
 endif
 "------------------------------------DOCUMENTATION
 "------------------------------------CONTEXT MENU
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
+"------------------------------------API
 

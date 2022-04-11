@@ -1,0 +1,11 @@
+INFO:  latexindent.exe version 3.16, 2022-03-13, a script to indent .tex files
+       latexindent.exe lives here: C:/texlive/2021/bin/win32/
+       Wed Apr  6 21:12:33 2022
+       Reading input from STDIN
+INFO:  Processing switches:
+INFO:  Directory for backup files and indent.log: .
+INFO:  YAML settings read: defaultSettings.yaml
+       Reading defaultSettings.yaml from C:/texlive/2021/bin/win32/defaultSettings.yaml
+       Reading defaultSettings.yaml (2nd attempt) from C:/texlive/2021/bin/win32/../../texmf-dist/scripts/latexindent/defaultSettings.yaml
+       and then, if necessary, C:/texlive/2021/bin/win32/LatexIndent/defaultSettings.yaml
+FATAL Could not open defaultSettings.yaml
