@@ -401,13 +401,16 @@ snippet ej "Ejemplo en una sola columna" i
 endsnippet
 
 snippet ej2 "Ejemplo en dos columna" i
-\begin{example}
-  $1
-\end{example}
-\begin{exampleItem}
-  \tcbitem\consumeboxarray{1}$2
-\end{exampleItem}
-$0
+\begin{ej}
+  \begin{multicols}{2}
+    \begin{pre}
+      $1
+    \end{pre}
+    \begin{sol}
+      $0
+    \end{sol}
+  \end{multicols}
+\end{ej}
 endsnippet
 
 snippet ell "Ejemplo ilustrativo" i
