@@ -1,7 +1,5 @@
 priority -50
-
 extends texmath
-
 global !p
 
 def math():
@@ -509,8 +507,9 @@ snippet xmm "x" iA
 x_{m}
 endsnippet
 
+priority 100
 context "math()"
-snippet '(?<!i)st' "text subscript" irA
+snippet '(?<!i)stt' "text subscript" irA
 _{\text{$1}}$0
 endsnippet
 
@@ -822,6 +821,7 @@ endsnippet
 #negrilla modo matematico
 
 #texto en modo matematico
+priority -50
 context "math()"
 snippet tt "text" iA
 \text{$1}$0
@@ -883,6 +883,8 @@ snippet cjt "Conjunto de ecuaciones" i
 \right.
 endsnippet
 
+priority 100
+context "math()"
 snippet stm "Sistema de ecuaciones" i
 \begin{systemeq}
   ${0}
@@ -934,27 +936,27 @@ snippet `c "letra griega minuscula" iA
 \chi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
-context "math()"   
+context "math()"
 snippet `d "letra griega minuscula" iA
 \delta`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
-context "math()"   
+context "math()"
 snippet `e "letra griega minuscula" iA
-\epsilon`!p snip.rv = after_greek_letter()`$1
+\varepsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
-context "math()"   
+context "math()"
 snippet è "letra griega minuscula" iA
-\epsilon`!p snip.rv = after_greek_letter()`$1
+\varepsilon`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
-context "math()"   
+context "math()"
 snippet `f "letra griega minuscula" iA
 \phi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
-context "math()"   
+context "math()"
 snippet `g "letra griega minuscula" iA
 \gamma`!p snip.rv = after_greek_letter()`$1
 endsnippet  
@@ -1522,19 +1524,17 @@ $0
 endsnippet
 
 snippet figm "Figura tikz en el margen" i
-figura \ref{fig:$1}
-\marginote{
-  \begin{figure}[H]
-    \centering
-    \begin{scaletikzpicturetowidth}{\marginparwidth}
-      \begin{tikzpicture}[scale=\tikzscale]
-        $3
-      \end{tikzpicture}
-    \end{scaletikzpicturetowidth}
-    \caption{$2}
-    \label{fig:$1}
-  \end{figure}
-}
+  figura \ref{fig:$1}
+\begin{marginfigure}
+  \centering
+  \begin{scaletikzpicturetowidth}{\marginparwidth}
+    \begin{tikzpicture}[scale=\tikzscale]
+      $3
+    \end{tikzpicture}
+  \end{scaletikzpicturetowidth}
+  \caption{$2}
+  \label{fig:$1}
+\end{marginfigure}
 $0
 endsnippet
 
