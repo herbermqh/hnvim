@@ -73,43 +73,15 @@ cmp.setup({
     end,
   },
   mapping = {
-    --[[ ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-    ['<C-e>'] = cmp.mapping({
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    }),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items. ]]
-    -- -----vsnip
-    --[[ ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif vim.fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-      end
-    end, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-        feedkey("<Plug>(vsnip-jump-prev)", "")
-      end
-    end, { "i", "s" }), ]]
-    -- ------ultisnips
+    --------ultisnips
     ["<Tab>"] = cmp.mapping({
-            c = function()
-                if cmp.visible() then
-                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-                else
-                    cmp.complete()
-                end
-            end,
+            -- c = function()
+            --     if cmp.visible() then
+            --         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+            --     else
+            --         cmp.complete()
+            --     end
+            -- end,
             i = function(fallback)
                 -- if cmp.visible() then
                     -- cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
@@ -208,26 +180,27 @@ cmp.setup({
     { name = 'ultisnips' }, -- For ultisnips users.
     -- { name = 'snippy' }, -- For snippy users.
     -- { nane = 'cmp_tabnine'}
-    { name = 'buffer' },
-    { name = 'copilot' }
+    -- { name = 'buffer' },
+    { name = 'copilot' },
+    { name = 'nvim_lsp_signature_help' }
   }),
   formatting = {
     format = function(entry, vim_item)
       -- Kind icons
       vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
       -- Source
-      vim_item.menu = ({
-        buffer = "[Buffer]",
-        nvim_lsp = "[LSP]",
-        luasnip = "[LuaSnip]",
-        nvim_lua = "[Lua]",
-        latex_symbols = "[LaTeX]",
-      })[entry.source.name]
+      -- vim_item.menu = ({
+      --   buffer = "[Buffer]",
+      --   nvim_lsp = "[LSP]",
+      --   luasnip = "[LuaSnip]",
+      --   nvim_lua = "[Lua]",
+      --   latex_symbols = "[LaTeX]",
+      -- })[entry.source.name]
       return vim_item
     end
   },
   view = {
-    entries = "custom"
+    entries = "wildmenu",
   }
 })
 
@@ -241,22 +214,35 @@ cmp.setup.filetype('gitcommit', {
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline('/', {
-  completion = { autocomplete = false},
-  sources = {
-     { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
-  },
-})
+-- cmp.setup.cmdline('/', {
+--   completion = { autocomplete = false},
+--   sources = {
+--      { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
+--   },
+-- })
+-- cmp.setup.cmdline('/', {
+--   view = {
+--     entries = 'custom'
+--   },
+--   sources = cmp.config.sources({
+--     { name = 'nvim_lsp_document_symbol' }
+--   },{
+--     { name = 'buffer' }
+--   })
+-- })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  completion = { autocomplete = false},
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
+-- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+-- cmp.setup.cmdline(':', {
+--   view = {
+--     entries = 'custom'
+--   },
+--   completion = { autocomplete = false},
+--   sources = cmp.config.sources({
+--     { name = 'path' }
+--   }, {
+--     { name = 'cmdline' }
+--   })
+-- })
 
 
 

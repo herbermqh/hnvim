@@ -14,7 +14,10 @@ require('packer').startup(function()
     use {
     'williamboman/nvim-lsp-installer',
     }
-
+    -- menu
+    use 'nixprime/cpsm'
+    use 'romgrk/fzy-lua-native'
+    use 'gelguy/wilder.nvim'
     --autocomplete
     use('SirVer/ultisnips')
     use('quangnguyen30192/cmp-nvim-ultisnips')
