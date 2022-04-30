@@ -15,6 +15,7 @@ require('packer').startup(function()
     'williamboman/nvim-lsp-installer',
     }
     -- menu
+    use 'sharkdp/fd'
     use 'nixprime/cpsm'
     use 'romgrk/fzy-lua-native'
     use 'gelguy/wilder.nvim'
