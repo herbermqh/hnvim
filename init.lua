@@ -1,5 +1,5 @@
 require('plugins')
-require('treesitter-config')
+-- require('treesitter-config')
 require('dashboard')
 require('floaterm')
 require('babar')

@@ -15,7 +15,7 @@ require('packer').startup(function()
     'williamboman/nvim-lsp-installer',
     }
     -- menu
-    use 'sharkdp/fd'
+    -- use 'sharkdp/fd'
     use 'nixprime/cpsm'
     use 'romgrk/fzy-lua-native'
     use 'gelguy/wilder.nvim'
@@ -53,7 +53,7 @@ require('packer').startup(function()
 
     -- Utilities
     -- use({'Pocco81/AutoSave.nvim', opt = true})
-    use 'kevinhwang91/nvim-bqf'
+    -- use 'kevinhwang91/nvim-bqf'
     use({
         'AckslD/nvim-neoclip.lua',
         config = function()
