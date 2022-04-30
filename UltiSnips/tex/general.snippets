@@ -248,12 +248,15 @@ snippet "\s\sit" "item" riA
 \item[$1] $0
 endsnippet
 
-context "env('listDescription')"
+
+priority -100
+context "env('ddescription')"
 snippet "\s\sit" "item" riA
 \item[$1] $0
 endsnippet
 
 #description
+priority -100
 snippet desc "Description" i
 \begin{description}
   \item[$1] $0
@@ -261,10 +264,11 @@ snippet desc "Description" i
 endsnippet
 
 #list description
-snippet ldesc "Description" i
-\begin{listDescription}
+priority 500
+snippet ddesc "Description" i
+\begin{ddescription}
   \item[$1] $0
-\end{listDescription}
+\end{ddescription}
 endsnippet
 
 #otra entornos de enumeracion o listas

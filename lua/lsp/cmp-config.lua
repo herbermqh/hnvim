@@ -102,7 +102,7 @@ cmp.setup({
       end
     end, { "i", "s" }), ]]
     -- ------ultisnips
-    ["<C-n>"] = cmp.mapping({
+    ["<Tab>"] = cmp.mapping({
             c = function()
                 if cmp.visible() then
                     cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
@@ -111,9 +111,9 @@ cmp.setup({
                 end
             end,
             i = function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-                elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+                -- if cmp.visible() then
+                    -- cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+                if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
                     vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
                 else
                     fallback()
@@ -127,7 +127,7 @@ cmp.setup({
                 end
             end
         }),
-        ["<C-b"] = cmp.mapping({
+        ["<S-Tab>"] = cmp.mapping({
             c = function()
                 if cmp.visible() then
                     cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
@@ -244,7 +244,7 @@ cmp.setup.filetype('gitcommit', {
 cmp.setup.cmdline('/', {
   completion = { autocomplete = false},
   sources = {
-    { name = 'buffer' }
+     { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
   },
 })
 
