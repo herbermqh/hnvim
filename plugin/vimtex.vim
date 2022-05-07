@@ -41,6 +41,7 @@ let g:vimtex_syntax_custom_cmds = [
       \ {'name': 'unit'    , 'mathmode': 1, 'concealchar': ''},
       \ {'name': 'ce'    , 'mathmode': 1, 'concealchar': ''},
       \ {'name': 'ce'    , 'mathmode': 0, 'concealchar': ''},
+      \ {'name': 'limits'  , 'mathmode': 1, 'concealchar': ''},
       \ {'name': 'Expect'  , 'mathmode': 1, 'concealchar': '𝔼'},
       \ {'name': 'Var'     , 'mathmode': 1, 'concealchar': '𝕍'},
       \ {'name': 'pdf'     , 'mathmode': 1, 'concealchar': '𝕡'},

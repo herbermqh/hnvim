@@ -19,6 +19,7 @@ require('packer').startup(function()
     use 'nixprime/cpsm'
     use 'romgrk/fzy-lua-native'
     use 'gelguy/wilder.nvim'
+    use 'ryanoasis/vim-devicons'
     --autocomplete
     use('SirVer/ultisnips')
     use('quangnguyen30192/cmp-nvim-ultisnips')

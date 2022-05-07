@@ -18,7 +18,6 @@ syn match texMathSymbol '\\geqslant\>' contained conceal cchar=⩾
 syn match texMathSymbol '\\leqslant\>' contained conceal cchar=⩽
 
 " \Heber
-syn match texMathSymbol '\\limits' contained conceal cchar= 
 
 " \mathbb characters
 syn match texMathSymbol '\\mathbb{\s*A\s*}' contained conceal cchar=𝔸

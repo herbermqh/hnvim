@@ -1,7 +1,6 @@
 local wilder = require('wilder')
 -- Disable Python remote plugin
 
-local wilder = require('wilder')
 wilder.setup({modes = {':', '/', '?'}})
 
 wilder.set_option('pipeline', {
@@ -68,7 +67,7 @@ local popupmenu_renderer = wilder.popupmenu_renderer(
 
 local wildmenu_renderer = wilder.wildmenu_renderer({
   highlighter = highlighters,
-  separator = ' · ',
+  separator = ' ',
   left = {' ', wilder.wildmenu_spinner(), ' '},
   right = {' ', wilder.wildmenu_index()},
 })
