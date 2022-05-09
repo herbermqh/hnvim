@@ -74,31 +74,31 @@ cmp.setup({
   },
   mapping = {
     --------ultisnips
-    -- ["<Tab>"] = cmp.mapping({
-    --         -- c = function()
-    --         --     if cmp.visible() then
-    --         --         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-    --         --     else
-    --         --         cmp.complete()
-    --         --     end
-    --         -- end,
-    --         i = function(fallback)
-    --             -- if cmp.visible() then
-    --                 -- cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-    --             if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-    --                 vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
-    --             else
-    --                 fallback()
-    --             end
-    --         end,
-    --         s = function(fallback)
-    --             if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-    --                 vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
-    --             else
-    --                 fallback()
-    --             end
-    --         end
-    --     }),
+    ["<Tab>"] = cmp.mapping({
+            c = function()
+                if cmp.visible() then
+                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+                else
+                    cmp.complete()
+                end
+            end,
+            -- i = function(fallback)
+            --     -- if cmp.visible() then
+            --         -- cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+            --     if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+            --         vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
+            --     else
+            --         fallback()
+            --     end
+            -- end,
+            -- s = function(fallback)
+            --     if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+            --         vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), 'm', true)
+            --     else
+            --         fallback()
+            --     end
+            -- end
+        }),
         -- ["<S-Tab>"] = cmp.mapping({
         --     c = function()
         --         if cmp.visible() then
@@ -200,7 +200,7 @@ cmp.setup({
     end
   },
   view = {
-    entries = "wildmenu",
+    entries = "custom",
   }
 })
 
@@ -220,31 +220,26 @@ cmp.setup.filetype('gitcommit', {
 --      { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
 --   },
 -- })
--- cmp.setup.cmdline('/', {
---   view = {
---     entries = 'custom'
---   },
---   sources = cmp.config.sources({
---     { name = 'nvim_lsp_document_symbol' }
---   },{
---     { name = 'buffer' }
---   })
--- })
+cmp.setup.cmdline('/', {
+  view = {
+    entries = 'custom'
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp_document_symbol' }
+  },{
+    { name = 'buffer' }
+  })
+})
 
 -- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline(':', {
---   view = {
---     entries = 'custom'
---   },
---   completion = { autocomplete = false},
---   sources = cmp.config.sources({
---     { name = 'path' }
---   }, {
---     { name = 'cmdline' }
---   })
--- })
-
-
-
-
-
+cmp.setup.cmdline(':', {
+  view = {
+    entries = 'custom'
+  },
+  completion = { autocomplete = false},
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})

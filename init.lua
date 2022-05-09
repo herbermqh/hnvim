@@ -24,6 +24,6 @@ require('indentline')
 require('config-notify')
 require('lualine-config')
 require('tokyonight-config')
-require('wildermenu-config')
+-- require('wildermenu-config')
 
 
