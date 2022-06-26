@@ -1,6 +1,6 @@
 require('plugins')
 require('treesitter-config')
-require('dashboard')
+require('dashboard-config')
 require('floaterm')
 require('babar')
 require('telescope-config')

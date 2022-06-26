@@ -32,8 +32,6 @@ listkeys = {
   { key = "q",                                        action = "close"},
   { key = "g?",                                       action = "toggle_help"  },
 }
-
-
 require'nvim-tree'.setup {
   auto_reload_on_write = true,
   disable_netrw        = false,
