@@ -25,10 +25,6 @@ db.custom_center = {
       desc = 'Find  word                              ',
       action = 'Telescope live_grep',
       shortcut = 'SPC f w'},
-      {icon = '  ',
-      desc = 'Open Personal dotfiles                  ',
-      action = 'Telescope dotfiles path=' .. home ..'/.dotfiles',
-      shortcut = 'SPC f d'},
     }
 
 

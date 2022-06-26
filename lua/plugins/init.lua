@@ -112,6 +112,7 @@ require('packer').startup(function()
 
     -- UI Plugins
     use('glepnir/dashboard-nvim')
+    use('goolord/alpha-nvim')
     --use({
     --    'glepnir/galaxyline.nvim',
     --    branch = 'main',
