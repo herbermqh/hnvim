@@ -47,7 +47,7 @@ require'nvim-tree'.setup {
     width = 30,
     height = 30,
     side = "right",
-    preserve_window_proportions = false,
+    preserve_window_proportions = true,
     number = false,
     relativenumber = false,
     signcolumn = "yes",
@@ -56,8 +56,11 @@ require'nvim-tree'.setup {
       list = listkeys,
     },
   },
-  hijack_directories   = {
-    enable = true,
+  renderer = {
+    group_empty = true
+  },
+  hijack_directories = {
+    enable    = true,
     auto_open = true,
   },
   update_focused_file = {
@@ -67,7 +70,7 @@ require'nvim-tree'.setup {
   },
   ignore_ft_on_setup = {},
   system_open = {
-    cmd = nil,
+    cmd  = nil,
     args = {},
   },
   diagnostics = {
@@ -103,7 +106,7 @@ require'nvim-tree'.setup {
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         exclude = {
           filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
-          buftype = { "nofile", "terminal", "help" },
+          buftype  = { "nofile", "terminal", "help" },
         },
       },
     },
@@ -122,6 +125,4 @@ require'nvim-tree'.setup {
     },
   },
 }
-
-
 
