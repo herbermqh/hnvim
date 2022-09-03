@@ -106,7 +106,7 @@ endsnippet
 #  TEXTO NORMAL  #
 ##################
 #smart quotes
-snippet "\"([a-zA-Z0-9_$´\s]+)\b\"\s" "smart quotes" Ar
+snippet "\"([a-zA-Z0-9_´\s]+)\b\"\s" "smart quotes" Ar
 \`\``!p snip.rv = match.group(1)`'' $0
 endsnippet
 
@@ -196,6 +196,12 @@ snippet ft "\footnote" i
 endsnippet
 
 #texto como en la pantalla
+snippet casy "codetex" i
+\begin{codeasy}{lefthand ratio=0.6}
+  $0
+\end{codeasy}
+endsnippet
+
 snippet ct "codetex" i
 \begin{codetex}{lefthand ratio=0.6}
   $0
@@ -1796,7 +1802,7 @@ endsnippet
 # \caption{${3:caption name}}
 
 snippet cin "mintinline" iA
-\mintinline{${1:language}}{${2:code}}$0
+\mintinline{$1}{$2}$0
 endsnippet
 ############
 #  BEANER  #

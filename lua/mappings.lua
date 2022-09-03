@@ -65,8 +65,8 @@ mapper('n', '<C-h', ':BufferPrevious<CR>')
 
 -- start inkscape
 vim.cmd([[
-  inoremap <A-f> <Esc>:silent exec '!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
-  nnoremap <A-f> <Esc>:silent exec '!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
+  inoremap <A-f> <Esc>:execute '!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
+  nnoremap <A-f> <Esc>:execute '!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
 ]])
   -- nnoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
   -- inoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>

@@ -30,6 +30,7 @@ let g:vimtex_quickfix_open_on_warning=0
 let g:vimtex_syntax_enabled=1
 let g:vimtex_syntax_conceal_disable=0
 let g:vimtex_syntax_custom_cmds = [
+      \ {'name': 'unit', 'mathmode': 1, 'conceal': 1, 'concealchar': ''},
       \ {'name': 'vect', 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
       \ {'name': 'vec', 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
       \ {'name': 'mat' , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
@@ -38,7 +39,6 @@ let g:vimtex_syntax_custom_cmds = [
       \ {'name': 'textbf', 'mathmode': 0, 'argstyle': 'bold', 'conceal': 1},
       \ {'name': 'keyw', 'mathmode': 0, 'argstyle': 'boldital' , 'conceal': 1},
       \ {'name': 'Prob'    , 'mathmode': 1, 'concealchar': 'ℙ'},
-      \ {'name': 'unit'    , 'mathmode': 1, 'concealchar': ''},
       \ {'name': 'ce'    , 'mathmode': 1, 'concealchar': ''},
       \ {'name': 'ce'    , 'mathmode': 0, 'concealchar': ''},
       \ {'name': 'limits'  , 'mathmode': 1, 'concealchar': ''},
