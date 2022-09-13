@@ -87,8 +87,11 @@ if has('win32')
   " let g:vimtex_view_general_viewer='okular'
   " let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
 else
+  " wsl
+  let g:vimtex_view_method = 'SumatraPDF.exe'
+  "
   " let g:xwindow_id = system('xdotool getactivewindow') 
-  let g:vimtex_view_method = 'zathura'
+  " let g:vimtex_view_method = 'zathura'
   " let g:vimtex_view_zathura_hook_view = 'MyHook'
   " let g:vimtex_view_zathura_hook_callback = 'MyHook'
   " function! MyHook()
