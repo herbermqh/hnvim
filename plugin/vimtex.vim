@@ -1,25 +1,30 @@
 "------------------------------------USAGE
 "OPTIONS
+let g:vimtex_enabled = 1
 let g:vimtex_compiler_enable = 1
 let g:vimtex_compiler_method = 'latexmk'
-let g:vimtex_compiler_latexmk = {
-      \ 'callback' : 1,
-      \ 'continuous' : 1,
-      \ 'executable' : 'latexmk',
-      \ 'hooks' : [],
-      \ 'options' : [
-      \   '-verbose',
-      \   '--shell-escape',
-      \   '-enable-write18',
-      \   '-verbose',
-      \   '-file-line-error',
-      \   '-synctex=1',
-      \   '-interaction=nonstopmode',
-      \ ],
-      \}
+" let g:vimtex_compiler_latexmk = {
+"       \ 'continuous' : 0,
+"       \ 'executable' : 'latexmk',
+"       \}
+" let g:vimtex_compiler_latexmk = {
+"       \ 'callback' : 1,
+"       \ 'continuous' : 0,
+"       \ 'executable' : 'latexmk',
+"       \ 'hooks' : [],
+"       \ 'options' : [
+"       \   '-verbose',
+"       \   '--shell-escape',
+"       \   '-enable-write18',
+"       \   '-verbose',
+"       \   '-file-line-error',
+"       \   '-synctex=1',
+"       \   '-interaction=nonstopmode',
+"       \ ],
+"       \}
 " let g:vimtex_compiler_latexmk_engines = {
 "         \ '_'                : 'hlatex',
-"         \ 'xelatex'       : 'hlatex',
+"         \ 'pdflatex'       : 'hlatex',
 "         \}
 "note: no está definido latexmk_engines por que en el arhicov .latexmkrc se
 "define $pdf_mode=5; 5 para xelatex, 4 para lualatex y 0 para pdflatex.

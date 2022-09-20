@@ -271,7 +271,7 @@ snippet "\s\sit" "item" riA
 \item $0
 endsnippet
 
-context "env('question')"
+context "env('itemquestion')"
 snippet "\s\sit" "item" riA
 \item $0
 endsnippet
@@ -316,10 +316,10 @@ snippet nit "Lista con nombre" i
 \end{NameItem}
 endsnippet
 
-snippet qt "Preguntas" i
-\begin{question}
+snippet iq "Preguntas" i
+\begin{itemquestion}
   \item ${0}
-\end{question}
+\end{itemquestion}
 endsnippet
 
 #titulo
@@ -855,7 +855,7 @@ snippet "→([a-zA-Z])" "Vector postfix" riA
 endsnippet
 
 context "math()"
-snippet "(?<!\\|n|\w|\d)([a-zA-Z])→" "Vector postfix" riA
+snippet "(?<!\\|n|\w|\d)([a-zA-Z]+)→" "Vector postfix" riA
 \vec{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
 endsnippet
 
@@ -957,9 +957,9 @@ snippet form "Fórmula" i
 endsnippet
 
 snippet resp "Respuesta" i
-\begin{hanswer}
+\begin{answer}
   ${0}
-\end{hanswer}
+\end{answer}
 endsnippet
 
 snippet tabox "Tabla en caja" i
@@ -1656,7 +1656,6 @@ snippet imgb "Imagen sin referencia" i
 endsnippet
 
 snippet imgq "Imagen sin referencia" i
-% \reffig{$1}
 \imagequestion{$1}$0
 endsnippet
 

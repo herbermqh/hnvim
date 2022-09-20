@@ -48,8 +48,8 @@ require('packer').startup(function()
     -- use 'hrsh7th/cmp-copilot'
     use {'github/copilot.vim'}
     -- LaTeX
-    use({'lervag/vimtex'})
-    -- use({'herbermqh/vimtex'})
+    -- use({'lervag/vimtex'})
+    use({'herbermqh/vimtex'})
     -- use('herbermqh/vim-latex')
 
     -- Utilities
@@ -104,6 +104,7 @@ require('packer').startup(function()
 
 
     --typing
+    use('terryma/vim-multiple-cursors')
     use({'alvan/vim-closetag'})
     use({'tpope/vim-surround'})
 
