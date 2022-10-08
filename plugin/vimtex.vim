@@ -115,3 +115,4 @@ endif
 call vimtex#syntax#core#new_region_math('empheq')
 call vimtex#syntax#core#new_region_math('answer')
 call vimtex#syntax#core#new_region_math('formula')
+
