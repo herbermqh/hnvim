@@ -253,10 +253,22 @@ snippet enumi "Enumerate" i
 \end{enumerate}
 endsnippet
 
-snippet premisa "Enumerate" i
-\begin{premisa}[p]
+snippet lpremise "Enumerate" i
+\begin{listpremise}
   \item $0
-\end{premisa}
+\end{listpremise}
+endsnippet
+
+snippet laxiom "Enumerate" i
+\begin{listaxiom}
+  \item $0
+\end{listaxiom}
+endsnippet
+
+snippet lproposition "Enumerate" i
+\begin{listproposition}
+  \item $0
+\end{listproposition}
 endsnippet
 
 # Itemize
@@ -271,12 +283,27 @@ snippet "\s\sit" "item" riA
 \item $0
 endsnippet
 
-context "env('itemquestion')"
+context "env('listquestion')"
 snippet "\s\sit" "item" riA
 \item $0
 endsnippet
 
 context "env('itemize')"
+snippet "\s\sit" "item" riA
+\item $0
+endsnippet
+
+context "env('listproposition')"
+snippet "\s\sit" "item" riA
+\item $0
+endsnippet
+
+context "env('listpremise')"
+snippet "\s\sit" "item" riA
+\item $0
+endsnippet
+
+context "env('listaxiom')"
 snippet "\s\sit" "item" riA
 \item $0
 endsnippet
@@ -288,7 +315,7 @@ endsnippet
 
 
 priority -100
-context "env('ddescription')"
+context "env('listdescription')"
 snippet "\s\sit" "item" riA
 \item[$1] $0
 endsnippet
@@ -303,23 +330,23 @@ endsnippet
 
 #list description
 priority 500
-snippet ddesc "Description" i
-\begin{ddescription}
+snippet ldescription "List description" i
+\begin{listdescription}
   \item[$1] $0
-\end{ddescription}
+\end{listdescription}
 endsnippet
 
 #otra entornos de enumeracion o listas
-snippet nit "Lista con nombre" i
-\begin{NameItem}[${1:nombre}]
+snippet ldenum "Lista con nombre" i
+\begin{listdescriptionenum}
   \item ${0}
-\end{NameItem}
+\end{listdescriptionenum}
 endsnippet
 
-snippet iq "Preguntas" i
-\begin{itemquestion}
+snippet lquestion "Preguntas" i
+\begin{listquestion}
   \item ${0}
-\end{itemquestion}
+\end{listquestion}
 endsnippet
 
 #titulo
@@ -460,9 +487,9 @@ endsnippet
 #modulacion
 snippet pr "Def problema" i
 \newproblem{$1}{%
-  $2
-}{%
   $0
+}{%
+  
 }
 endsnippet
 
@@ -846,7 +873,7 @@ endsnippet
 
 #vectores a,.
 context "math()"
-snippet "→([a-zA-Z])" "Vector postfix" riA
+snippet "→([a-zA-Z0])" "Vector postfix" riA
 \vec{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
 endsnippet
 
