@@ -98,11 +98,13 @@ require('packer').startup(function()
     use({
       'kyazdani42/nvim-tree.lua',
       requires = 'kyazdani42/nvim-web-devicons',
+      tag = 'nightly',
       config = function() require('nvim-tree').setup {} end
     })
 
 
     --typing
+    use('terryma/vim-multiple-cursors')
     use({'alvan/vim-closetag'})
     use({'tpope/vim-surround'})
 

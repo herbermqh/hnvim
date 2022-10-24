@@ -1,25 +1,30 @@
 "------------------------------------USAGE
 "OPTIONS
+let g:vimtex_enabled = 1
 let g:vimtex_compiler_enable = 1
 let g:vimtex_compiler_method = 'latexmk'
-let g:vimtex_compiler_latexmk = {
-      \ 'callback' : 1,
-      \ 'continuous' : 1,
-      \ 'executable' : 'latexmk',
-      \ 'hooks' : [],
-      \ 'options' : [
-      \   '-verbose',
-      \   '--shell-escape',
-      \   '-enable-write18',
-      \   '-verbose',
-      \   '-file-line-error',
-      \   '-synctex=1',
-      \   '-interaction=nonstopmode',
-      \ ],
-      \}
+" let g:vimtex_compiler_latexmk = {
+"       \ 'continuous' : 0,
+"       \ 'executable' : 'latexmk',
+"       \}
+" let g:vimtex_compiler_latexmk = {
+"       \ 'callback' : 1,
+"       \ 'continuous' : 0,
+"       \ 'executable' : 'latexmk',
+"       \ 'hooks' : [],
+"       \ 'options' : [
+"       \   '-verbose',
+"       \   '--shell-escape',
+"       \   '-enable-write18',
+"       \   '-verbose',
+"       \   '-file-line-error',
+"       \   '-synctex=1',
+"       \   '-interaction=nonstopmode',
+"       \ ],
+"       \}
 " let g:vimtex_compiler_latexmk_engines = {
 "         \ '_'                : 'hlatex',
-"         \ 'xelatex'       : 'hlatex',
+"         \ 'pdflatex'       : 'hlatex',
 "         \}
 "note: no está definido latexmk_engines por que en el arhicov .latexmkrc se
 "define $pdf_mode=5; 5 para xelatex, 4 para lualatex y 0 para pdflatex.
@@ -80,23 +85,29 @@ nnoremap <localleader>lt :call vimtex#fzf#run()<cr>"
 "------------------------------------GRAMMAR CHECKING
 "------------------------------------VIEW
 "VIEWER CONFIGURATION
-if has('win32')
+" if has('win32')
+"   " let g:vimtex_view_general_viewer='okular'
+"   " let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+" else
+"   let g:xwindow_id = system('xdotool getactivewindow') 
+"   " let g:vimtex_view_method = 'SumatraPDF.exe'
+"   " function! ZathuraHook() dict abort
+"   " if self.xwin_id <= 0 | return | endif
+"   " silent call system('xdotool windowactivate ' . self.xwin_id . ' --sync')
+"   " silent call system('xdotool windowraise ' . self.xwin_id)
+"   " endfunction
+"   " let g:vimtex_view_zathura_hook_view = 'MyHook'
+"   " let g:vimtex_view_zathura_hook_callback = 'MyHook'
+"   " function! MyHook()
+"   "   silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
+"   " endfunction
+" endif
+if has('win32') || (has('unix') && exists('$WSLENV'))
+  let g:vimtex_view_general_viewer = 'zathura'
+else
   let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
   let g:vimtex_view_general_options
-        \ = '-reuse-instance -forward-search @tex @line @pdf'
-  " let g:vimtex_view_general_viewer='okular'
-  " let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
-else
-  " wsl
-  let g:vimtex_view_method = 'SumatraPDF.exe'
-  "
-  " let g:xwindow_id = system('xdotool getactivewindow') 
-  " let g:vimtex_view_method = 'zathura'
-  " let g:vimtex_view_zathura_hook_view = 'MyHook'
-  " let g:vimtex_view_zathura_hook_callback = 'MyHook'
-  " function! MyHook()
-  "   silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
-  " endfunction
+    \ = '-reuse-instance -forward-search @tex @line @pdf'
 endif
 "------------------------------------DOCUMENTATION
 "------------------------------------CONTEXT MENU
@@ -104,3 +115,4 @@ endif
 call vimtex#syntax#core#new_region_math('empheq')
 call vimtex#syntax#core#new_region_math('answer')
 call vimtex#syntax#core#new_region_math('formula')
+

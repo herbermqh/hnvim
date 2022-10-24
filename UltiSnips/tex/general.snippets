@@ -253,10 +253,22 @@ snippet enumi "Enumerate" i
 \end{enumerate}
 endsnippet
 
-snippet premisa "Enumerate" i
-\begin{premisa}[p]
+snippet lpremise "Enumerate" i
+\begin{listpremise}
   \item $0
-\end{premisa}
+\end{listpremise}
+endsnippet
+
+snippet laxiom "Enumerate" i
+\begin{listaxiom}
+  \item $0
+\end{listaxiom}
+endsnippet
+
+snippet lproposition "Enumerate" i
+\begin{listproposition}
+  \item $0
+\end{listproposition}
 endsnippet
 
 # Itemize
@@ -271,12 +283,27 @@ snippet "\s\sit" "item" riA
 \item $0
 endsnippet
 
-context "env('question')"
+context "env('listquestion')"
 snippet "\s\sit" "item" riA
 \item $0
 endsnippet
 
 context "env('itemize')"
+snippet "\s\sit" "item" riA
+\item $0
+endsnippet
+
+context "env('listproposition')"
+snippet "\s\sit" "item" riA
+\item $0
+endsnippet
+
+context "env('listpremise')"
+snippet "\s\sit" "item" riA
+\item $0
+endsnippet
+
+context "env('listaxiom')"
 snippet "\s\sit" "item" riA
 \item $0
 endsnippet
@@ -288,7 +315,7 @@ endsnippet
 
 
 priority -100
-context "env('ddescription')"
+context "env('listdescription')"
 snippet "\s\sit" "item" riA
 \item[$1] $0
 endsnippet
@@ -303,23 +330,23 @@ endsnippet
 
 #list description
 priority 500
-snippet ddesc "Description" i
-\begin{ddescription}
+snippet ldescription "List description" i
+\begin{listdescription}
   \item[$1] $0
-\end{ddescription}
+\end{listdescription}
 endsnippet
 
 #otra entornos de enumeracion o listas
-snippet nit "Lista con nombre" i
-\begin{NameItem}[${1:nombre}]
+snippet ldenum "Lista con nombre" i
+\begin{listdescriptionenum}
   \item ${0}
-\end{NameItem}
+\end{listdescriptionenum}
 endsnippet
 
-snippet qt "Preguntas" i
-\begin{question}
+snippet lquestion "Preguntas" i
+\begin{listquestion}
   \item ${0}
-\end{question}
+\end{listquestion}
 endsnippet
 
 #titulo
@@ -331,23 +358,19 @@ endsnippet
 
 #capitulo y secciones
 snippet chapter "chapter" A
-\chapter{$1}
-$0
+\chapter{$0}
 endsnippet
 
 snippet SSE "section" iA
-\section{$1}
-$0
+\section{$0}
 endsnippet
 
 snippet SSS "subsection" iA
-\subsection{$1}
-$0
+\subsection{$0}
 endsnippet
 
 snippet SS2 "subsubsection" iA
-\subsubsection{$1}
-$0
+\subsubsection{$0}
 endsnippet
 
 #referencia
@@ -464,9 +487,9 @@ endsnippet
 #modulacion
 snippet pr "Def problema" i
 \newproblem{$1}{%
-  $2
-}{%
   $0
+}{%
+  
 }
 endsnippet
 
@@ -850,12 +873,12 @@ endsnippet
 
 #vectores a,.
 context "math()"
-snippet "→([a-zA-Z])" "Vector postfix" riA
+snippet "→([a-zA-Z0])" "Vector postfix" riA
 \vec{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
 endsnippet
 
 context "math()"
-snippet "(?<!\\|n|\w|\d)([a-zA-Z])→" "Vector postfix" riA
+snippet "(?<!\\|n|\w|\d)([a-zA-Z]+)→" "Vector postfix" riA
 \vec{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
 endsnippet
 
@@ -951,15 +974,15 @@ endsnippet
 
 #otros entornos matematico
 snippet form "Fórmula" i
-\begin{hequation}
+\begin{formula}
   $0
-\end{hequation}
+\end{formula}
 endsnippet
 
 snippet resp "Respuesta" i
-\begin{hanswer}
+\begin{answer}
   ${0}
-\end{hanswer}
+\end{answer}
 endsnippet
 
 snippet tabox "Tabla en caja" i
@@ -1623,49 +1646,54 @@ endsnippet
 
 #graficas por algún paquete
 snippet grpb "Gráfica en body" i
-% \reffig{$1}
 \begin{graphbody}{$1}
   $0
 \end{graphbody}
 endsnippet
 
 snippet grpm "Gráfica en body" i
-% \reffig{$1}
 \begin{graphmargin}{$1}
   $0
 \end{graphmargin}
 endsnippet
 
 snippet grpfw "Gráfica en body" i
-% \reffig{$1}
 \begin{graphfullwidth}{$1}
   $0
 \end{graphfullwidth}
 endsnippet
 
 snippet subgrp "Subgráfica" i
-\subgraph{%\reffig{$1}
+\subgraph{%
   $0
 }{$1}
 endsnippet
 
+snippet grpms "N images en el margen" i
+\begin{graphmargin}{$1}
+  \subgraph{%
+    $0
+  }{$1$2}
+  \subgraph{%
+    
+  }{$1$3}
+\end{graphmargin}
+endsnippet
+
 #images
 snippet imgb "Imagen sin referencia" i
-% \reffig{$1}
 \imagebody{$1}$0
 endsnippet
 
 snippet imgq "Imagen sin referencia" i
-% \reffig{$1}
 \imagequestion{$1}$0
 endsnippet
 
 snippet imgm "Imagen en el margen" i
-\imagemargin{$1}\reffig{$1} $0
+\imagemargin{$1}$0
 endsnippet
 
 snippet imgbs "N images en el margen" i
-% \reffig{$1}
 \begin{imagebodyseveral}{$1}
   \subimage{$1$2}
   \subimage{$1$3}
@@ -1674,7 +1702,6 @@ $0
 endsnippet
 
 snippet imgms "N images en el margen" i
-% \reffig{$1}
 \begin{imagemarginseveral}{$1}
   \subimage{$1$2}
   \subimage{$1$3}
@@ -1683,7 +1710,6 @@ $0
 endsnippet
 
 snippet imgfws "N images en el margen" i
-% \reffig{$1}
 \begin{imagefullwidthseveral}{$1}
   \subimage{$1$2}
   \subimage{$1$3}
@@ -1693,21 +1719,18 @@ endsnippet
 
 #tabla
 snippet tblm "Imagen en el margen" i
-% \reftbl{$1}
 \begin{tabularmargin}{$2}{$1}
   $0
 \end{tabularmargin}
 endsnippet
 
 snippet tblb "Imagen en el margen" i
-% \reftbl{$1}
 \begin{tabularmargin}{$2}{$1}
   $0
 \end{tabularmargin}
 endsnippet
 
 snippet tblfw "Imagen en el margen" i
-% \reftbl{$1}
 \begin{tabularfullwidth}{$2}{$1}
   $0
 \end{tabularfullwidth}

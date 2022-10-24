@@ -43,17 +43,17 @@ mapper('n', '<leader>n', ':set nu! rnu!<CR>')
 -- mapper('t', '<Esc>', '<C-\\><C-n>')
 
 -- Copy to OS clipboard.
-mapper('v', 'y', '"+y')
-mapper('n', 'yy', '"+yy')
+mapper('v', 'C-c', '"+y')
+mapper('n', 'C-c', '"+yy')
 
 -- delete line to Os clipboard
-mapper('v', 'd', '"+d')
-mapper('n', 'dd', '"+dd')
+mapper('v', 'C-x', '"+d')
+mapper('n', 'C-x', '"+dd')
 
 -- Paste from OS clipboard
-mapper('n', 'p', '"+p')
+mapper('n', 'C-p', '"+p')
 -- mapper('n', '<Leader>P', '"+P')
-mapper('v', 'p', '"+p')
+mapper('v', 'C-p', '"+p')
 -- mapper('v', '<Leader>P', '"+P"`"`"')
 mapper('n', 'J', 'mzJ`z')
 
@@ -65,9 +65,10 @@ mapper('n', '<C-h', ':BufferPrevious<CR>')
 
 -- start inkscape
 vim.cmd([[
-  inoremap <A-f> <Esc>:execute '!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
-  nnoremap <A-f> <Esc>:execute '!python -m illustrator-figures crear-editar "'.getline('.').'"' @%<CR><CR>:w<CR>
+  inoremap <A-f> <Esc>:silent execute '!python -m illustrator-figures crear-editar "'.getline('.').'"' '%:p'<CR><CR>:w<CR>
+  nnoremap <A-f> <Esc>:silent execute '!python -m illustrator-figures crear-editar "'.getline('.').'"' '%:p'<CR><CR>:w<CR>
 ]])
+-- NOTA: el comando @% (imprime directorio actual) no funciona de manera correcta con telescope por lo que se reemplza por '%:p'
   -- nnoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
   -- inoremap <A-f> <Esc>:silent exec '.!python -m illustrator-figures crear-editar "'.getline('.').'" "'.b:vimtex.tex.'"'<CR><CR>:w<CR>
   -- nnoremap <A-fgh> : silent exec '!inkscape-figures edit "'.b:vimtex.tex.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
@@ -76,8 +77,8 @@ vim.cmd([[
   -- inoremap <C-A-l> <Esc>:w<CR>:silent execute '!latexindent -w '.b:vimtex.tex.''<CR>i
   -- nnoremap <C-A-l> :w<CR>:silent execute '!latexindent -w '.b:vimtex.tex.''<CR>
 vim.cmd([[
-  inoremap <C-A-l> <Esc>:w<CR>:silent execute '!latexindent -w '@%<CR>:e<CR>i
-  nnoremap <C-A-l> :w<CR>:silent execute '!latexindent -w '@%<CR>:e<CR>
+  inoremap <C-A-l> <Esc>:w<CR>:silent exec '!latexindent -w' '%:p'<CR>:e<CR>i
+  nnoremap <C-A-l> :w<CR>:silent exec '!latexindent -w' '%:p'<CR>:e<CR>
 ]])
 
 -- create files latex
@@ -88,7 +89,7 @@ vim.cmd([[
 
 -- preabulo precompilador
 vim.cmd([[
-  nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble ' expand('%:p')<CR>
+  nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble ' '%:p'<CR>
 ]])
 
 -- Plugins Mappings ↓
