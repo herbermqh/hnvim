@@ -33,35 +33,41 @@ mapper('n', 'A-u', 'gewvguwb')
 -- Duplitcate Line
 mapper('n', 'tt', ':t.<CR>$')
 
---  Toggle Numbers
-mapper('n', '<leader>n', ':set nu! rnu!<CR>')
-
 -- use ESC to turn off search highlighting
 -- mapper('n', '<Esc>', ':noh<CR>')
 
 -- Get out of the Terminal
 -- mapper('t', '<Esc>', '<C-\\><C-n>')
 
--- Copy to OS clipboard.
-mapper('v', 'C-c', '"+y')
-mapper('n', 'C-c', '"+yy')
+-- Copy, delete and paste to OS clipboard.
+vim.cmd([[
+  vnoremap <C-c> "+y
+  nnoremap <C-c> "+yy
+  vnoremap <C-x> "+d
+  nnoremap <C-x> "+dd
+  vnoremap <C-p> "+p
+  nnoremap <C-p> "+p
+]])
+-- mapper('v', 'C-c', '"+y')
+-- mapper('n', 'C-c', '"+yy')
+-- mapper('v', 'C-x', '"+d')
+-- mapper('n', 'C-x', '"+dd')
+-- mapper('n', 'C-p', '"+p')
+-- mapper('v', 'C-p', '"+p')
 
--- delete line to Os clipboard
-mapper('v', 'C-x', '"+d')
-mapper('n', 'C-x', '"+dd')
-
--- Paste from OS clipboard
-mapper('n', 'C-p', '"+p')
--- mapper('n', '<Leader>P', '"+P')
-mapper('v', 'C-p', '"+p')
--- mapper('v', '<Leader>P', '"+P"`"`"')
 mapper('n', 'J', 'mzJ`z')
 
--- buffers
-mapper('n', '<C-Right>', ':BufferNext<CR>')
-mapper('n', '<C-l>', ':BufferNext<CR>')
-mapper('n', '<C-Left>', ':BufferPrevious<CR>')
-mapper('n', '<C-h', ':BufferPrevious<CR>')
+-- Buffers
+-- mapper('n', '<C-Right>', ':BufferNext<CR>')
+-- mapper('n', '<C-l>', ':BufferNext<CR>')
+-- mapper('n', '<C-Left>', ':BufferPrevious<CR>')
+-- mapper('n', '<C-h', ':BufferPrevious<CR>')
+vim.cmd([[
+  nnoremap <C-Right> :BufferNext<CR>
+  nnoremap <C-l> :BufferNext<CR>
+  nnoremap <C-Left> :BufferPrevious<CR>
+  nnoremap <C-h> :BufferPrevious<CR>
+]])
 
 -- start inkscape
 vim.cmd([[
@@ -114,8 +120,8 @@ mapper('n', '<F8>', ']sz=') -- error ortorgrafico
 mapper('n', '<leader>mm', [[<Cmd>lua require('material.functions').toggle_style()<CR>]])
 
 -- Coc.nvim
-mapper('n', '<F12>', ':CocCommand terminal.Toggle<CR>')
-mapper('n', '<F5>', ':Format<CR>')
+-- mapper('n', '<F12>', ':CocCommand terminal.Toggle<CR>')
+-- mapper('n', '<F5>', ':Format<CR>')
 
 -- plug_mapper('n', '<leader>rn', '<Plug>(coc-rename)')
 
@@ -133,13 +139,13 @@ plug_mapper('n', '<leader>kf', '<Plug>(coc-fix-current)')
 -- expressive_mapper('i', '<C-space>', 'coc#refresh()')
 
 -- TODO: Pass to Lua
-vim.cmd([[
-nnoremap <silent> <M-Up>    :<C-U>exec "exec 'norm m`' \| move -" . (1+v:count1)<CR>``
-nnoremap <silent> <M-Down>  :<C-U>exec "exec 'norm m`' \| move +" . (0+v:count1)<CR>``
+-- vim.cmd([[
+-- nnoremap <silent> <M-Up>    :<C-U>exec "exec 'norm m`' \| move -" . (1+v:count1)<CR>``
+-- nnoremap <silent> <M-Down>  :<C-U>exec "exec 'norm m`' \| move +" . (0+v:count1)<CR>``
 
-vnoremap <silent> <M-Up>    :<C-U>exec "'<,'>move '<-" . (1+v:count1)<CR>gv
-vnoremap <silent> <M-Down>  :<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv
+-- vnoremap <silent> <M-Up>    :<C-U>exec "'<,'>move '<-" . (1+v:count1)<CR>gv
+-- vnoremap <silent> <M-Down>  :<C-U>exec "'<,'>move '>+" . (0+v:count1)<CR>gv
 
-nnoremap  <silent> <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
-nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-]])
+-- nnoremap  <silent> <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+-- nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+-- ]])
