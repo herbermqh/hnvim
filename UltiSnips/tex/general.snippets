@@ -191,9 +191,6 @@ endsnippet
 
 
 #nota en pie de pagina
-snippet ft "\footnote" i
-\\footnote{${1:${VISUAL:text}}} ${0}
-endsnippet
 
 #texto como en la pantalla
 snippet casy "codetex" i
@@ -233,6 +230,10 @@ endsnippet
 #cajas
 
 #notas en el margen
+snippet nt "Note" i
+\\note{$0}
+endsnippet
+
 
 #enumerate
 snippet enum "Enumerate" i
@@ -453,14 +454,9 @@ endsnippet
 
 #otros entornos
 snippet ej "Ejemplo en una sola columna" i
-\begin{ej}
-	\begin{pre}
-		$1
-	\end{pre}
-	\begin{sol}
-		$0
-	\end{sol}
-\end{ej}
+\begin{example}
+  $0
+\end{example}
 endsnippet
 
 snippet ej2 "Ejemplo en dos columna" i
@@ -843,6 +839,10 @@ endsnippet
 # snippet "(\s|\$)(\w+)\b" "overline" riA
 # `!p snip.rv ="$" if match.group(1)=="$" else " "`\overline{`!p snip.rv=match.group(2)`}$0
 # endsnippet
+
+snippet "latex" "overline" riA
+\LaTeX
+endsnippet 
 
 context "math()"
 snippet "¯(\w|\d+)" "overline" riA
@@ -1725,9 +1725,9 @@ snippet tblm "Imagen en el margen" i
 endsnippet
 
 snippet tblb "Imagen en el margen" i
-\begin{tabularmargin}{$2}{$1}
+\begin{tabularbody}{$2}{$1}
   $0
-\end{tabularmargin}
+\end{tabularbody}
 endsnippet
 
 snippet tblfw "Imagen en el margen" i
