@@ -68,7 +68,10 @@ vim.cmd([[
   nnoremap <C-Left> :BufferPrevious<CR>
   nnoremap <C-h> :BufferPrevious<CR>
 ]])
-
+vim.cmd([[
+  inoremap <A-g> <Esc>:silent execute '!python -m pdf2img convert %:p'<CR><CR>:w<CR>
+  nnoremap <A-g> <Esc>:silent execute '!python -m pdf2img convert %:p'<CR><CR>:w<CR>
+]])
 -- start inkscape
 vim.cmd([[
   inoremap <A-f> <Esc>:silent execute '!python -m illustrator-figures crear-editar "'.getline('.').'"' '%:p'<CR><CR>:w<CR>
