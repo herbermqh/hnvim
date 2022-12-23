@@ -36,8 +36,6 @@
   let g:which_key_map['v'] = [ '<C-W>v'                     , 'split right']
   let g:which_key_map['z'] = [ 'Goyo'                       , 'zen' ]
 
-
-
   " s is for search
   let g:which_key_map.s = {
         \ 'name' : '+search' ,
@@ -134,3 +132,4 @@
   let g:floaterm_height=0.8
   let g:floaterm_wintitle=0
   let g:floaterm_autoclose=1
+  

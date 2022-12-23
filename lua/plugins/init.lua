@@ -53,6 +53,7 @@ require('packer').startup(function()
     -- use('herbermqh/vim-latex')
 
     -- Utilities
+    use 'rhysd/vim-grammarous'
     -- use({'Pocco81/AutoSave.nvim', opt = true})
     -- use 'kevinhwang91/nvim-bqf'
     use({
@@ -88,6 +89,7 @@ require('packer').startup(function()
     -- use({'rbgrouleff/bclose.vim'})
     -- use({'nvim-lua/popup.nvim'})
     -- use({'nvim-lua/plenary.nvim'})
+    use 'duane9/nvim-rg'
     use({
         'nvim-telescope/telescope.nvim',
         --[[ requires = {

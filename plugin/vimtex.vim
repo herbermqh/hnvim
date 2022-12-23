@@ -104,15 +104,25 @@ nnoremap <localleader>lt :call vimtex#fzf#run()<cr>"
 " endif
 if has('win32') || (has('unix') && exists('$WSLENV'))
   let g:vimtex_view_general_viewer = 'zathura'
-else
   let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
   let g:vimtex_view_general_options
     \ = '-reuse-instance -forward-search @tex @line @pdf'
+" else
+"   let g:vimtex_view_general_viewer = 'zathura'
+  " let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
+  " let g:vimtex_view_general_options
+  "   \ = '-reuse-instance -forward-search @tex @line @pdf'
 endif
+
+" if has('win32') || (has('unix') && exists('$WSLENV'))
+"    let g:vimtex_view_method = 'sioyek'
+"    let g:vimtex_view_sioyek_exe = 'sioyek.exe'
+"    let g:vimtex_callback_progpath = 'wsl nvim'
+" endif
+
 "------------------------------------DOCUMENTATION
 "------------------------------------CONTEXT MENU
 "------------------------------------API
 call vimtex#syntax#core#new_region_math('empheq')
 call vimtex#syntax#core#new_region_math('answer')
 call vimtex#syntax#core#new_region_math('formula')
-
