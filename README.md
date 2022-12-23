@@ -82,4 +82,3 @@
 * [MatchTag](https://github.com/gregsexton/MatchTag) - highlights the matching HTML tag when the cursor is positioned on a tag
 
 
-
