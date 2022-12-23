@@ -79,6 +79,5 @@
 * [vim-searchindex](https://github.com/google/vim-searchindex) - display number of search matches & index of a current match
 * [file-line](https://github.com/bogado/file-line) - enabling opening a file in a given line
 * [emmet-vim](https://github.com/mattn/emmet-vim) - provides support for expanding abbreviations similar to [emmet](http://emmet.io)
-* [MatchTag](https://github.com/gregsexton/MatchTag) - highlights the matching HTML tag when the cursor is positioned on a tag
 
 
