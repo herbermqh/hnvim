@@ -106,7 +106,7 @@ endsnippet
 #  TEXTO NORMAL  #
 ##################
 #smart quotes
-snippet "\"([a-zA-Z0-9_´\s]+)\b\"\s" "smart quotes" Ar
+snippet "\"([a-zA-Z0-9\_\´\sáíóéúÁÉÍÓÚ]+)\b\"\s" "smart quotes" Ar
 \`\``!p snip.rv = match.group(1)`'' $0
 endsnippet
 
@@ -211,6 +211,7 @@ snippet ctl "codetex" i
 \end{codetexlong}
 endsnippet
 
+priority 200
 snippet ctc "codetexcomment" i
 \begin{codetexcomment}{lefthand ratio=0.6}
   $0
@@ -636,32 +637,32 @@ snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet 
 
-context "math()"
-snippet / "Fraction" i
-\\frac{${VISUAL}}{$1}$0
-endsnippet
+# context "math()"
+# snippet / "Fraction" i
+# \\frac{${VISUAL}}{$1}$0
+# endsnippet
 
-priority 300
-context "math()"
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
-\\frac{`!p snip.rv = match.group(1)`}{$1}$0
-endsnippet
+# priority 300
+# context "math()"
+# snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
+# \\frac{`!p snip.rv = match.group(1)`}{$1}$0
+# endsnippet
 
-priority 1000
-context "math()"
-snippet '^.*\)/' "() frac" wrA
-`!p
-stripped = match.string[:-1]
-depth = 0
-i = len(stripped) - 1
-while True:
-	if stripped[i] == ')': depth += 1
-	if stripped[i] == '(': depth -= 1
-	if depth == 0: break;
-	i-=1
-snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
-`{$1}$0
-endsnippet
+# priority 1000
+# context "math()"
+# snippet '^.*\)/' "() frac" wrA
+# `!p
+# stripped = match.string[:-1]
+# depth = 0
+# i = len(stripped) - 1
+# while True:
+# 	if stripped[i] == ')': depth += 1
+# 	if stripped[i] == '(': depth -= 1
+# 	if depth == 0: break;
+# 	i-=1
+# snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+# `{$1}$0
+# endsnippet
 
 #raices
 # context "math()"
@@ -992,6 +993,11 @@ snippet tabox "Tabla en caja" i
 endsnippet
 
 #letra griegas
+context "math()"   
+snippet `' "prima" iA
+\prime`!p snip.rv = after_greek_letter()`$1
+endsnippet
+
 context "math()"   
 snippet `a "letra griega minuscula" iA
 \alpha`!p snip.rv = after_greek_letter()`$1
@@ -1697,11 +1703,11 @@ snippet imgm "Imagen en el margen" i
 \imagemargin{$1}$0
 endsnippet
 
-snippet imgbs "N images en el margen" i
-\begin{imagebodyseveral}{$1}
+snippet imgbf "N images en el margen" i
+\begin{imagefullbody}{$1}
   \subimage{$1$2}
   \subimage{$1$3}
-\end{iimagebodyseveral}
+\end{iimagefullbody}
 $0
 endsnippet
 
@@ -1713,11 +1719,11 @@ snippet imgms "N images en el margen" i
 $0
 endsnippet
 
-snippet imgfws "N images en el margen" i
-\begin{imagefullwidthseveral}{$1}
+snippet imgfw "N images en el margen" i
+\begin{imagefullwidth}{$1}
   \subimage{$1$2}
   \subimage{$1$3}
-\end{imagefullwidthseveral}
+\end{imagefullwidth}
 $0
 endsnippet
 
@@ -1820,6 +1826,23 @@ endsnippet
 snippet cin "mintinline" iA
 \mintinline{$1}{$2}$0
 endsnippet
+
+#\mintinline{tex}{}\ProcessOptions -> \mintinline{tex}{\ProcessOptions}
+snippet "\\mintinline{tex}{}([#a-zA-Z0-9\@\\\;\*{}\-<>\s\=\/\.\,]+)" "mintinline" ir
+\mintinline{tex}{`!p snip.rv = match.group(1)`}
+endsnippet
+
+snippet tc "texcode" i
+\begin{texcode}
+  $0
+\end{texcode}
+endsnippet
+
+snippet tic "texinlinecode" i
+\mintinline{tex}{$1}$0
+endsnippet
+
+
 ############
 #  BEANER  #
 ############
