@@ -35,9 +35,9 @@ require'lspconfig'.cssls.setup{
   capabilities = capabilities
 }
 
-require'lspconfig'.sumneko_lua.setup{
-  capabilities = capabilities
-}
+-- require'lspconfig'.sumneko_lua.setup{
+--   capabilities = capabilities
+-- }
 
 -- require'lspconfig'.zeta_note.setup{
   -- capabilities = capabilities

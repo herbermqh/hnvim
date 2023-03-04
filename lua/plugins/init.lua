@@ -101,7 +101,7 @@ require('packer').startup(function()
       'kyazdani42/nvim-tree.lua',
       requires = 'kyazdani42/nvim-web-devicons',
       tag = 'nightly',
-      config = function() require('nvim-tree').setup {} end
+      -- config = function() require('nvim-tree').setup {} end
     })
 
 
@@ -115,7 +115,10 @@ require('packer').startup(function()
     -- use({'airblade/vim-gitgutter'})
 
     -- UI Plugins
-    use('glepnir/dashboard-nvim')
+    use {
+      'glepnir/dashboard-nvim',
+      event='VimEnter',
+    }
     use('goolord/alpha-nvim')
     --use({
     --    'glepnir/galaxyline.nvim',

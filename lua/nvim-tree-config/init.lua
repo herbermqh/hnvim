@@ -39,8 +39,8 @@ require'nvim-tree'.setup {
   hijack_netrw         = true,
   hijack_unnamed_buffer_when_opening = true,
   ignore_buffer_on_setup = false,
-  open_on_setup        = true,
-  open_on_tab          = true,
+  -- open_on_setup        = true,
+  -- open_on_tab          = true,
   sort_by              = "case_sensitive",
   update_cwd           = true,
   view = {
@@ -64,8 +64,8 @@ require'nvim-tree'.setup {
     auto_open = true,
   },
   update_focused_file = {
-    enable      = false,
-    update_cwd  = false,
+    enable      = true,
+    update_cwd  = true,
     ignore_list = {}
   },
   ignore_ft_on_setup = {},

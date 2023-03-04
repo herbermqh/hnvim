@@ -37,11 +37,3 @@ vim.wo.cursorcolumn = false
 -- setup must be called before loading
 
 
-
-
-
---lightline
-vim.cmd('set noshowmode')
-
--- others
-vim.cmd('set encoding=utf8')
