@@ -14,6 +14,7 @@ require('packer').startup(function()
     use {
     'williamboman/nvim-lsp-installer',
     }
+    use 'hura/vim-asymptote'
     -- menu
     -- use 'sharkdp/fd'
     -- use 'nixprime/cpsm'
@@ -23,6 +24,17 @@ require('packer').startup(function()
     --autocomplete
     use('SirVer/ultisnips')
     use('quangnguyen30192/cmp-nvim-ultisnips')
+    -- use({
+    --   "jackMort/ChatGPT.nvim",
+    --   config = function()
+    --     require("chatgpt").setup()
+    --   end,
+    --   requires = {
+    --     "MunifTanjim/nui.nvim",
+    --     "nvim-lua/plenary.nvim",
+    --     "nvim-telescope/telescope.nvim"
+    --   }
+    -- })
     -- use('herbermqh/vim-snippets')
     -- use('honza/vim-snippets')
     -- use 'dcampos/nvim-snippy'
@@ -53,7 +65,7 @@ require('packer').startup(function()
     -- use('herbermqh/vim-latex')
 
     -- Utilities
-    use 'rhysd/vim-grammarous'
+    -- use 'rhysd/vim-grammarous'
     -- use({'Pocco81/AutoSave.nvim', opt = true})
     -- use 'kevinhwang91/nvim-bqf'
     use({
@@ -117,7 +129,12 @@ require('packer').startup(function()
     -- UI Plugins
     use {
       'glepnir/dashboard-nvim',
-      event='VimEnter',
+      -- event = 'VimEnter',
+      -- config = function()
+      --   require('dashboard').setup {
+      --     theme = 'hyoer',
+      --   }
+      -- end,
     }
     use('goolord/alpha-nvim')
     --use({

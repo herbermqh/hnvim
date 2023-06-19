@@ -161,7 +161,6 @@ vim.cmd([[
   \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 ]])
 
-
 -- Don't redraw while executing macros
 vim.o.ttyfast = true
 

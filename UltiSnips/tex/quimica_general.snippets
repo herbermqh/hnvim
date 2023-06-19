@@ -79,22 +79,31 @@ _{{\ce{$1}}}$0
 endsnippet
 
 #factores de conversion
-priority 100
+priority 1000
 context "math()"
-snippet "([0-9]+)\s([a-zA-Z]+)\s([a-zA-Z0-9]+)" "valor unidada sustancia" ir
+snippet "([0-9^{}\-\+])\s([a-zA-Z]+)\s([a-zA-Z0-9]+)" "valor unidada sustancia" ir
 `!p snip.rv = match.group(1)+'\;\\unit{'+match.group(2)+'}\;\\ce{'+match.group(3)+'}'`
 endsnippet
 
-snippet "([0-9]+)\s([a-zA-Z\\\{\}/]+)" "valor unidada" ir
+priority -1000
+context "math()"
+snippet "([0-9^{}\-\+]+)\s([a-zA-Z]+)\s([\\a-zA-Z0-9]+)" "valor unidada macro" ir
+`!p snip.rv = match.group(1)+'\;\\unit{'+match.group(2)+'}\;'+match.group(3)`
+endsnippet
+
+snippet "([0-9^{}\-\+]+)\s([a-zA-Z\\\{\}/]+)" "valor unidada" ir
 `!p snip.rv = match.group(1)+'\;\\unit{'+match.group(2)+'}'`
 endsnippet
 
 priority 1000
 context "math()"
-snippet "([a-zA-Z0-9\\;\{\},]+)>([a-zA-Z0-9\\;\{\},]+)" "factor conversor" ir
+snippet "([a-zA-Z0-9^{}\\;\{\},\-\+]+)>([a-zA-Z0-9^{}\\;\{\},\-\+]+)" "factor conversor" ir
 `!p snip.rv = '\\frac{'+ match.group(2) +'}{'+ match.group(1)+'}'`
 endsnippet
 
+snippet "(w+)<" "factor conversor" ir
+`!p snip.rv = 'hola mundo' + match.group(1) + 'despues'`
+endsnippet
 #nomenclatura
 snippet ce "chemin" i
 \ce{$1}
