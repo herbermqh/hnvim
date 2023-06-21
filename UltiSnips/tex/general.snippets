@@ -78,7 +78,6 @@ def after_delimiters():
 
 endglobal
 
-
 #DOCUMENT
 snippet documentclass "documentclass" b
 \documentclass`!p snip.rv="[" if t[1] else ""`${1:options}`!p snip.rv = "]" if t[1] else ""`{${2:package}}
@@ -106,7 +105,7 @@ endsnippet
 #  TEXTO NORMAL  #
 ##################
 #smart quotes
-snippet "\"([a-zA-Z0-9_´\s]+)\b\"\s" "smart quotes" Ar
+snippet "\"([a-zA-Z0-9\_\´\sáíóéúÁÉÍÓÚ]+)\b\"\s" "smart quotes" Ar
 \`\``!p snip.rv = match.group(1)`'' $0
 endsnippet
 
@@ -151,7 +150,7 @@ endsnippet
 #tamanos letras
 
 #centrado
-snippet center "center" i
+snippet '(?<!\{)center' "center" ri
 \begin{center}
   $0
 \end{center}
@@ -172,6 +171,13 @@ snippet mul3 "En tres columna" i
 \begin{multicols}{3}
 	${0}
 \end{multicols}
+endsnippet
+
+#asymptote
+snippet '(?<!\{)asy' "Entorno asymptote" ri
+\begin{asy}
+  $0
+\end{asy}
 endsnippet
 
 #minipage
@@ -205,12 +211,19 @@ snippet ct "codetex" i
 \end{codetex}
 endsnippet
 
+snippet pt "plaintex" i
+\begin{plaintex}
+  $0
+\end{plaintex}
+endsnippet
+
 snippet ctl "codetex" i
 \begin{codetexlong}
   $0
 \end{codetexlong}
 endsnippet
 
+priority 10000
 snippet ctc "codetexcomment" i
 \begin{codetexcomment}{lefthand ratio=0.6}
   $0
@@ -222,7 +235,6 @@ snippet ctcl "codetexcommentlong" i
   $0
 \end{codetexcommentlong}
 endsnippet
-
 
 
 #xcolor
@@ -284,7 +296,7 @@ snippet "\s\sit" "item" riA
 \item $0
 endsnippet
 
-context "env('listquestion')"
+context "env('question')"
 snippet "\s\sit" "item" riA
 \item $0
 endsnippet
@@ -344,10 +356,10 @@ snippet ldenum "Lista con nombre" i
 \end{listdescriptionenum}
 endsnippet
 
-snippet lquestion "Preguntas" i
-\begin{listquestion}
+snippet qt "Preguntas" i
+\begin{question}
   \item ${0}
-\end{listquestion}
+\end{question}
 endsnippet
 
 #titulo
@@ -434,9 +446,9 @@ endsnippet
 
 #definiciones
 snippet def "Definición" i
-\begin{definicion}[$1]
+\begin{definition}[$1]
 	$0
-\end{definicion}
+\end{definition}
 endsnippet
   
 #teoremas demostraciones
@@ -473,9 +485,9 @@ snippet ej2 "Ejemplo en dos columna" i
 endsnippet
 
 snippet ell "Ejemplo ilustrativo" i
-\begin{ExampleIllustrative}
+\begin{exampleillustrative}
   $0
-\end{ExampleIllustrative}
+\end{exampleillustrative}
 endsnippet
   
 #indice alfabetico
@@ -636,32 +648,32 @@ snippet // "Fraction" iA
 \\frac{$1}{$2}$0
 endsnippet 
 
-context "math()"
-snippet / "Fraction" i
-\\frac{${VISUAL}}{$1}$0
-endsnippet
+# context "math()"
+# snippet / "Fraction" i
+# \\frac{${VISUAL}}{$1}$0
+# endsnippet
 
-priority 300
-context "math()"
-snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
-\\frac{`!p snip.rv = match.group(1)`}{$1}$0
-endsnippet
+# priority 300
+# context "math()"
+# snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "symbol frac" wrA
+# \\frac{`!p snip.rv = match.group(1)`}{$1}$0
+# endsnippet
 
-priority 1000
-context "math()"
-snippet '^.*\)/' "() frac" wrA
-`!p
-stripped = match.string[:-1]
-depth = 0
-i = len(stripped) - 1
-while True:
-	if stripped[i] == ')': depth += 1
-	if stripped[i] == '(': depth -= 1
-	if depth == 0: break;
-	i-=1
-snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
-`{$1}$0
-endsnippet
+# priority 1000
+# context "math()"
+# snippet '^.*\)/' "() frac" wrA
+# `!p
+# stripped = match.string[:-1]
+# depth = 0
+# i = len(stripped) - 1
+# while True:
+# 	if stripped[i] == ')': depth += 1
+# 	if stripped[i] == '(': depth -= 1
+# 	if depth == 0: break;
+# 	i-=1
+# snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+# `{$1}$0
+# endsnippet
 
 #raices
 # context "math()"
@@ -770,18 +782,6 @@ endsnippet
 # endsnippet
 
 #delimitadores
-# snippet () "simple parent" iA
-# ($1)$0
-# endsnippet
-
-# snippet [] "simple bracket" iA
-# [$1]$0
-# endsnippet
-
-# snippet {} "simple brace" iA
-# {$1}$0
-# endsnippet
-
 context "math()"
 snippet "(?<!t)(\)\))" "left( right)" iAr 
 \left($1\right)$0
@@ -840,9 +840,9 @@ endsnippet
 # `!p snip.rv ="$" if match.group(1)=="$" else " "`\overline{`!p snip.rv=match.group(2)`}$0
 # endsnippet
 
-snippet "latex" "overline" riA
-\LaTeX
-endsnippet 
+# snippet "latex" "overline" riA
+# \LaTeX
+# endsnippet 
 
 context "math()"
 snippet "¯(\w|\d+)" "overline" riA
@@ -893,7 +893,6 @@ endsnippet
 # $\vec{`!p snip.rv=match.group(1)`}
 # endsnippet
 
-
 #negrilla modo matematico
 
 #texto en modo matematico
@@ -901,6 +900,11 @@ priority -50
 context "math()"
 snippet tt "text" iA
 \text{$1}$0
+endsnippet
+
+#texto en negrilla
+snippet tbf "bfseries" iA
+\bfseries
 endsnippet
 
 #espacio modo matematico
@@ -979,10 +983,14 @@ snippet form "Fórmula" i
 \end{formula}
 endsnippet
 
-snippet resp "Respuesta" i
+snippet ans "Respuesta" i
 \begin{answer}
   ${0}
 \end{answer}
+endsnippet
+
+snippet ansl "Respuesta" i
+\answerinline{${0}}
 endsnippet
 
 snippet tabox "Tabla en caja" i
@@ -993,6 +1001,11 @@ endsnippet
 
 #letra griegas
 context "math()"   
+snippet `' "prima" iA
+\prime`!p snip.rv = after_greek_letter()`$1
+endsnippet
+
+context "math()"
 snippet `a "letra griega minuscula" iA
 \alpha`!p snip.rv = after_greek_letter()`$1
 endsnippet
@@ -1296,7 +1309,7 @@ snippet +- "pm" iA
 endsnippet
 
 context "math()"
-snippet -+ "mp" iA
+snippet +- "mp" iA
 \pm $0
 endsnippet
 
@@ -1307,7 +1320,7 @@ endsnippet
 
 context "math()"
 snippet `o "circ" iA
-\circ $0
+\circ`!p snip.rv = after_commands()`$1
 endsnippet
 
 priority -10
@@ -1378,11 +1391,11 @@ snippet mcal "mathcal" iA
 \mathcal{$1}$0
 endsnippet
 
-priority 100
-context "math()"
-snippet "->|to" "to" riA
-\to $0
-endsnippet
+# priority 100
+# context "math()"
+# snippet "(?<!\\[a-z+])(->|to)" "to" riA
+# \to $0
+# endsnippet
 
 priority 200
 context "math()"
@@ -1510,11 +1523,9 @@ endsnippet
 
 #simbolos del paquete amssymb
 context "math()"
-snippet "\\(R|Q|Z|I|N)" "mathbb R Q Z I" riA
+snippet "\\(R|Q|Z|I|N)" "mathbb R Q Z I" ri
 \\mathbb{`!p snip.rv=match.group(1)`}
 endsnippet
-
-
 
 ########################
 #  PROGRAMACION LATEX  #
@@ -1554,21 +1565,25 @@ pre_expand "add_row(snip)"
 snippet "tr(\d+)" "Add table row of dimension ..." r
 endsnippet
 
-# snippet table "Table environment" i
-# \begin{table}[${1:htpb}]
-# 	\centering
-# 	\begin{${4:t}${4/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}{${5:c}}
-# 	$0${5/(?<=.)(c|l|r)|./(?1: & )/g}
-# 	\end{$4${4/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}
-# 	\caption{$2}
-# 	\label{$3}
-# \end{table}
-# endsnippet
+snippet table "Table environment" i
+\begin{table}[${1:htpb}]
+  $0
+  \caption{$2}
+  \label{tab:${3:label}}
+\end{table}
+endsnippet
+
+
+snippet tabular "Tabular environment" i
+\begin{${4:t}${4/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}{${5:c}}
+  $0${5/(?<=.)(c|l|r)|./(?1: & )/g}
+\end{$4${4/(t)$|(a)$|(.*)/(?1:abular)(?2:rray)/}}
+endsnippet
+
 
 
 # snippet tabular "Tabular environment" i
 # \begin{table}[${1:htpb}]
-# 	\centering
 # 	\begin{tabular}{${5:c}}
 # 	$0${5/((?<=.)c|l|r)|./(?1: & )/g}
 # 	\end{tabular}
@@ -1605,6 +1620,25 @@ endsnippet
 # endsnippet
 
 #figure
+snippet fig "figure environment" i
+\begin{figure}[${1:htpb}]
+	$0
+	\caption{$2}
+	\label{fig:${3:label}}
+\end{figure}
+endsnippet
+
+priority 10000
+snippet mfig "figure environment" i
+\begin{marginfigure}
+	$0
+	\caption{$1}
+	\label{fig:${3:label}}
+\end{marginfigure}
+endsnippet
+
+
+
 snippet tikzm "Figura tikz en el margen" i
 \begin{scaletikzpicturetowidth}{\marginparwidth}
   \begin{tikzpicture}[scale=\tikzscale]
@@ -1689,15 +1723,19 @@ snippet imgq "Imagen sin referencia" i
 \imagequestion{$1}$0
 endsnippet
 
+snippet imge "Imagen sin referencia" i
+\imageexample{$1}$0
+endsnippet
+
 snippet imgm "Imagen en el margen" i
 \imagemargin{$1}$0
 endsnippet
 
-snippet imgbs "N images en el margen" i
-\begin{imagebodyseveral}{$1}
+snippet imgbf "N images en el margen" i
+\begin{imagefullbody}{$1}
   \subimage{$1$2}
   \subimage{$1$3}
-\end{iimagebodyseveral}
+\end{iimagefullbody}
 $0
 endsnippet
 
@@ -1709,32 +1747,43 @@ snippet imgms "N images en el margen" i
 $0
 endsnippet
 
-snippet imgfws "N images en el margen" i
-\begin{imagefullwidthseveral}{$1}
+snippet imgfw "N images en el margen" i
+\begin{imagefullwidth}{$1}
   \subimage{$1$2}
   \subimage{$1$3}
-\end{imagefullwidthseveral}
+\end{imagefullwidth}
 $0
 endsnippet
 
 #tabla
-snippet tblm "Imagen en el margen" i
-\begin{tabularmargin}{$2}{$1}
-  $0
-\end{tabularmargin}
+# snippet tblm "Imagen en el margen" i
+# \begin{tabularmargin}{$2}{$1}
+#   $0
+# \end{tabularmargin}
+# endsnippet
+
+priority 10000
+snippet mtab "figure environment" i
+\begin{margintable}
+	$0
+	\caption{$1}
+	\label{tab:${3:label}}
+\end{margintable}
 endsnippet
 
-snippet tblb "Imagen en el margen" i
-\begin{tabularbody}{$2}{$1}
-  $0
-\end{tabularbody}
-endsnippet
 
-snippet tblfw "Imagen en el margen" i
-\begin{tabularfullwidth}{$2}{$1}
-  $0
-\end{tabularfullwidth}
-endsnippet
+
+# snippet tblb "Imagen en el margen" i
+# \begin{tabularbody}{$2}{$1}
+#   $0
+# \end{tabularbody}
+# endsnippet
+
+# snippet tblfw "Imagen en el margen" i
+# \begin{tabularfullwidth}{$2}{$1}
+#   $0
+# \end{tabularfullwidth}
+# endsnippet
 #fuentes en tablas
 
 #color de tablas
@@ -1805,8 +1854,7 @@ endsnippet
 
 # \begin{listing}
 snippet "mint(ed)?( (\S+))?" "Minted code typeset" ir
-\begin{minted}{${1:`!p snip.rv = match.group(3) if match.group(2) is not None else "language"`}}
-  ${0:${VISUAL:code}}
+\begin{minted}{${1}}$0
 \end{minted}
 endsnippet
 # \end{listing}
@@ -1816,6 +1864,24 @@ endsnippet
 snippet cin "mintinline" iA
 \mintinline{$1}{$2}$0
 endsnippet
+
+#\mintinline{tex}{}\ProcessOptions -> \mintinline{tex}{\ProcessOptions}
+snippet "\\mintinline{tex}{}([#a-zA-Z0-9\@\\\;\*{}\-<>\s\=\/\.\,]+)" "mintinline" ir
+\mintinline{tex}{`!p snip.rv = match.group(1)`}
+endsnippet
+
+priority -10000
+snippet tc "texcode" i
+\begin{texcode}
+  $0
+\end{texcode}
+endsnippet
+
+snippet tic "texinlinecode" i
+\mintinline{tex}{$1}$0
+endsnippet
+
+
 ############
 #  BEANER  #
 ############

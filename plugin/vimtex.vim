@@ -4,24 +4,20 @@ let g:vimtex_enabled = 1
 let g:vimtex_compiler_enable = 1
 let g:vimtex_compiler_method = 'latexmk'
 " let g:vimtex_compiler_latexmk = {
-"       \ 'continuous' : 0,
-"       \ 'executable' : 'latexmk',
-"       \}
-" let g:vimtex_compiler_latexmk = {
-"       \ 'callback' : 1,
-"       \ 'continuous' : 0,
-"       \ 'executable' : 'latexmk',
-"       \ 'hooks' : [],
-"       \ 'options' : [
-"       \   '-verbose',
-"       \   '--shell-escape',
-"       \   '-enable-write18',
-"       \   '-verbose',
-"       \   '-file-line-error',
-"       \   '-synctex=1',
-"       \   '-interaction=nonstopmode',
-"       \ ],
-"       \}
+"         \ 'build_dir' : 'build',
+"         \ 'callback' : 1,
+"         \ 'continuous' : 1,
+"         \ 'executable' : 'latexmk',
+"         \ 'hooks' : [],
+"         \ 'options' : [
+"         \   '-verbose',
+"         \   '-shell-escape',
+"         \   '-enable-write18',
+"         \   '-file-line-error',
+"         \   '-synctex=1',
+"         \   '-interaction=nonstopmode',
+"         \ ],
+"         \}
 " let g:vimtex_compiler_latexmk_engines = {
 "         \ '_'                : 'hlatex',
 "         \ 'pdflatex'       : 'hlatex',
@@ -102,23 +98,17 @@ nnoremap <localleader>lt :call vimtex#fzf#run()<cr>"
 "   "   silent call system('xdotool windowactivate ' . g:xwindow_id . ' --sync')
 "   " endfunction
 " endif
+"
 if has('win32') || (has('unix') && exists('$WSLENV'))
-  let g:vimtex_view_general_viewer = 'zathura'
   let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
   let g:vimtex_view_general_options
     \ = '-reuse-instance -forward-search @tex @line @pdf'
-" else
-"   let g:vimtex_view_general_viewer = 'zathura'
+else
+  " let g:vimtex_view_general_viewer = 'zathura'
   " let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
   " let g:vimtex_view_general_options
   "   \ = '-reuse-instance -forward-search @tex @line @pdf'
 endif
-
-" if has('win32') || (has('unix') && exists('$WSLENV'))
-"    let g:vimtex_view_method = 'sioyek'
-"    let g:vimtex_view_sioyek_exe = 'sioyek.exe'
-"    let g:vimtex_callback_progpath = 'wsl nvim'
-" endif
 
 "------------------------------------DOCUMENTATION
 "------------------------------------CONTEXT MENU
