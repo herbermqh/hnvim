@@ -1,4 +1,4 @@
-vim.g.barbar_auto_setup = true-- disable auto-setup
+vim.g.barbar_auto_setup = false -- disable auto-setup
 require'barbar'.setup {
   -- WARN: do not copy everything below into your config!
   --       It is just an example of what configuration options there are.
@@ -121,14 +121,14 @@ require'barbar'.setup {
 --   icon_pinned = ' ',
 -- }
 
-local tree ={}
-tree.open = function ()
-   require'bufferline.state'.set_offset(31, 'FileTree')
-   require'nvim-tree'.find_file(true)
-end
+-- local tree ={}
+-- tree.open = function ()
+--    require'bufferline.state'.set_offset(31, 'FileTree')
+--    require'nvim-tree'.find_file(true)
+-- end
 
-tree.close = function ()
-   require'bufferline.state'.set_offset(0)
-   require'nvim-tree'.close()
-end
+-- tree.close = function ()
+--    require'bufferline.state'.set_offset(0)
+--    require'nvim-tree'.close()
+-- end
 return tree

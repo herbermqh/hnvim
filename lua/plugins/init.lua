@@ -1,7 +1,6 @@
 require('packer').startup(function()
     -- Packer Itself
     use('wbthomason/packer.nvim')
-
     -- LSP
     --[[ use({
         'neoclide/coc.nvim',
@@ -60,8 +59,8 @@ require('packer').startup(function()
     -- use 'hrsh7th/cmp-copilot'
     use {'github/copilot.vim'}
     -- LaTeX
-    -- use({'lervag/vimtex'})
-    use({'herbermqh/vimtex'})
+    use({'lervag/vimtex'})
+    -- use({'herbermqh/vimtex'})
     -- use('herbermqh/vim-latex')
 
     -- Utilities
@@ -151,12 +150,16 @@ require('packer').startup(function()
       end,
       requires = {'kyazdani42/nvim-web-devicons', opt = true}
     }) ]]
-    use('p00f/nvim-ts-rainbow')
+    -- modules ts
+    -- use('p00f/nvim-ts-rainbow') -- discontinuado en vez de esto se utiliza nvim-ts-rainbow2
+    use 'HiPhish/nvim-ts-rainbow2'
+    use 'windwp/nvim-ts-autotag'
+
+    use({'frazrepo/vim-rainbow'})
+    use({'luochen1990/rainbow'})
     -- use('akinsho/nvim-bufferline.lua')
     -- use('powerline/fonts')
-    use {
-      'romgrk/barbar.nvim',
-    }
+    use {'romgrk/barbar.nvim',}
     use 'nvim-lualine/lualine.nvim'
 
     -- Themes
@@ -165,10 +168,10 @@ require('packer').startup(function()
     -- use({'marko-cerovac/material.nvim', opt = false, as = 'material'})
     -- use({'folke/tokyonight.nvim'})
     use 'herbermqh/tokyonight.nvim'
-    -- use 'Mofiqul/vscode.nvim'
+    use 'Mofiqul/vscode.nvim'
     -- use 'bluz71/vim-moonfly-colors'
     -- use 'bluz71/vim-nightfly-guicolors'
-    -- use({'christianchiarulli/nvcode-color-schemes.vim'})
+    use({'christianchiarulli/nvcode-color-schemes.vim'})
     --[[ use{
       'PHSix/nvim-hybrid',
       config = function()
@@ -179,7 +182,7 @@ require('packer').startup(function()
     -- use 'yonlu/omni.vim'
     -- use 'ray-x/aurora'
     -- use 'nekonako/xresources-nvim'
-    -- use 'shaunsingh/nord.nvim'
+    use 'shaunsingh/nord.nvim'
     -- use {'MordechaiHadad/nvim-papadark', requires = {'rktjmp/lush.nvim'}}
     -- use 'shaunsingh/moonlight.nvim'
     -- use 'navarasu/onedark.nvim'
@@ -198,8 +201,6 @@ require('packer').startup(function()
     -- use 'olimorris/onedark.nvim'
 
     -- IDE
-    use({'frazrepo/vim-rainbow'})
-    use({'luochen1990/rainbow'})
     -- use({'micha/vim-colors-solarized'})
     -- use({'mg979/vim-visual-multi'})
     -- use({'arzg/vim-colors-xcode'})
@@ -214,7 +215,7 @@ require('packer').startup(function()
     -- others
     use({'voldikss/vim-floaterm'})
     use({'liuchengxu/vim-which-key'})
-    use({'liuchengxu/vim-clap'})
+    -- use({'liuchengxu/vim-clap'})
     use {"akinsho/toggleterm.nvim"}
 
     -- Ocasional Plugins
