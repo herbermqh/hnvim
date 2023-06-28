@@ -59,8 +59,8 @@ require('packer').startup(function()
     -- use 'hrsh7th/cmp-copilot'
     use {'github/copilot.vim'}
     -- LaTeX
-    use({'lervag/vimtex'})
-    -- use({'herbermqh/vimtex'})
+    -- use({'lervag/vimtex'})
+    use({'herbermqh/vimtex'})
     -- use('herbermqh/vim-latex')
 
     -- Utilities
@@ -155,8 +155,8 @@ require('packer').startup(function()
     use 'HiPhish/nvim-ts-rainbow2'
     use 'windwp/nvim-ts-autotag'
 
-    use({'frazrepo/vim-rainbow'})
-    use({'luochen1990/rainbow'})
+    -- use({'frazrepo/vim-rainbow'})
+    -- use({'luochen1990/rainbow'})
     -- use('akinsho/nvim-bufferline.lua')
     -- use('powerline/fonts')
     use {'romgrk/barbar.nvim',}
