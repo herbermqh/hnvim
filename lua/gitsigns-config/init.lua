@@ -63,8 +63,4 @@ require('gitsigns').setup({
   yadm = {
     enable = false
   },
-  -- keymaps
-  -- keymaps = { noremap = true, buffer = true },
-  sign_priority = 6,
-  update_debounce = 200,
 })

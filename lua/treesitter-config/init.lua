@@ -8,8 +8,7 @@ require'nvim-treesitter.configs'.setup{
   },
   highlight = {
     enable = true,
-    disable = {""},
-    additional_vim_regex_highlighting = true,
+    additional_vim_regex_highlighting = false,
   },
   indent = { enable = true, disable = {"yaml"}},
   rainbow = {
@@ -19,7 +18,7 @@ require'nvim-treesitter.configs'.setup{
       html = 'rainbow-tags',
       latex = 'rainbow-art',
     },
-    extended_mode = true,
+    -- extended_mode = true,
     strategy = {
       rainbow.strategy['global'],
       latex = function()
@@ -44,6 +43,6 @@ require'nvim-treesitter.configs'.setup{
             },
   },
   autotag={
-    enable = true,
+    enable = false,
   },
 }

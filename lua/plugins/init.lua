@@ -153,7 +153,7 @@ require('packer').startup(function()
     -- modules ts
     -- use('p00f/nvim-ts-rainbow') -- discontinuado en vez de esto se utiliza nvim-ts-rainbow2
     use 'HiPhish/nvim-ts-rainbow2'
-    use 'windwp/nvim-ts-autotag'
+    -- use 'windwp/nvim-ts-autotag'
 
     -- use({'frazrepo/vim-rainbow'})
     -- use({'luochen1990/rainbow'})
