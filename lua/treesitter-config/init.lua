@@ -8,7 +8,7 @@ require'nvim-treesitter.configs'.setup{
   },
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = false,
+    additional_vim_regex_highlighting = true,
   },
   indent = { enable = true, disable = {"yaml"}},
   rainbow = {
@@ -21,16 +21,6 @@ require'nvim-treesitter.configs'.setup{
     -- extended_mode = true,
     strategy = {
       rainbow.strategy['global'],
-      latex = function()
-            -- Disabled for very large files, global strategy for large files,
-            -- local strategy otherwise
-            if vim.fn.line('$') > 10000 then
-                return nil
-            elseif vim.fn.line('$') > 1000 then
-                return rainbow.strategy['global']
-            end
-            return rainbow.strategy['local']
-        end
     },
     hlgroups = {
                'TSRainbowBlue',
@@ -45,4 +35,22 @@ require'nvim-treesitter.configs'.setup{
   autotag={
     enable = false,
   },
+  playground = {
+    enable = true,
+    disable = {},
+    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+    persist_queries = false, -- Whether the query persists across vim sessions
+    keybindings = {
+      toggle_query_editor = 'o',
+      toggle_hl_groups = 'i',
+      toggle_injected_languages = 't',
+      toggle_anonymous_nodes = 'a',
+      toggle_language_display = 'I',
+      focus_language = 'f',
+      unfocus_language = 'F',
+      update = 'R',
+      goto_node = '<cr>',
+      show_help = '?',
+    },
+  }
 }

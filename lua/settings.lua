@@ -28,7 +28,6 @@ vim.cmd([[
   set breakindent
 ]])
 
-
 -- vim.o.smartindent = true
 -- vim.bo.smartindent = true
 
