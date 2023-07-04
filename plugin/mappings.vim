@@ -1,4 +1,4 @@
-vnoremap <C-c> "+y
+vnoremap <C-c> "+
 nnoremap <C-c> "+yy
 vnoremap <C-x> "+d
 nnoremap <C-x> "+dd

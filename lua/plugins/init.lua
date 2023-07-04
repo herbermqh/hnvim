@@ -19,7 +19,8 @@ require('packer').startup(function()
     -- use 'nixprime/cpsm'
     -- use 'romgrk/fzy-lua-native'
     -- use 'gelguy/wilder.nvim'
-    -- use 'ryanoasis/vim-devicons'
+    use 'ryanoasis/vim-devicons'
+    use 'kyazdani42/nvim-web-devicons'
     --autocomplete
     use('SirVer/ultisnips')
     use('quangnguyen30192/cmp-nvim-ultisnips')
@@ -153,7 +154,8 @@ require('packer').startup(function()
     -- modules ts
     -- use('p00f/nvim-ts-rainbow') -- discontinuado en vez de esto se utiliza nvim-ts-rainbow2
     use 'HiPhish/nvim-ts-rainbow2'
-    use 'windwp/nvim-ts-autotag'
+    -- use 'windwp/nvim-ts-autotag'
+    use 'nvim-treesitter/playground'
 
     -- use({'frazrepo/vim-rainbow'})
     -- use({'luochen1990/rainbow'})

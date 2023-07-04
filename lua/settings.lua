@@ -28,7 +28,6 @@ vim.cmd([[
   set breakindent
 ]])
 
-
 -- vim.o.smartindent = true
 -- vim.bo.smartindent = true
 
@@ -131,8 +130,8 @@ vim.o.wildmenu = true
 vim.o.wildmode = 'longest:full,full'
 
 -- Minimal number of screen lines to keep above and below the cursor
-vim.o.scrolloff = 3
-vim.o.sidescrolloff = 3
+vim.o.scrolloff = 1
+vim.o.sidescrolloff = 1
 
 -- RipGrep needed
 vim.o.grepprg = 'rg --vimgrep --no-heading --hidden --smart-case --no-ignore-vcs'
