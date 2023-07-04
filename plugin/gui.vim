@@ -1,3 +1,4 @@
+" colorscheme lunar
 set number
 set relativenumber
 set wrap
