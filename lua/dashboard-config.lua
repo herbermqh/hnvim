@@ -16,7 +16,7 @@ db.setup({
       desc = 'Recently latest session                 ',
       shortcut = 'SPC s l',
       action ='Telescope oldfiles'},
-      {icon = '  ',
+      {icon = '󱞛  ',
       desc = 'Recently opened files                   ',
       action =  'DashboardFindHistory',
       shortcut = 'SPC f h'},
@@ -33,7 +33,7 @@ db.setup({
       action = 'Telescope live_grep',
       shortcut = 'SPC f w'},
     },
-    footer = {'herbermqh@gmail.com'},  --your footer
+    footer = {'neovim plus'},  --your footer
   },
     preview = {
       command = 'cat | lolcat -F 0.3',
