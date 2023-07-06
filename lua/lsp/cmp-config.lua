@@ -208,7 +208,6 @@ cmp.setup.filetype('gitcommit', {
     { name = 'buffer' },
   })
 })
-
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 -- cmp.setup.cmdline('/', {
 --   completion = { autocomplete = false},
@@ -241,3 +240,18 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+----- window 
+cmp.setup {
+  window = {
+    completion = { -- rounded border; thin-style scrollbar
+      border = 'rounded',
+      scrollbar = '║',
+      winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None'
+    },
+    documentation = { -- no border; native-style scrollbar
+      border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'},
+      scrollbar = '║',
+      winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None'
+    },
+  },
+}
