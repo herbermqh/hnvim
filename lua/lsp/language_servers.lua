@@ -8,7 +8,7 @@ require'lspconfig'.html.setup {
 require'lspconfig'.texlab.setup {
   capabilities = capabilities,
   cmd = { "texlab" },
-  filetypes = { "tex", "bib", "sty" },
+  filetypes = { "tex", "bib", "sty", "latex", "cls"},
 }
 
 --[[ require'lspconfig'.ltex.setup{

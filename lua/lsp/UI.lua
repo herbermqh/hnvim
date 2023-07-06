@@ -1,8 +1,6 @@
-
-
 -- ------------------------Borders
 
---[[ local border = {
+local border = {
       {"╭", "FloatBorder"},
       {"─", "FloatBorder"},
       {"╮", "FloatBorder"},
@@ -11,7 +9,7 @@
       {"─", "FloatBorder"},
       {"╰", "FloatBorder"},
       {"│", "FloatBorder"},
-} ]]
+}
 
 -- LSP settings (for overriding per client)
 local handlers =  {

@@ -12,10 +12,10 @@ require("notify").setup({
   render = "default",
 
   -- Default timeout for notifications
-  timeout = 1000,
+  timeout = 500,
 
   -- Max number of columns for messages
-  max_width = nil,
+  max_width = 30,
   -- Max number of lines for a message
   max_height = nil,
 
@@ -35,10 +35,7 @@ require("notify").setup({
   },
 })
 
-
-
 vim.notify = require("notify")
-
 
 -- Utility functions shared between progress reports for LSP and DAP
 
@@ -85,7 +82,6 @@ end
 local function format_message(message, percentage)
  return (percentage and percentage .. "%\t" or "") .. (message or "")
 end
-
 
 -- LSP integration
 -- Make sure to also have the snippet with the common helper functions in your config!
