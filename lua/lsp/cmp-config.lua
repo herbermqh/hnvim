@@ -2,42 +2,38 @@ vim.g.completeopt="menu,menuone,noselect,noinsert"
 
 -- Setup nvim-cmp.
 local cmp = require'cmp'
-local lspkind = require('lspkind')
+-- local lspkind = require('lspkind')
 
 local t = function(str)
     return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
-
-
 local kind_icons = {
-  Text = "",
-  Method = "",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "ﴯ",
-  Interface = "",
-  Module = "",
-  Property = "ﰠ",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = ""
+      Text = "󰉿",
+      Method = "󰆧",
+      Function = "󰊕",
+      Constructor = "",
+      Field = "󰜢",
+      Variable = "󰀫",
+      Class = "󰠱",
+      Interface = "",
+      Module = "",
+      Property = "󰜢",
+      Unit = "󰑭",
+      Value = "󰎠",
+      Enum = "",
+      Keyword = "󰌋",
+      Snippet = "",
+      Color = "󰏘",
+      File = "󰈙",
+      Reference = "󰈇",
+      Folder = "󰉋",
+      EnumMember = "",
+      Constant = "󰏿",
+      Struct = "󰙅",
+      Event = "",
+      Operator = "󰆕",
+      TypeParameter = "",
 }
-
-
 vim.cmd([[
 highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
 highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
@@ -212,7 +208,6 @@ cmp.setup.filetype('gitcommit', {
     { name = 'buffer' },
   })
 })
-
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 -- cmp.setup.cmdline('/', {
 --   completion = { autocomplete = false},
@@ -245,3 +240,18 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+----- window 
+cmp.setup {
+  window = {
+    completion = { -- rounded border; thin-style scrollbar
+      border = 'rounded',
+      scrollbar = '║',
+      winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None'
+    },
+    documentation = { -- no border; native-style scrollbar
+      border = {'╭', '─', '╮', '│', '╯', '─', '╰', '│'},
+      scrollbar = '║',
+      winhighlight = 'Normal:CmpPmenu,FloatBorder:CmpPmenuBorder,CursorLine:PmenuSel,Search:None'
+    },
+  },
+}
