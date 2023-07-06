@@ -107,9 +107,10 @@
       \ 'name'  : 'LaTeX',
       \ 'c' :   [':TexlabBuild'  ,   'compile'],
       \ 's' :   [':VimtexStop'  ,   'stop compile'],
-      \ 'e' :   [':VimtexErrors'  ,   'errors'],
+      \ 'e' :   [':Telescope diagnostics'  ,   'errors'],
       \ 'v' :   [':VimtexView'  ,   'view pdf'],
       \ }
+      " \ 'e' :   [':VimtexErrors'  ,   'errors'],
 " Register which key map
   call which_key#register('<Space>', "g:which_key_map")
 
