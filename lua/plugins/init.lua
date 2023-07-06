@@ -9,10 +9,10 @@ require('packer').startup(function()
     }) ]]
     use 'neovim/nvim-lspconfig'
     -- use 'hrsh7th/nvim-compe'
-    use 'onsails/lspkind-nvim'
-    use {
-    'williamboman/nvim-lsp-installer',
-    }
+    -- use 'onsails/lspkind-nvim'
+    -- use {
+    -- 'williamboman/nvim-lsp-installer',
+    -- }
     use 'hura/vim-asymptote'
     -- menu
     -- use 'sharkdp/fd'
