@@ -105,12 +105,11 @@
     \ }
   let g:which_key_map.l = {
       \ 'name'  : 'LaTeX',
-      \ 'c' :   [':TexlabBuild'  ,   'compile'],
+      \ 'c' :   [':VimtexCompile'  ,   'compile'],
       \ 's' :   [':VimtexStop'  ,   'stop compile'],
-      \ 'e' :   [':Telescope diagnostics'  ,   'errors'],
+      \ 'e' :   [':VimtexErrors'  ,   'errors'],
       \ 'v' :   [':VimtexView'  ,   'view pdf'],
       \ }
-      " \ 'e' :   [':VimtexErrors'  ,   'errors'],
 " Register which key map
   call which_key#register('<Space>', "g:which_key_map")
 
