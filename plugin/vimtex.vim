@@ -25,7 +25,7 @@ let g:vimtex_compiler_method = 'latexmk'
 "note: no está definido latexmk_engines por que en el arhicov .latexmkrc se
 "define $pdf_mode=5; 5 para xelatex, 4 para lualatex y 0 para pdflatex.
 let g:vimtex_imaps_enabled=0
-let g:vimtex_quickfix_mode=2
+let g:vimtex_quickfix_mode=1
 let g:vimtex_quickfix_autoclose_after_keystrokes=0
 let g:vimtex_quickfix_open_on_warning=0
 let g:vimtex_syntax_enabled=1
