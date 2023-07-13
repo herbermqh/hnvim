@@ -12,10 +12,10 @@ require("notify").setup({
   render = "default",
 
   -- Default timeout for notifications
-  timeout = 500,
+  timeout = 400,
 
   -- Max number of columns for messages
-  max_width = 40,
+  max_width = 45,
   -- Max number of lines for a message
   max_height = nil,
 
@@ -23,7 +23,7 @@ require("notify").setup({
   -- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
 
   -- Minimum width for notification windows
-  minimum_width = 40,
+  minimum_width = 5,
 
   -- Icons for the different levels
   icons = {
@@ -36,6 +36,43 @@ require("notify").setup({
 })
 
 vim.notify = require("notify")
+--------------------------------------------
+---
+-- Output of Command
+local function notify_output(command, opts)
+  local output = ""
+  local notification
+  local notify = function(msg, level)
+    local notify_opts = vim.tbl_extend(
+      "keep",
+      opts or {},
+      { title = table.concat(command, " "), replace = notification }
+    )
+    notification = vim.notify(msg, level, notify_opts)
+
+  end
+
+  local on_data = function(_, data)
+    output = output .. table.concat(data, "\n")
+    notify(output, "info")
+  end
+  vim.fn.jobstart(command, {
+    on_stdout = on_data,
+    on_stderr = on_data,
+    on_exit = function(_, code)
+
+      if #output == 0 then
+
+        notify("No output of command, exit code: " .. code, "warn")
+      end
+    end,
+  })
+end
+
+
+
+
+-- Progress updates
 
 -- Utility functions shared between progress reports for LSP and DAP
 
@@ -83,6 +120,11 @@ local function format_message(message, percentage)
  return (percentage and percentage .. "%\t" or "") .. (message or "")
 end
 
+
+
+
+
+-- LSP Status Updates
 -- LSP integration
 -- Make sure to also have the snippet with the common helper functions in your config!
 
@@ -125,3 +167,24 @@ vim.lsp.handlers["$/progress"] = function(_, result, ctx)
    notif_data.spinner = nil
  end
 end
+
+
+
+
+-- Lsp messages
+-- table from lsp severity to vim severity.
+local severity = {
+  "error",
+  "warn",
+  "info",
+  "info", -- map both hint and info to info?
+}
+
+vim.lsp.handlers["window/showMessage"] = function(err, method, params, client_id)
+             vim.notify(method.message, severity[params.type])
+end
+
+
+
+
+

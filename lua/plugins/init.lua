@@ -85,6 +85,7 @@ require('packer').startup(function()
         require('gitsigns').setup()
       end
     })
+    use 'mfussenegger/nvim-dap'
 
     --[[ use({
         'b3nj5m1n/kommentary',
