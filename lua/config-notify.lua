@@ -15,7 +15,7 @@ require("notify").setup({
   timeout = 500,
 
   -- Max number of columns for messages
-  max_width = 30,
+  max_width = 40,
   -- Max number of lines for a message
   max_height = nil,
 
@@ -23,7 +23,7 @@ require("notify").setup({
   -- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
 
   -- Minimum width for notification windows
-  minimum_width = 80,
+  minimum_width = 40,
 
   -- Icons for the different levels
   icons = {
