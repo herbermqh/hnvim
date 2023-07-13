@@ -26,5 +26,8 @@ require('lualine-config')
 require('tokyonight-config')
 -- require('wildermenu-config')
 -- require('alpha-nvim-config')
+-- require('cmdline')
+require('config-noice')
+
 
 

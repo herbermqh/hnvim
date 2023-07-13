@@ -33,3 +33,7 @@ nnoremap <A-e> <Esc>:silent exec '!python -m gestor-archivos-latex edit "'.getli
 " -- preabulo precompilador
 nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble ' '%:p'<CR>
 
+
+
+
+

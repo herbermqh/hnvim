@@ -24,7 +24,21 @@ let g:vimtex_compiler_method = 'latexmk'
 "         \}
 "note: no está definido latexmk_engines por que en el arhicov .latexmkrc se
 "define $pdf_mode=5; 5 para xelatex, 4 para lualatex y 0 para pdflatex.
+let g:vimtex_delim_list = {
+        \ 'delim_tex' : {
+        \   'name' : [
+        \     ['[', ']'],
+        \     ['{', '}'],
+        \     ['\glq', '\grq'],
+        \     ['\glqq', '\grqq'],
+        \     ['\flq', '\frq'],
+        \     ['\flqq', '\frqq'],
+        \    ]
+        \  }
+        \}
 let g:vimtex_imaps_enabled=0
+let g:vimtex_include_indicators=['input','include','subfile','includeonly', 'chapterfile']
+let g:vimtex_include_search_enabled=1
 let g:vimtex_quickfix_mode=1
 let g:vimtex_quickfix_autoclose_after_keystrokes=0
 let g:vimtex_quickfix_open_on_warning=0
@@ -57,8 +71,8 @@ let g:vimtex_syntax_custom_cmds = [
       \]
 let g:vimtex_fold_enabled=1
 let g:vimtex_toc_enabled=1
-let g:vimtex_mappings_enabled=0
-let g:vimtex_indent_enabled=0
+let g:vimtex_mappings_enabled=1
+let g:vimtex_indent_enabled=1
 "------------------------------------COMPLETION
 "------------------------------------FOLDING
 "------------------------------------IDENTATION
@@ -101,8 +115,7 @@ nnoremap <localleader>lt :call vimtex#fzf#run()<cr>"
 "
 if has('win32') || (has('unix') && exists('$WSLENV'))
   let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
-  let g:vimtex_view_general_options
-    \ = '-reuse-instance -forward-search @tex @line @pdf'
+  let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
 else
   " let g:vimtex_view_general_viewer = 'zathura'
   " let g:vimtex_view_general_viewer = 'SumatraPDF.exe'

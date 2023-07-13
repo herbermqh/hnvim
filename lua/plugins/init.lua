@@ -60,8 +60,8 @@ require('packer').startup(function()
     -- use 'hrsh7th/cmp-copilot'
     use {'github/copilot.vim'}
     -- LaTeX
-    -- use({'lervag/vimtex'})
-    use({'herbermqh/vimtex'})
+    use({'lervag/vimtex'})
+    -- use({'herbermqh/vimtex'})
     -- use('herbermqh/vim-latex')
 
     -- Utilities
@@ -213,6 +213,20 @@ require('packer').startup(function()
     use({'tpope/vim-obsession'})
     use({'tpope/vim-commentary'})
     use 'tpope/vim-repeat'
+    -- use {
+    --   'VonHeikemen/fine-cmdline.nvim',
+    --   requires = {
+    --     {'MunifTanjim/nui.nvim'}
+    --   }
+    -- }
+    use {
+      'folke/noice.nvim',
+      requires = {
+        'MunifTanjim/nui.nvim',
+        'rcarriga/nvim-notify',
+        ''
+      }
+    }
 
     -- others
     use({'voldikss/vim-floaterm'})
