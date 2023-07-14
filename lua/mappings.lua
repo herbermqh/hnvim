@@ -17,7 +17,7 @@ vim.g.mapleader = ' '
 
 -- save document
 plug_mapper('n', '<C-s>', ':w!<CR>')
-plug_mapper('i', '<C-s>', '<Esc>:w!<CR>a')
+plug_mapper('i', '<C-s>', '<Esc>:w!<CR>')
 
 -- exit neovim
 mapper('n', 'q', ':x! <CR>')
