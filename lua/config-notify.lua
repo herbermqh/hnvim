@@ -23,7 +23,7 @@ require("notify").setup({
   -- Set this to either a highlight group, an RGB hex value e.g. "#000000" or a function returning an RGB code for dynamic values
 
   -- Minimum width for notification windows
-  minimum_width = 5,
+  minimum_width = 20,
 
   -- Icons for the different levels
   icons = {
