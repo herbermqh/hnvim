@@ -67,6 +67,7 @@ require("noice").setup({
   -- see the section on Command Redirection
   ---@type NoiceRouteConfig
   redirect = {
+
     view = "popup",
     filter = { event = "msg_show" },
   },
