@@ -59,6 +59,32 @@ local colors = {
   red      = '#ec5f67',
 }
 
+local mode_color = {
+  n = colors.red,
+
+  i = colors.green,
+  v = colors.blue,
+  [''] = colors.blue,
+  V = colors.blue,
+  c = colors.magenta,
+  no = colors.red,
+
+  s = colors.orange,
+  S = colors.orange,
+  [''] = colors.orange,
+  ic = colors.yellow,
+  R = colors.violet,
+  Rv = colors.violet,
+  cv = colors.red,
+  ce = colors.red,
+
+  r = colors.cyan,
+  rm = colors.cyan,
+  ['r?'] = colors.cyan,
+  ['!'] = colors.red,
+  t = colors.red,
+}
+
 local conditions = {
   buffer_not_empty = function()
     return vim.fn.empty(vim.fn.expand('%:t')) ~= 1
@@ -129,9 +155,13 @@ ins_left {
     return '▊'
 
   end,
-  color = { fg = colors.blue }, -- Sets highlighting of component
+  color = function()
+    return { fg = mode_color[vim.fn.mode()] }
+  end,
   padding = { left = 0, right = 1 }, -- We don't need space before this
 }
+
+
 
 ins_left {
   -- mode component
@@ -139,36 +169,7 @@ ins_left {
 
     return ''
   end,
-  color = function()
-    -- auto change color according to neovims mode
-    local mode_color = {
-      n = colors.red,
-
-      i = colors.green,
-      v = colors.blue,
-      [''] = colors.blue,
-      V = colors.blue,
-      c = colors.magenta,
-      no = colors.red,
-
-      s = colors.orange,
-      S = colors.orange,
-      [''] = colors.orange,
-      ic = colors.yellow,
-      R = colors.violet,
-      Rv = colors.violet,
-      cv = colors.red,
-      ce = colors.red,
-
-      r = colors.cyan,
-      rm = colors.cyan,
-      ['r?'] = colors.cyan,
-      ['!'] = colors.red,
-      t = colors.red,
-
-    }
-    return { fg = mode_color[vim.fn.mode()] }
-  end,
+  color = { fg = colors.blue},
   padding = { right = 1 },
 }
 
@@ -214,7 +215,7 @@ ins_left {
   -- Lsp server name .
 
   function()
-    local msg = 'No Active Lsp'
+    local msg = '󱃞 '
     local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
     local clients = vim.lsp.get_active_clients()
     if next(clients) == nil then
@@ -231,8 +232,9 @@ ins_left {
     return msg
   end,
 
-  icon = ' LSP:',
-  color = { fg = '#ffffff', gui = 'bold' },
+  icon = ' :',
+  -- color = { fg = '#ffffff', gui = 'bold' },
+  color = { fg = colors.fg, gui = 'bold' },
 }
 
 -- Add components to right sections
@@ -246,7 +248,7 @@ ins_right {
 ins_right {
   'fileformat',
   fmt = string.upper,
-  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
+  icons_enabled = true, -- I think icons are cool but Eviline doesn't have them. sigh
   color = { fg = colors.green, gui = 'bold' },
 }
 
@@ -272,13 +274,15 @@ ins_right {
 
 }
 
-
 ins_right {
 
   function()
     return '▊'
   end,
-  color = { fg = colors.blue },
+  -- color = { fg = colors.blue },
+  color = function()
+    return { fg = mode_color[vim.fn.mode()] }
+  end,
   padding = { left = 1 },
 }
 
