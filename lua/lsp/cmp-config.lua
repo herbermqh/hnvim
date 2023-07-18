@@ -224,7 +224,7 @@ cmp.setup.cmdline('/', {
   sources = cmp.config.sources({
     { name = 'nvim_lsp_document_symbol' }
   },{
-      { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
+      { name = 'buffer', option = { keyword_pattern = [=[[^[:blank:]].*]=] } }
   })
 })
 
