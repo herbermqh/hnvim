@@ -1,9 +1,3 @@
-vnoremap <C-c> "+
-nnoremap <C-c> "+yy
-vnoremap <C-x> "+d
-nnoremap <C-x> "+dd
-vnoremap <C-p> "+p
-nnoremap <C-p> "+p
 " -- Buffers
 nnoremap <C-Right> :BufferNext<CR>
 nnoremap <C-l> :BufferNext<CR>

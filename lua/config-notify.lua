@@ -15,7 +15,7 @@ require("notify").setup({
   timeout = 400,
 
   -- Max number of columns for messages
-  max_width = 45,
+  max_width = 80,
   -- Max number of lines for a message
   max_height = nil,
 

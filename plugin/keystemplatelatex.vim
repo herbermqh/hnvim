@@ -1,6 +1,3 @@
-" autoload myconfig
-nnoremap conf :source ~/.config/nvim/plugin/myconfig.vim<cr>
-
 function! Construct_directory_chapterfile(namechapter,typearchive)
   let _file = expand('%:p:h') . '/' . a:namechapter . '/' . a:typearchive . '-' . a:namechapter . '.tex'
   return _file

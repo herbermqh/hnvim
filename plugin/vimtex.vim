@@ -3,21 +3,9 @@
 let g:vimtex_enabled = 1
 let g:vimtex_compiler_enable = 1
 let g:vimtex_compiler_method = 'latexmk'
-" let g:vimtex_compiler_latexmk = {
-"         \ 'build_dir' : 'build',
-"         \ 'callback' : 1,
-"         \ 'continuous' : 1,
-"         \ 'executable' : 'latexmk',
-"         \ 'hooks' : [],
-"         \ 'options' : [
-"         \   '-verbose',
-"         \   '-shell-escape',
-"         \   '-enable-write18',
-"         \   '-file-line-error',
-"         \   '-synctex=1',
-"         \   '-interaction=nonstopmode',
-"         \ ],
-"         \}
+let g:vimtex_compiler_latexmk = {
+        \ 'out_dir' : 'build',
+        \}
 " let g:vimtex_compiler_latexmk_engines = {
 "         \ '_'                : 'hlatex',
 "         \ 'pdflatex'       : 'hlatex',
@@ -126,6 +114,55 @@ endif
 "------------------------------------DOCUMENTATION
 "------------------------------------CONTEXT MENU
 "------------------------------------API
-call vimtex#syntax#core#new_region_math('empheq')
-call vimtex#syntax#core#new_region_math('answer')
-call vimtex#syntax#core#new_region_math('formula')
+let g:vimtex_syntax_custom_envs = [
+          \ {
+          \   'name': 'empheq',
+          \   'math': v:true
+          \ },
+          \ {
+          \   'name': 'answer',
+          \   'math': v:true
+          \ },
+          \ {
+          \   'name': 'formula',
+          \   'math': v:true
+          \ },
+          \ {
+          \   'name': 'python_code',
+          \   'region': 'texPythonCodeZone',
+          \   'nested': 'python',
+          \ },
+          \ {
+          \   'name': 'codetexcommentlong',
+          \   'region': 'texCodeZone',
+          \   'nested': {
+          \     'python': 'language=python',
+          \     'c': 'language=C',
+          \     'rust': 'language=rust',
+          \   },
+          \ },
+          \]
+let g:vimtex_syntax_nested = {
+          \ 'aliases' : {
+          \   'C' : 'c',
+          \   'csharp' : 'cs',
+          \ },
+          \ 'ignored' : {
+          \   'sh' : ['shSpecial'],
+          \   'bash' : ['shSpecial'],
+          \   'cs' : [
+          \     'csBraces',
+          \   ],
+          \   'python' : [
+          \     'pythonEscape',
+          \     'pythonBEscape',
+          \     'pythonBytesEscape',
+          \   ],
+          \   'java' : [
+          \     'javaError',
+          \   ],
+          \   'haskell' : [
+          \     'hsVarSym',
+          \   ],
+          \ }
+          \}

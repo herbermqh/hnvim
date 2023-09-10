@@ -109,6 +109,7 @@
       \ 's' :   [':VimtexStop'  ,   'stop compile'],
       \ 'e' :   [':VimtexErrors'  ,   'errors'],
       \ 'v' :   [':VimtexView'  ,   'view pdf'],
+      \ 'i' :   [':ToggleFileTexIllustrator'  ,   'LaTeX output in illustrator'],
       \ }
 " Register which key map
   call which_key#register('<Space>', "g:which_key_map")
@@ -122,8 +123,7 @@
   "------------------floaterm
   let g:floaterm_keymap_toggle = '<F1>'
   let g:floaterm_keymap_next   = '<F2>'
-  let g:floaterm_keymap_prev   = '<F3>'
-  let g:floaterm_keymap_new    = '<F4>'
+  let g:floaterm_keymap_new    = '<F3>'
 
   " Floaterm
   let g:floaterm_gitcommit='floaterm'

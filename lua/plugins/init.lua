@@ -234,7 +234,7 @@ require('packer').startup(function()
     use({'liuchengxu/vim-which-key'})
     -- use({'liuchengxu/vim-clap'})
     use {"akinsho/toggleterm.nvim"}
-
+    use {"herbermqh/nvim-workbench"}
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
     -- use({'Pocco81/TrueZen.nvim', opt = true})

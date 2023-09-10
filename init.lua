@@ -28,6 +28,7 @@ require('tokyonight-config')
 -- require('alpha-nvim-config')
 -- require('cmdline')
 require('config-noice')
-
+require('devscript')
+require('latextoillustrator')
 
 
