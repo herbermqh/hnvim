@@ -302,7 +302,7 @@ snippet "\s\sit" "item" riA
 \item $0
 endsnippet
 
-context "env('question')"
+context "env('questions')"
 snippet "\s\sit" "item" riA
 \item $0
 endsnippet
@@ -363,9 +363,9 @@ snippet ldenum "Lista con nombre" i
 endsnippet
 
 snippet qt "Preguntas" i
-\begin{question}
+\begin{questions}
   \item ${0}
-\end{question}
+\end{questions}
 endsnippet
 
 #titulo
@@ -390,6 +390,11 @@ endsnippet
 
 snippet SS2 "subsubsection" iA
 \subsubsection{$0}
+endsnippet
+
+
+snippet SF "subfragment" iA
+\subfragment{$0}
 endsnippet
 
 #referencia
@@ -645,7 +650,7 @@ endsnippet
 
 #Tamaño natural
 snippet dm "Math" wA
-\[${1:${VISUAL}}\] $0
+\[${1:${VISUAL}}\]$0
 endsnippet
 
 # Fracciones
