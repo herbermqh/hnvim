@@ -60,8 +60,8 @@ require('packer').startup(function()
     -- use 'hrsh7th/cmp-copilot'
     use {'github/copilot.vim'}
     -- LaTeX
-    -- use({'lervag/vimtex'})
-    use({'herbermqh/vimtex'})
+    use({'lervag/vimtex'})
+    -- use({'herbermqh/vimtex'})
     -- use('herbermqh/vim-latex')
 
     -- Utilities
@@ -85,6 +85,7 @@ require('packer').startup(function()
         require('gitsigns').setup()
       end
     })
+    use 'mfussenegger/nvim-dap'
 
     --[[ use({
         'b3nj5m1n/kommentary',
@@ -213,13 +214,27 @@ require('packer').startup(function()
     use({'tpope/vim-obsession'})
     use({'tpope/vim-commentary'})
     use 'tpope/vim-repeat'
+    -- use {
+    --   'VonHeikemen/fine-cmdline.nvim',
+    --   requires = {
+    --     {'MunifTanjim/nui.nvim'}
+    --   }
+    -- }
+    use {
+      'folke/noice.nvim',
+      requires = {
+        'MunifTanjim/nui.nvim',
+        'rcarriga/nvim-notify',
+        ''
+      }
+    }
 
     -- others
     use({'voldikss/vim-floaterm'})
     use({'liuchengxu/vim-which-key'})
     -- use({'liuchengxu/vim-clap'})
     use {"akinsho/toggleterm.nvim"}
-
+    use {"herbermqh/nvim-workbench"}
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
     -- use({'Pocco81/TrueZen.nvim', opt = true})

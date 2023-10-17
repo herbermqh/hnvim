@@ -17,7 +17,7 @@ vim.g.mapleader = ' '
 
 -- save document
 plug_mapper('n', '<C-s>', ':w!<CR>')
-plug_mapper('i', '<C-s>', '<Esc>:w!<CR>a')
+plug_mapper('i', '<C-s>', '<Esc>:w!<CR>')
 
 -- exit neovim
 mapper('n', 'q', ':x! <CR>')
@@ -39,19 +39,19 @@ mapper('n', 'tt', ':t.<CR>$')
 -- Get out of the Terminal
 -- mapper('t', '<Esc>', '<C-\\><C-n>')
 
--- mapper('v', 'C-c', '"+y')
--- mapper('n', 'C-c', '"+yy')
--- mapper('v', 'C-x', '"+d')
--- mapper('n', 'C-x', '"+dd')
--- mapper('n', 'C-p', '"+p')
--- mapper('v', 'C-p', '"+p')
+mapper('v', '<C-c>', '"+y')
+mapper('n', '<C-c>', '"+yy')
+mapper('v', '<C-x>', '"+d')
+mapper('n', '<C-x>', '"+dd')
+mapper('n', '<C-p>', '"+p')
+mapper('v', '<C-p>', '"+p')
 
 mapper('n', 'J', 'mzJ`z')
 
 
 -- Plugins Mappings ↓
 -- vim latex
-mapper('n', '<F8>', ']sz=') -- error ortorgrafico
+-- mapper('n', '<F8>', ']sz=') -- error ortorgrafico
 
 -- Telescope
 -- mapper('n', '<C-F>', ':Telescope live_grep<CR>')

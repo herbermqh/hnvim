@@ -236,6 +236,12 @@ snippet ctcl "codetexcommentlong" i
 \end{codetexcommentlong}
 endsnippet
 
+snippet cxtcl "codexetexcommentlong" i
+\begin{codexetexcommentlong}
+  $0
+\end{codexetexcommentlong}
+endsnippet
+
 
 #xcolor
 
@@ -296,7 +302,7 @@ snippet "\s\sit" "item" riA
 \item $0
 endsnippet
 
-context "env('question')"
+context "env('questions')"
 snippet "\s\sit" "item" riA
 \item $0
 endsnippet
@@ -357,9 +363,9 @@ snippet ldenum "Lista con nombre" i
 endsnippet
 
 snippet qt "Preguntas" i
-\begin{question}
+\begin{questions}
   \item ${0}
-\end{question}
+\end{questions}
 endsnippet
 
 #titulo
@@ -384,6 +390,11 @@ endsnippet
 
 snippet SS2 "subsubsection" iA
 \subsubsection{$0}
+endsnippet
+
+
+snippet SF "subfragment" iA
+\subfragment{$0}
 endsnippet
 
 #referencia
@@ -639,7 +650,7 @@ endsnippet
 
 #Tamaño natural
 snippet dm "Math" wA
-\[${1:${VISUAL}}\] $0
+\[${1:${VISUAL}}\]$0
 endsnippet
 
 # Fracciones
@@ -874,12 +885,12 @@ endsnippet
 #vectores a,.
 context "math()"
 snippet "→([a-zA-Z0])" "Vector postfix" riA
-\vec{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
+\vv{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
 endsnippet
 
 context "math()"
 snippet "(?<!\\|n|\w|\d)([a-zA-Z]+)→" "Vector postfix" riA
-\vec{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
+\vv{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
 endsnippet
 
 
@@ -903,7 +914,11 @@ snippet tt "text" iA
 endsnippet
 
 #texto en negrilla
-snippet tbf "bfseries" iA
+# snippet tbf "bfseries" iA
+# \bfseries
+# endsnippet
+
+snippet '(?<!tex)(tbf)' "functions math" rwA
 \bfseries
 endsnippet
 
@@ -1630,11 +1645,11 @@ endsnippet
 
 priority 10000
 snippet mfig "figure environment" i
-\begin{marginfigure}
+\begin{marginfigure}%
 	$0
 	\caption{$1}
 	\label{fig:${3:label}}
-\end{marginfigure}
+\end{marginfigure}%
 endsnippet
 
 
@@ -1715,44 +1730,8 @@ snippet grpms "N images en el margen" i
 endsnippet
 
 #images
-snippet imgb "Imagen sin referencia" i
-\imagebody{$1}$0
-endsnippet
-
-snippet imgq "Imagen sin referencia" i
-\imagequestion{$1}$0
-endsnippet
-
-snippet imge "Imagen sin referencia" i
-\imageexample{$1}$0
-endsnippet
-
-snippet imgm "Imagen en el margen" i
-\imagemargin{$1}$0
-endsnippet
-
-snippet imgbf "N images en el margen" i
-\begin{imagefullbody}{$1}
-  \subimage{$1$2}
-  \subimage{$1$3}
-\end{iimagefullbody}
-$0
-endsnippet
-
-snippet imgms "N images en el margen" i
-\begin{imagemarginseveral}{$1}
-  \subimage{$1$2}
-  \subimage{$1$3}
-\end{imagemarginseveral}
-$0
-endsnippet
-
-snippet imgfw "N images en el margen" i
-\begin{imagefullwidth}{$1}
-  \subimage{$1$2}
-  \subimage{$1$3}
-\end{imagefullwidth}
-$0
+snippet img "Imagen sin referencia" i
+\image{$1}$0
 endsnippet
 
 #tabla

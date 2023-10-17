@@ -141,7 +141,7 @@ vim.o.grepformat = '%f:%l:%c:%m,%f:%l:%m'
 vim.o.completeopt = 'menuone,noinsert,noselect'
 
 -- Very lazy please
-vim.o.lazyredraw = true
+-- vim.o.lazyredraw = true
 
 -- Error Format
 vim.o.errorformat = vim.o.errorformat .. ',%f'

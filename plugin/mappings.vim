@@ -1,9 +1,3 @@
-vnoremap <C-c> "+
-nnoremap <C-c> "+yy
-vnoremap <C-x> "+d
-nnoremap <C-x> "+dd
-vnoremap <C-p> "+p
-nnoremap <C-p> "+p
 " -- Buffers
 nnoremap <C-Right> :BufferNext<CR>
 nnoremap <C-l> :BufferNext<CR>
@@ -32,4 +26,8 @@ nnoremap <A-e> <Esc>:silent exec '!python -m gestor-archivos-latex edit "'.getli
 
 " -- preabulo precompilador
 nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble ' '%:p'<CR>
+
+
+
+
 

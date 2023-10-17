@@ -1,6 +1,3 @@
-" autoload myconfig
-nnoremap conf :source ~/.config/nvim/plugin/myconfig.vim<cr>
-
 function! Construct_directory_chapterfile(namechapter,typearchive)
   let _file = expand('%:p:h') . '/' . a:namechapter . '/' . a:typearchive . '-' . a:namechapter . '.tex'
   return _file
@@ -97,7 +94,9 @@ endfunction
 
 function! Getline(typearchive)
   let linetext = getline('.')
-  let namecommand = linetext[match(linetext, '\\')+1:match(linetext, '{')-1]
+  " cambiar el namecommand por extracción de codigo desde \\ hasta primer
+  " aparición de [ o {
+  let namecommand = linetext[match(linetext, '\\')+1:match(linetext, '[\|{')-1]
   if namecommand ==? "chapterfile"
     let namechapter = linetext[match(linetext, '{')+1:match(linetext, '}')-1]
     let _directory= Setvardirectoryarchive(namechapter,a:typearchive)

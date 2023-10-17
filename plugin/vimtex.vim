@@ -3,29 +3,31 @@
 let g:vimtex_enabled = 1
 let g:vimtex_compiler_enable = 1
 let g:vimtex_compiler_method = 'latexmk'
-" let g:vimtex_compiler_latexmk = {
-"         \ 'build_dir' : 'build',
-"         \ 'callback' : 1,
-"         \ 'continuous' : 1,
-"         \ 'executable' : 'latexmk',
-"         \ 'hooks' : [],
-"         \ 'options' : [
-"         \   '-verbose',
-"         \   '-shell-escape',
-"         \   '-enable-write18',
-"         \   '-file-line-error',
-"         \   '-synctex=1',
-"         \   '-interaction=nonstopmode',
-"         \ ],
-"         \}
+let g:vimtex_compiler_latexmk = {
+        \ 'out_dir' : 'build',
+        \}
 " let g:vimtex_compiler_latexmk_engines = {
 "         \ '_'                : 'hlatex',
 "         \ 'pdflatex'       : 'hlatex',
 "         \}
 "note: no está definido latexmk_engines por que en el arhicov .latexmkrc se
 "define $pdf_mode=5; 5 para xelatex, 4 para lualatex y 0 para pdflatex.
+let g:vimtex_delim_list = {
+        \ 'delim_tex' : {
+        \   'name' : [
+        \     ['[', ']'],
+        \     ['{', '}'],
+        \     ['\glq', '\grq'],
+        \     ['\glqq', '\grqq'],
+        \     ['\flq', '\frq'],
+        \     ['\flqq', '\frqq'],
+        \    ]
+        \  }
+        \}
 let g:vimtex_imaps_enabled=0
-let g:vimtex_quickfix_mode=2
+let g:vimtex_include_indicators=['input','include','subfile','includeonly', 'chapterfile']
+let g:vimtex_include_search_enabled=1
+let g:vimtex_quickfix_mode=1
 let g:vimtex_quickfix_autoclose_after_keystrokes=0
 let g:vimtex_quickfix_open_on_warning=0
 let g:vimtex_syntax_enabled=1
@@ -57,8 +59,8 @@ let g:vimtex_syntax_custom_cmds = [
       \]
 let g:vimtex_fold_enabled=1
 let g:vimtex_toc_enabled=1
-let g:vimtex_mappings_enabled=0
-let g:vimtex_indent_enabled=0
+let g:vimtex_mappings_enabled=1
+let g:vimtex_indent_enabled=1
 "------------------------------------COMPLETION
 "------------------------------------FOLDING
 "------------------------------------IDENTATION
@@ -101,8 +103,7 @@ nnoremap <localleader>lt :call vimtex#fzf#run()<cr>"
 "
 if has('win32') || (has('unix') && exists('$WSLENV'))
   let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
-  let g:vimtex_view_general_options
-    \ = '-reuse-instance -forward-search @tex @line @pdf'
+  let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
 else
   " let g:vimtex_view_general_viewer = 'zathura'
   " let g:vimtex_view_general_viewer = 'SumatraPDF.exe'
@@ -113,6 +114,55 @@ endif
 "------------------------------------DOCUMENTATION
 "------------------------------------CONTEXT MENU
 "------------------------------------API
-call vimtex#syntax#core#new_region_math('empheq')
-call vimtex#syntax#core#new_region_math('answer')
-call vimtex#syntax#core#new_region_math('formula')
+let g:vimtex_syntax_custom_envs = [
+          \ {
+          \   'name': 'empheq',
+          \   'math': v:true
+          \ },
+          \ {
+          \   'name': 'answer',
+          \   'math': v:true
+          \ },
+          \ {
+          \   'name': 'formula',
+          \   'math': v:true
+          \ },
+          \ {
+          \   'name': 'python_code',
+          \   'region': 'texPythonCodeZone',
+          \   'nested': 'python',
+          \ },
+          \ {
+          \   'name': 'codetexcommentlong',
+          \   'region': 'texCodeZone',
+          \   'nested': {
+          \     'python': 'language=python',
+          \     'c': 'language=C',
+          \     'rust': 'language=rust',
+          \   },
+          \ },
+          \]
+let g:vimtex_syntax_nested = {
+          \ 'aliases' : {
+          \   'C' : 'c',
+          \   'csharp' : 'cs',
+          \ },
+          \ 'ignored' : {
+          \   'sh' : ['shSpecial'],
+          \   'bash' : ['shSpecial'],
+          \   'cs' : [
+          \     'csBraces',
+          \   ],
+          \   'python' : [
+          \     'pythonEscape',
+          \     'pythonBEscape',
+          \     'pythonBytesEscape',
+          \   ],
+          \   'java' : [
+          \     'javaError',
+          \   ],
+          \   'haskell' : [
+          \     'hsVarSym',
+          \   ],
+          \ }
+          \}
