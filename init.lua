@@ -1,6 +1,6 @@
 require('plugins')
-require('dashboard-config')
 require('treesitter-config')
+-- require('dashboard-config')
 require('floaterm')
 require('babar')
 require('telescope-config')
@@ -30,5 +30,6 @@ require('tokyonight-config')
 require('config-noice')
 require('devscript')
 require('latextoillustrator')
+-- require('alpha-nvim-config')
 
 
