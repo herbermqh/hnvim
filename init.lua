@@ -30,6 +30,6 @@ require('tokyonight-config')
 require('config-noice')
 require('devscript')
 require('latextoillustrator')
--- require('alpha-nvim-config')
+require('alpha-nvim-config')
 
 
