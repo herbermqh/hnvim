@@ -11,7 +11,7 @@ local function set_buffer_options()
         vim.api.nvim_buf_set_name(buf, filetex)
         vim.api.nvim_buf_set_option(buf, "buftype", "")
         vim.api.nvim_buf_set_option(buf, "filetype", "tex")
-        vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
+        -- vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
         vim.api.nvim_buf_set_option(buf, "modifiable", true)
         vim.api.nvim_buf_set_option(buf, "buflisted", false)
     end
