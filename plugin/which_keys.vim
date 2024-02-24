@@ -108,6 +108,7 @@
       \ 'c' :   [':VimtexCompile'  ,   'compile'],
       \ 's' :   [':VimtexStop'  ,   'stop compile'],
       \ 'e' :   [':VimtexErrors'  ,   'errors'],
+      \ 'd' :   [':LatexmkCleanLogFiles'  ,   'clean tmp files'],
       \ 'v' :   [':VimtexView'  ,   'view pdf'],
       \ 'i' :   [':ToggleFileTexIllustrator'  ,   'LaTeX output in illustrator'],
       \ }
