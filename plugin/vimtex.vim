@@ -3,9 +3,9 @@
 let g:vimtex_enabled = 1
 let g:vimtex_compiler_enable = 1
 let g:vimtex_compiler_method = 'latexmk'
-let g:vimtex_compiler_latexmk = {
-        \ 'out_dir' : 'build',
-        \}
+let g:vimtex_compiler_latexmk = {}
+        " \ 'out_dir' : 'build',
+        " \}
 " let g:vimtex_compiler_latexmk_engines = {
 "         \ '_'                : 'hlatex',
 "         \ 'pdflatex'       : 'hlatex',

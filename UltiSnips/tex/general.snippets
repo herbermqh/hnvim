@@ -523,6 +523,16 @@ snippet "\sec" "Ecuacion" riA
 \tag{$1} $0
 endsnippet
 
+context "math()"
+snippet "lta" "Ecuacion" ri
+\ltag{\aarrow{$1}}$0
+endsnippet
+
+context "math()"
+snippet "ltm" "Ecuacion" ri
+\ltag{\marrow{${1:a}}}$0
+endsnippet
+
 ##############################
 #  TEXTO EN MODO MATEMATICO  #
 #############################
@@ -1416,6 +1426,11 @@ priority 200
 context "math()"
 snippet <-> "leftrightarrow" iA
 \leftrightarrow $0
+endsnippet
+
+context "math()"
+snippet >> "letra griega minuscula" iA
+\to`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"
