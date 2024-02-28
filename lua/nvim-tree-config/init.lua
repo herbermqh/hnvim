@@ -79,7 +79,7 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', 'K',       api.node.navigate.sibling.first,     opts('First Sibling'))
   vim.keymap.set('n', 'L',       api.node.open.toggle_group_empty,    opts('Toggle Group Empty'))
   vim.keymap.set('n', 'M',       api.tree.toggle_no_bookmark_filter,  opts('Toggle Filter: No Bookmark'))
-  vim.keymap.set('n', 'm',       api.marks.toggle,                    opts('Toggle Bookmark'))
+  -- vim.keymap.set('n', 'm',       api.marks.toggle,                    opts('Toggle Bookmark'))
   vim.keymap.set('n', 'o',       api.node.open.edit,                  opts('Open'))
   vim.keymap.set('n', 'O',       api.node.open.no_window_picker,      opts('Open: No Window Picker'))
   vim.keymap.set('n', 'p',       api.fs.paste,                        opts('Paste'))
@@ -105,6 +105,7 @@ local function my_on_attach(bufnr)
 --   { key = "yn",                                       action = "copy_name"}, --Heber
 --   { key = "yd",                                       action = "copy_path"}, --Heber
 --   { key = {"<CR>", "o", "<2-LeftMouse>", "<Right>"},  action = "edit"},
+--   { key = "m",                                        action = "create"},
   vim.keymap.set('n', '<Left>',  api.node.navigate.parent_close,      opts('Close Directory'))
   vim.keymap.set('n', 'a',       api.fs.rename_basename,              opts('Rename: Basename'))
   vim.keymap.set('n', 'yy',      api.fs.copy.node,                    opts('Copy'))
@@ -114,6 +115,7 @@ local function my_on_attach(bufnr)
   vim.keymap.set('n', '<2-LeftMouse>',  api.node.open.edit,           opts('Open'))
   vim.keymap.set('n', 'o',       api.node.open.edit,                  opts('Open'))
   vim.keymap.set('n', '<Right>', api.node.open.edit,                  opts('Open'))
+  vim.keymap.set('n', 'm',       api.fs.create,                       opts('Create File Or Directory'))
   --
 end
 require'nvim-tree'.setup {
