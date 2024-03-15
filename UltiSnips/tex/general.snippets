@@ -272,6 +272,12 @@ snippet enumi "Enumerate" i
 \end{enumerate}
 endsnippet
 
+snippet enumd "Enumerate" i
+\begin{enumdesc}[$1]
+  \item $0
+\end{enumdesc}
+endsnippet
+
 snippet lpremise "Enumerate" i
 \begin{listpremise}
   \item $0
@@ -476,23 +482,22 @@ snippet teo "Teorema" i
 endsnippet
 
 #otros entornos
-snippet ej "Ejemplo en una sola columna" i
+snippet exa "Ejemplo en una sola columna" i
 \begin{example}
   $0
 \end{example}
 endsnippet
 
-snippet ej2 "Ejemplo en dos columna" i
-\begin{ej}
-  \begin{multicols}{2}
-    \begin{pre}
-      $1
-    \end{pre}
-    \begin{sol}
-      $0
-    \end{sol}
-  \end{multicols}
-\end{ej}
+snippet exas "Ejemplo en una sola columna" i
+\begin{examples}
+  $0
+\end{examples}
+endsnippet
+
+snippet exes "Ejemplo en una sola columna" i
+\begin{exercises}
+  $0
+\end{exercises}
 endsnippet
 
 snippet ell "Ejemplo ilustrativo" i
