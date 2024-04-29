@@ -19,7 +19,7 @@ require('telescope').setup({
       horizontal = {mirror = false},
       vertical = {mirror = false}
     },
-    initial_mode = 'insert',
+    -- initial_mode = 'insert',
     prompt_prefix = " ",
     selection_caret = " ",
     entry_prefix = "  ",
@@ -28,10 +28,10 @@ require('telescope').setup({
     use_less = true,
     sorting_strategy = "descending",
     layout_strategy = "horizontal",
-    set_env = {['COLORTERM'] = 'truecolor'}, -- default = nil,
+    -- set_env = {['COLORTERM'] = 'truecolor'}, -- default = nil,
     color_devicons = true,
-    winblend = 20,
-    path_display = {},
+    -- winblend = 20,
+    -- path_display = {},
     border = {},
     borderchars = {'─', '│', '─', '│', '╭', '╮', '╯', '╰'},
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
@@ -48,4 +48,5 @@ require('telescope').setup({
 })
 -- Load Telescope extensions
 -- require('telescope').load_extension('fzy_native')
-vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })
+-- vim.g.tokyonight_dark_float = true

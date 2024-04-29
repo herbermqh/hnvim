@@ -102,7 +102,6 @@ require('packer').startup(function()
     -- use({'rbgrouleff/bclose.vim'})
     -- use({'nvim-lua/popup.nvim'})
     -- use({'nvim-lua/plenary.nvim'})
-    use 'duane9/nvim-rg'
     use({
         'nvim-telescope/telescope.nvim',
         --[[ requires = {
@@ -170,8 +169,8 @@ require('packer').startup(function()
     -- use 'mhinz/vim-startify'
     use 'norcalli/nvim-colorizer.lua'
     -- use({'marko-cerovac/material.nvim', opt = false, as = 'material'})
-    -- use({'folke/tokyonight.nvim'})
-    use 'herbermqh/tokyonight.nvim'
+    use({'folke/tokyonight.nvim'})
+    -- use 'herbermqh/tokyonight.nvim'
     use 'Mofiqul/vscode.nvim'
     -- use 'bluz71/vim-moonfly-colors'
     -- use 'bluz71/vim-nightfly-guicolors'

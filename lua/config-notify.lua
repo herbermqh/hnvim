@@ -2,7 +2,6 @@ require("notify").setup({
   -- Animation style (see below for details)
   stages = "fade_in_slide_out",
 
-  background_colour = "guibg",
   -- Function called when a new window is opened, use for changing win settings/config
   on_open = nil,
 
@@ -37,6 +36,9 @@ require("notify").setup({
 })
 
 vim.notify = require("notify")
+require("notify").setup({
+  background_colour = "#000000",
+})
 --------------------------------------------
 ---
 -- Output of Command
