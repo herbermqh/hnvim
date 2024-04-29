@@ -48,3 +48,4 @@ require('telescope').setup({
 })
 -- Load Telescope extensions
 -- require('telescope').load_extension('fzy_native')
+vim.api.nvim_set_hl(0, "TelescopeNormal", { bg = "none" })

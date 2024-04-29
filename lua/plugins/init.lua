@@ -157,6 +157,7 @@ require('packer').startup(function()
     use 'HiPhish/nvim-ts-rainbow2'
     -- use 'windwp/nvim-ts-autotag'
     use 'nvim-treesitter/playground'
+    use 'tree-sitter/tree-sitter-regex'
 
     -- use({'frazrepo/vim-rainbow'})
     -- use({'luochen1990/rainbow'})
@@ -204,6 +205,7 @@ require('packer').startup(function()
     -- use 'olimorris/onedark.nvim'
 
     -- IDE
+    use "xiyaowong/transparent.nvim"
     -- use({'micha/vim-colors-solarized'})
     -- use({'mg979/vim-visual-multi'})
     -- use({'arzg/vim-colors-xcode'})

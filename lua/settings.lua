@@ -75,59 +75,59 @@ local wildignored = {
   '*/.git/*',
 }
 
-local wildignore = ''
-for i = 1, #wildignored do
-  wildignore = wildignore .. wildignored[i] .. ','
-end
+-- local wildignore = ''
+-- for i = 1, #wildignored do
+--   wildignore = wildignore .. wildignored[i] .. ','
+-- end
 
--- Finally, set wildignore...
-vim.o.wildignore = wildignore
+-- -- Finally, set wildignore...
+-- vim.o.wildignore = wildignore
 
 -- Suffixes Stuff
 -- Get a lower priority when multiple files match a wildcard
-local suffixesed = {
-  '.aux',
-  '.log',
-  '.dvi',
-  '.bbl',
-  '.blg',
-  '.brf',
-  '.cb',
-  '.ind',
-  '.idx',
-  '.ilg',
-  '.inx',
-  '.out',
-  '.toc',
-  '.o',
-  '.obj',
-  '.dll',
-  '.class',
-  '.pyc',
-  '.ipynb',
-  '.so',
-  '.swp',
-  '.zip',
-  '.exe',
-  '.jar',
-  '.gz',
-}
+-- local suffixesed = {
+--   '.aux',
+--   '.log',
+--   '.dvi',
+--   '.bbl',
+--   '.blg',
+--   '.brf',
+--   '.cb',
+--   '.ind',
+--   '.idx',
+--   '.ilg',
+--   '.inx',
+--   '.out',
+--   '.toc',
+--   '.o',
+--   '.obj',
+--   '.dll',
+--   '.class',
+--   '.pyc',
+--   '.ipynb',
+--   '.so',
+--   '.swp',
+--   '.zip',
+--   '.exe',
+--   '.jar',
+--   '.gz',
+-- }
 
-local suffixes = ''
-for i = 1, #suffixesed do
-  suffixes = suffixes .. suffixesed[i] .. ','
-end
+-- local suffixes = ''
+-- for i = 1, #suffixesed do
+--   suffixes = suffixes .. suffixesed[i] .. ','
+-- end
 
--- Finally, set suffixesed...
-vim.o.suffixes = suffixes
+-- -- Finally, set suffixesed...
+-- vim.o.suffixes = suffixes
 
 --  When set case is ignored when completing file names and directories
-vim.o.wildignorecase = true
-vim.o.wildcharm = 26
+-- vim.o.wildignorecase = true
+-- vim.o.wildcharm = 26
 
 -- Enables "enhanced mode" of command-line completion... that its <Tab> completion
-vim.o.wildmenu = true
-vim.o.wildmode = 'longest:full,full'
+-- vim.o.wildmenu = true
+-- vim.o.wildmode = 'longest:full,full'
 
 -- Minimal number of screen lines to keep above and below the cursor
 vim.o.scrolloff = 1

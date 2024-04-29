@@ -2,6 +2,7 @@ require("notify").setup({
   -- Animation style (see below for details)
   stages = "fade_in_slide_out",
 
+  background_colour = "guibg",
   -- Function called when a new window is opened, use for changing win settings/config
   on_open = nil,
 
@@ -183,8 +184,6 @@ local severity = {
 vim.lsp.handlers["window/showMessage"] = function(err, method, params, client_id)
              vim.notify(method.message, severity[params.type])
 end
-
-
 
 
 

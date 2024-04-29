@@ -382,6 +382,24 @@ endsnippet
 #tabla contenido
 
 #capitulo y secciones
+
+snippet "exerl" "Ecuacion" ri
+\exerciselevel{$0}
+endsnippet
+
+snippet "exersec" "Ecuacion" ri
+\sectionexercise{$0}
+endsnippet
+
+snippet "exersubsec" "Ecuacion" ri
+\subsectionexercise{$0}
+endsnippet
+
+snippet "et" "Ecuacion" ri
+\ltag{\marrow{${1:a}}}$0
+endsnippet
+
+
 snippet chapter "chapter" A
 \chapter{$0}
 endsnippet
@@ -537,6 +555,8 @@ context "math()"
 snippet "ltm" "Ecuacion" ri
 \ltag{\marrow{${1:a}}}$0
 endsnippet
+
+
 
 ##############################
 #  TEXTO EN MODO MATEMATICO  #
