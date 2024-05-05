@@ -8,13 +8,20 @@ npairs.add_rule(Rule("'","","tex"))
 
 -- blankline config
 local highlight = {
-    "RainbowRed",
-    "RainbowYellow",
-    "RainbowBlue",
-    "RainbowOrange",
-    "RainbowGreen",
-    "RainbowViolet",
-    "RainbowCyan",
+    -- "RainbowGreen",
+    -- "RainbowRed",
+    -- "RainbowYellow",
+    -- "RainbowBlue",
+    -- "RainbowOrange",
+    -- "RainbowViolet",
+    -- "RainbowCyan",
+ 'TSRainbowGreen',
+ 'TSRainbowYellow',
+ 'TSRainbowOrange',
+ 'TSRainbowRed',
+ 'TSRainbowViolet',
+ 'TSRainbowCyan',
+ 'TSRainbowBlue',
 }
 
 local hooks = require "ibl.hooks"
@@ -31,3 +38,15 @@ hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
 end)
 
 require("ibl").setup { indent = { highlight = highlight } }
+
+
+
+
+
+
+
+
+
+
+
+

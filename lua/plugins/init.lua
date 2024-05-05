@@ -65,6 +65,7 @@ require('packer').startup(function()
     -- use('herbermqh/vim-latex')
 
     -- Utilities
+    use 'duane9/nvim-rg'
     -- use 'rhysd/vim-grammarous'
     -- use({'Pocco81/AutoSave.nvim', opt = true})
     -- use 'kevinhwang91/nvim-bqf'
@@ -235,7 +236,7 @@ require('packer').startup(function()
     use({'liuchengxu/vim-which-key'})
     -- use({'liuchengxu/vim-clap'})
     use {"akinsho/toggleterm.nvim"}
-    use {"herbermqh/nvim-workbench"}
+    -- use {"herbermqh/nvim-workbench"}
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
     -- use({'Pocco81/TrueZen.nvim', opt = true})

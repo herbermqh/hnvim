@@ -31,3 +31,7 @@ nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble
 
 
 
+
+
+
+
