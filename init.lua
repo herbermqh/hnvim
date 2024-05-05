@@ -30,7 +30,7 @@ require('lualine-config')
 require('config-noice')
 require('devscript')
 require('latextoillustrator')
--- require('alpha-nvim-config')
 require('transparent-config')
+require('alpha-nvim-config')
 
 
