@@ -1,8 +1,12 @@
+" --------------mapas de teclas para abrir archivos de teoria, problemas resueltos, problemas propuestos y formulario
+"
+" contruye el directorio del capítulo ya puede ser para TEORIA, PR, PP y FORMULARIO
 function! Construct_directory_chapterfile(namechapter,typearchive)
   let _file = expand('%:p:h') . '/' . a:namechapter . '/' . a:typearchive . '-' . a:namechapter . '.tex'
   return _file
 endfunction
-
+"
+" establece el directorio de acuerdo con tipo de TEORIA, PR, PP y FORMULARIO
 function! Setvardirectoryarchive(namechapter,typearchive)
   let pathchapterteoria = Construct_directory_chapterfile(a:namechapter,a:typearchive)
   let pathchapterpr = Construct_directory_chapterfile(a:namechapter, a:typearchive)
@@ -16,6 +20,7 @@ function! Setvardirectoryarchive(namechapter,typearchive)
         \}
   return dictdirectory[a:typearchive]
 endfunction
+"-------------------------------------------------------------------------------------------
 
 function! Get_arguments_usarproblema(line_text)
   let name_book =  a:line_text[match(a:line_text, '{')+1:match(a:line_text, '}')-1]
@@ -67,6 +72,33 @@ function! Construct_directory_usarexamen(line_text)
         \}
 endfunction
 
+function! Construct_directory_loadbexam(line_text)
+  let name_examen = a:line_text[match(a:line_text, '{')+1:match(a:line_text, '}')-1]
+  let name_problem = a:line_text[match(a:line_text, '{', match(a:line_text, '{')+1)+1:match(a:line_text, '}', match(a:line_text, '}')+1)-1]
+  let name_examen_list = split(name_examen, '-')
+  let university = name_examen_list[0]
+  let subject = name_examen_list[1]
+  let partial = name_examen_list[2]
+  let year = name_examen_list[3]
+  let semester = name_examen_list[4]
+  let row = name_examen_list[5]
+  let other = name_examen_list[6]
+  " Construir nombre del directorio padre del examan de acuerdo a las variables university, subject, partial, year, semester, row, other, y establecer en variable name_parent_exam
+  if partial ==# ""
+    let name_parent_exam = university . '_' . subject . '_' . semester . '_' . other
+  else
+    let name_parent_exam = university . '_' . subject . '_' . partial . '_' . semester . '_' . other
+  endif
+  " Construir nombre del examen y establecer en variable name_exam_internal de acuerdo a las variables university, subject, partial, year, semester, row, other
+  if partial ==# ""
+    let name_exam_internal = university . '_' . subject . '_' . year . semester . '_' . row . '_' . other
+  else
+    let name_exam_internal = university . '_' . subject . '_' . partial . '_' . year . semester . '_' . row . '_' . other
+  endif
+  let _file = expand('%:p:h:h') . '/problems-exam/' . name_parent_exam . '/' . name_exam_internal . '/' . name_exam_internal . '.tex'
+  return _file
+endfunction
+
 function! Get_arguments_usarpractica(line_text)
   let name_practice = a:line_text[match(a:line_text, '{')+1:match(a:line_text, '}')-1]
   let name_exercise = a:line_text[match(a:line_text, '{', match(a:line_text, '{')+1)+1:match(a:line_text, '}', match(a:line_text, '}')+1)-1]
@@ -92,34 +124,91 @@ function! Openfile_search_word(file,word)
   execute "normal! zRn"
 endfunction
 
-function! Getline(typearchive)
+function! Gotopartchapter(typearchive)
   let linetext = getline('.')
-  " cambiar el namecommand por extracción de codigo desde \\ hasta primer
-  " aparición de [ o {
   let namecommand = linetext[match(linetext, '\\')+1:match(linetext, '[\|{')-1]
   if namecommand ==? "chapterfile"
     let namechapter = linetext[match(linetext, '{')+1:match(linetext, '}')-1]
     let _directory= Setvardirectoryarchive(namechapter,a:typearchive)
     execute "find" _directory
-  elseif namecommand ==? "usarproblema"
-    let name_book = Get_arguments_usarproblema(linetext).name_book
-    let name_chapter = Get_arguments_usarproblema(linetext).name_chapter
-    let name_exercise = Get_arguments_usarproblema(linetext).name_exercise
-    let _directory = Construct_directory_usarproblem(name_book,name_chapter)
-    call Openfile_search_word(_directory,name_exercise)
-  elseif namecommand ==? "usarexamen"
-    let _directory = Construct_directory_usarexamen(linetext).file
-    let name_exercise = Construct_directory_usarexamen(linetext).name_problem
-    call Openfile_search_word(_directory,name_exercise)
-  elseif namecommand ==? "usarpractica"
-    let name_practice = Get_arguments_usarpractica(linetext).name_practice
-    let name_exercise = Get_arguments_usarpractica(linetext).name_exercise
-    let _directory = Construct_directory_usarpractica(name_practice)
-    call Openfile_search_word(_directory,name_exercise)
+  else
+    echo "No chapterfile detect"
+    " en esta parte implementar la busqueda similar al telescope
   endif
 endfunction
 
-nnoremap lp :call Getline("PP")<cr>
-nnoremap ld :call Getline("TEORIA")<cr>
-nnoremap lr :call Getline("PR")<cr>
-nnoremap lf :call Getline("FORMULARIO")<cr>
+function! Gotofilecommand()
+ " definir globalment la varible linetext
+  let linetext = getline('.') 
+  " detectar si linetext es vacio
+  if linetext ==# ""
+    echo "command invalid"
+  else
+    let namecommand = linetext[match(linetext, '\\')+1:match(linetext, '[\|{')-1]
+    " si namecommand no es: chapterfile, usarproblema, usarexamen, usarpractica, loadbexam. Entonces imprimir "command invalid"
+    if namecommand !=? "chapterfile" && namecommand !=? "usarproblema" && namecommand !=? "usarexamen" && namecommand !=? "usarpractica" && namecommand !=? "loadbexam" && namecommand !=? "loadbbook"
+      echo "command invalid"
+    else
+      " llamar al función  de la forma "gotofile + namecommand()"
+      execute "call Gotofile" . namecommand . "()"
+    endif
+  endif
+endfunction
+
+function! Gotofilechapterfile()
+  let linetext = getline('.') 
+  let namechapter = linetext[match(linetext, '{')+1:match(linetext, '}')-1]
+  let _directory= Setvardirectoryarchive(namechapter,"TEORIA")
+  execute "find" _directory
+endfunction
+
+function! Gotofileusarproblema()
+  let linetext = getline('.')
+  let name_book = Get_arguments_usarproblema(linetext).name_book
+  let name_chapter = Get_arguments_usarproblema(linetext).name_chapter
+  let name_exercise = Get_arguments_usarproblema(linetext).name_exercise
+  let _directory = Construct_directory_usarproblem(name_book,name_chapter)
+  call Openfile_search_word(_directory,name_exercise)
+endfunction
+
+function! Gotofileusarexamen()
+  let linetext = getline('.') 
+  let _directory = Construct_directory_usarexamen(linetext).file
+  let name_exercise = Construct_directory_usarexamen(linetext).name_problem
+  call Openfile_search_word(_directory,name_exercise)
+endfunction
+
+function! Gotofileusarpractica()
+  let linetext = getline('.') 
+  let name_practice = Get_arguments_usarpractica(linetext).name_practice
+  let name_exercise = Get_arguments_usarpractica(linetext).name_exercise
+  let _directory = Construct_directory_usarpractica(name_practice)
+  call Openfile_search_word(_directory,name_exercise)
+endfunction
+
+function! Gotofileloadbexam()
+  let linetext = getline('.')
+  let _directory = Construct_directory_loadbexam(linetext)
+  " echo _directory
+  execute "find" _directory
+endfunction
+
+function! Gotofileloadbbook()
+  let linetext = getline('.') 
+  let name_book = linetext[match(linetext, '{')+1:match(linetext, '}')-1]
+  let _directory = expand('%:p:h:h') . '/problems-book/' . name_book . '/' . name_book . '.tex'
+  " echo _directory
+  execute "find" _directory
+endfunction
+
+
+"---------------atajos de teclado-----------------
+"ir a problemas resueltos
+nnoremap lp :call Gotopartchapter("PP")<cr>
+"ir a problemas propuestos
+nnoremap lr :call Gotopartchapter("PR")<cr>
+"ir a formulario
+nnoremap lf :call Gotopartchapter("FORMULARIO")<cr>
+"ir a un archivo dependiendo del comando
+nnoremap ld :call Gotofilecommand()<cr>
+"-------------------------------------------------
