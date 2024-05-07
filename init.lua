@@ -1,6 +1,6 @@
 require('plugins')
 require('treesitter-config')
--- require('dashboard-config')
+require('dashboard-config')
 require('tokyonight-config')
 require('floaterm')
 require('babar')
@@ -31,6 +31,6 @@ require('config-noice')
 require('devscript')
 require('latextoillustrator')
 require('transparent-config')
-require('alpha-nvim-config')
+-- require('alpha-nvim-config')
 
 
