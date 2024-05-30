@@ -129,7 +129,7 @@ require('packer').startup(function()
 
     -- UI Plugins
     use {
-      'glepnir/dashboard-nvim',
+      'nvimdev/dashboard-nvim',
       -- event = 'VimEnter',
       -- config = function()
       --   require('dashboard').setup {

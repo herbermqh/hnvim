@@ -25,7 +25,7 @@ let g:vimtex_delim_list = {
         \  }
         \}
 let g:vimtex_imaps_enabled=0
-let g:vimtex_include_indicators=['input','include','subfile','includeonly', 'chapterfile']
+let g:vimtex_include_indicators=['input','include','subfile','includeonly','chapterfile']
 let g:vimtex_include_search_enabled=1
 let g:vimtex_quickfix_mode=1
 let g:vimtex_quickfix_autoclose_after_keystrokes=0
@@ -34,8 +34,10 @@ let g:vimtex_syntax_enabled=1
 let g:vimtex_syntax_conceal_disable=0
 let g:vimtex_syntax_custom_cmds = [
       \ {'name': 'unit', 'mathmode': 1, 'conceal': 1, 'concealchar': ''},
-      \ {'name': 'vect', 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
-      \ {'name': 'vec', 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
+      \ {'name': 'unit', 'mathmode': 0, 'conceal': 1, 'concealchar': ''},
+      \ {'name': 'vect', 'mathmode': 1, 'argstyle': 'boldital', 'conceal': 1},
+      \ {'name': 'vec', 'mathmode': 1, 'argstyle': 'boldital', 'conceal': 1},
+      \ {'name': 'vv', 'mathmode': 1, 'argstyle': 'boldital', 'conceal': 1},
       \ {'name': 'mat' , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
       \ {'name': 'bm'  , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
       \ {'name': 'pmb' , 'mathmode': 1, 'argstyle': 'bold', 'conceal': 1},
@@ -56,6 +58,14 @@ let g:vimtex_syntax_custom_cmds = [
       \ {'name': 'Integers', 'mathmode': 1, 'concealchar': 'ℤ'},
       \ {'name': 'ones'    , 'mathmode': 1, 'concealchar': '𝟙'},
       \ {'name': 'bigO'    , 'mathmode': 1, 'concealchar': '𝒪'},
+      \]
+let g:vimtex_syntax_custom_cmds_with_concealed_delims = [
+      \ {'name': 'binom',
+      \  'nargs': 2,
+      \  'mathmode': 1,
+      \  'cchar_open': '(',
+      \  'cchar_mid': '|',
+      \  'cchar_close': ')'},
       \]
 let g:vimtex_fold_enabled=1
 let g:vimtex_toc_enabled=1
@@ -165,4 +175,10 @@ let g:vimtex_syntax_nested = {
           \     'hsVarSym',
           \   ],
           \ }
+          \}
+let g:vimtex_syntax_packages = {
+          \ 'amsmath': {'conceal': 1, 'load': 2},
+          \ 'babel': {'conceal': 1},
+          \ 'hyperref': {'conceal': 1},
+          \ 'fontawesome5': {'conceal': 1},
           \}
