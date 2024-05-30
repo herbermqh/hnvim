@@ -4,12 +4,15 @@ db.setup({
   theme = 'doom',
   config = {
     header = {
-    --   '██╗  ██╗    ███████╗    ██████╗     ███████╗    ██████╗ ',
-    --   '██║  ██║    ██╔════╝    ██╔══██╗    ██╔════╝    ██╔══██╗',
-    --   '███████║    █████╗      ██████╔╝    █████╗      ██████╔╝',
-    --   '██╔══██║    ██╔══╝      ██╔══██╗    ██╔══╝      ██╔══██╗',
-    --   '██║  ██║    ███████╗    ██████╔╝    ███████╗    ██║  ██║',
-    --   '╚═╝  ╚═╝    ╚══════╝    ╚═════╝     ╚══════╝    ╚═╝  ╚═╝',
+    '',
+    '',
+    ' █████  ██████  ████████     ███    ██ ██    ██ ██ ███    ███',
+    '██   ██ ██   ██    ██        ████   ██ ██    ██ ██ ████  ████',
+    '███████ ██████     ██        ██ ██  ██ ██    ██ ██ ██ ████ ██',
+    '██   ██ ██   ██    ██        ██  ██ ██  ██  ██  ██ ██  ██  ██',
+    '██   ██ ██   ██    ██        ██   ████   ████   ██ ██      ██',
+    '',
+    '',
     }, --your header
     center = {
       {icon = '  ',
@@ -40,12 +43,13 @@ db.setup({
     tabline = true,
     winbar = true,
   },
-  preview = {
-    command = 'cat | lolcat -F 0.3',
-    file_path = home .. '/.config/nvim/static/neovim.cat',
-    file_height = 5,
-    file_width = 63,
-  },
+  -- preview = {
+  --   command = 'cat | lolcat -F 0.3',
+  --   -- command = 'chafa',
+  --   file_path = home .. '/.config/nvim/static/neovim.cat',
+  --   file_height = 5,
+  --   file_width = 63,
+  -- },
 })
 -- db.preview_command = 'cat | lolcat -F 0.3'
 -- db.preview_file_path = home .. '/.config/nvim/static/neovim.cat'

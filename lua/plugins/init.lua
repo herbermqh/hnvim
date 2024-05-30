@@ -110,14 +110,12 @@ require('packer').startup(function()
             'nvim-telescope/telescope-fzy-native.nvim'
         } ]]
     })
-    use({
-      'kyazdani42/nvim-tree.lua',
-      requires = 'kyazdani42/nvim-web-devicons',
-      -- tag = 'nightly',
-      -- config = function() require('nvim-tree').setup {} end
-    })
-
-
+    use {
+      'nvim-tree/nvim-tree.lua',
+      requires = {
+        'nvim-tree/nvim-web-devicons', -- optional
+      },
+    }
     --typing
     use('terryma/vim-multiple-cursors')
     use({'alvan/vim-closetag'})
