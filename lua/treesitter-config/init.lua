@@ -1,4 +1,6 @@
 local rainbow = require('ts-rainbow')
+
+
 require'nvim-treesitter.configs'.setup{
   ensure_installed = {"python","lua","latex","html", "css"},
   sync_install=true,
@@ -18,18 +20,31 @@ require'nvim-treesitter.configs'.setup{
       html = 'rainbow-tags',
       latex = 'rainbow-art',
     },
-    -- extended_mode = true,
+    extended_mode = true,
+    -- strategy = require('ts-rainbow').strategy.global,
     strategy = {
-      rainbow.strategy['global'],
+        -- Use global strategy by default
+        rainbow.strategy['global'],
+        -- Use local for HTML
+        html = rainbow.strategy['local'],
+        -- Pick the strategy for LaTeX dynamically based on the buffer size
+        -- latex = function()
+        --     if vim.fn.line('$') > 10000 then
+        --         return nil
+        --     elseif vim.fn.line('$') > 1000 then
+        --         return rainbow.strategy['global']
+        --     end
+        --     return rainbow.strategy['local']
+        -- end
     },
     hlgroups = {
-               'TSRainbowBlue',
                'TSRainbowGreen',
-               'TSRainbowCyan',
-               'TSRainbowOrange',
                'TSRainbowYellow',
-               'TSRainbowViolet',
+               'TSRainbowOrange',
                'TSRainbowRed',
+               'TSRainbowViolet',
+               'TSRainbowCyan',
+               'TSRainbowBlue',
             },
   },
   autotag={

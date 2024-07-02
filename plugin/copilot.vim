@@ -10,7 +10,8 @@ imap <silent> <C-t> <Plug>(copilot-next)
 imap <silent> <C-g> <Plug>(copilot-previous)
 imap <silent> <C-A-\> <Plug>(copilot-dismiss)
 
-
+let g:copilot_workspace_folders =
+      \ ["~/Documents/LaTeX"]
 
 
 

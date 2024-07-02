@@ -1,4 +1,4 @@
-require('packer').startup(function()
+require('packer').startup({function()
     -- Packer Itself
     use('wbthomason/packer.nvim')
     -- LSP
@@ -65,6 +65,7 @@ require('packer').startup(function()
     -- use('herbermqh/vim-latex')
 
     -- Utilities
+    use 'duane9/nvim-rg'
     -- use 'rhysd/vim-grammarous'
     -- use({'Pocco81/AutoSave.nvim', opt = true})
     -- use 'kevinhwang91/nvim-bqf'
@@ -102,7 +103,6 @@ require('packer').startup(function()
     -- use({'rbgrouleff/bclose.vim'})
     -- use({'nvim-lua/popup.nvim'})
     -- use({'nvim-lua/plenary.nvim'})
-    use 'duane9/nvim-rg'
     use({
         'nvim-telescope/telescope.nvim',
         --[[ requires = {
@@ -110,14 +110,12 @@ require('packer').startup(function()
             'nvim-telescope/telescope-fzy-native.nvim'
         } ]]
     })
-    use({
-      'kyazdani42/nvim-tree.lua',
-      requires = 'kyazdani42/nvim-web-devicons',
-      -- tag = 'nightly',
-      -- config = function() require('nvim-tree').setup {} end
-    })
-
-
+    use {
+      'nvim-tree/nvim-tree.lua',
+      requires = {
+        'nvim-tree/nvim-web-devicons', -- optional
+      },
+    }
     --typing
     use('terryma/vim-multiple-cursors')
     use({'alvan/vim-closetag'})
@@ -129,7 +127,7 @@ require('packer').startup(function()
 
     -- UI Plugins
     use {
-      'glepnir/dashboard-nvim',
+      'nvimdev/dashboard-nvim',
       -- event = 'VimEnter',
       -- config = function()
       --   require('dashboard').setup {
@@ -157,6 +155,7 @@ require('packer').startup(function()
     use 'HiPhish/nvim-ts-rainbow2'
     -- use 'windwp/nvim-ts-autotag'
     use 'nvim-treesitter/playground'
+    use 'tree-sitter/tree-sitter-regex'
 
     -- use({'frazrepo/vim-rainbow'})
     -- use({'luochen1990/rainbow'})
@@ -169,8 +168,8 @@ require('packer').startup(function()
     -- use 'mhinz/vim-startify'
     use 'norcalli/nvim-colorizer.lua'
     -- use({'marko-cerovac/material.nvim', opt = false, as = 'material'})
-    -- use({'folke/tokyonight.nvim'})
-    use 'herbermqh/tokyonight.nvim'
+    use({'folke/tokyonight.nvim'})
+    -- use 'herbermqh/tokyonight.nvim'
     use 'Mofiqul/vscode.nvim'
     -- use 'bluz71/vim-moonfly-colors'
     -- use 'bluz71/vim-nightfly-guicolors'
@@ -204,6 +203,7 @@ require('packer').startup(function()
     -- use 'olimorris/onedark.nvim'
 
     -- IDE
+    use "xiyaowong/transparent.nvim"
     -- use({'micha/vim-colors-solarized'})
     -- use({'mg979/vim-visual-multi'})
     -- use({'arzg/vim-colors-xcode'})
@@ -234,9 +234,13 @@ require('packer').startup(function()
     use({'liuchengxu/vim-which-key'})
     -- use({'liuchengxu/vim-clap'})
     use {"akinsho/toggleterm.nvim"}
-    use {"herbermqh/nvim-workbench"}
+    -- use {"herbermqh/nvim-workbench"}
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
     -- use({'Pocco81/TrueZen.nvim', opt = true})
-end)
+end,
+config = {
+    clone_timeout = false
+  }
+})
 
