@@ -1880,6 +1880,12 @@ endsnippet
 # \label{lst:${4:${3/\\\w+\{(.*?)\}|\\(.)|(\w+)|([^\w\\]+)/(?4:_:\L$1$2$3\E)/ga}}}
 # \caption{${3:caption name}}
 
+snippet "psc" "pseudocode" ir
+\begin{pseudocode}
+  $0
+\end{pseudocode}
+endsnippet
+
 snippet cin "mintinline" iA
 \mintinline{$1}{$2}$0
 endsnippet
@@ -1925,8 +1931,6 @@ init_printing()
 snip.rv = eval('latex(' + match.group(1).replace('\\', '').replace('^', '**').replace('{', '(').replace('}', ')') + ')')
 `
 endsnippet
-
-
 
 #########################
 #  MATEMATICA SOFTWARE  #

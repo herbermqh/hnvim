@@ -1,4 +1,4 @@
-require('packer').startup(function()
+require('packer').startup({function()
     -- Packer Itself
     use('wbthomason/packer.nvim')
     -- LSP
@@ -238,5 +238,9 @@ require('packer').startup(function()
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
     -- use({'Pocco81/TrueZen.nvim', opt = true})
-end)
+end,
+config = {
+    clone_timeout = false
+  }
+})
 

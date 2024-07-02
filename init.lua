@@ -32,5 +32,6 @@ require('devscript')
 require('latextoillustrator')
 require('transparent-config')
 -- require('alpha-nvim-config')
+vim.deprecate = function() end
 
 

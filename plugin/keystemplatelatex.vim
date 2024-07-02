@@ -21,7 +21,6 @@ function! Setvardirectoryarchive(namechapter,typearchive)
   return dictdirectory[a:typearchive]
 endfunction
 "-------------------------------------------------------------------------------------------
-
 function! Get_arguments_usarproblema(line_text)
   let name_book =  a:line_text[match(a:line_text, '{')+1:match(a:line_text, '}')-1]
   let name_chapter =  a:line_text[match(a:line_text, '{', match(a:line_text, '{')+1)+1:match(a:line_text, '}', match(a:line_text, '}')+1)-1]
@@ -150,6 +149,7 @@ function! Gotofilecommand()
       echo "command invalid"
     else
       " llamar al función  de la forma "gotofile + namecommand()"
+      " echo "call Gotofile" . namecommand . "()"
       execute "call Gotofile" . namecommand . "()"
     endif
   endif
@@ -164,15 +164,22 @@ endfunction
 
 function! Gotofileusarproblema()
   let linetext = getline('.')
+  let linetext = substitute(linetext, '\[.*\]', '', '')"eliminar contenido del corchete
   let name_book = Get_arguments_usarproblema(linetext).name_book
   let name_chapter = Get_arguments_usarproblema(linetext).name_chapter
   let name_exercise = Get_arguments_usarproblema(linetext).name_exercise
   let _directory = Construct_directory_usarproblem(name_book,name_chapter)
+  " echo linetext
+  " echo name_book
+  " echo name_chapter
+  " echo name_exercise
+  " echo _directory
   call Openfile_search_word(_directory,name_exercise)
 endfunction
 
 function! Gotofileusarexamen()
   let linetext = getline('.') 
+  let linetext = substitute(linetext, '\[.*\]', '', '')"eliminar contenido del corchete
   let _directory = Construct_directory_usarexamen(linetext).file
   let name_exercise = Construct_directory_usarexamen(linetext).name_problem
   call Openfile_search_word(_directory,name_exercise)
