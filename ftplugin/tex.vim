@@ -9,3 +9,4 @@ xmap it S}<Esc>a\itshape
 " xmap ans <Esc>`>a}<Esc>`<i\answerinline{<Esc>
 
 xmap a y:let @z=@"<CR>gvc\answerinline{<C-R>z}<Esc>
+xmap t y:let @z=@"<CR>gvc\mintinline{tex}{<C-R>z}<Esc>

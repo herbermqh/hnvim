@@ -52,7 +52,7 @@ def add_row(snip):
 
 
 def after_greek_letter():
-  if t[1] and t[1][0] not in ['_', '^', ' ', '+', '-', '\\', ',']:
+  if t[1] and t[1][0] not in ['_', '^', ' ', '+', '-', '\\', ',', '(', ')', '[', ']', '{', '}', '<', '>', "'"]:
       space = ' '
       return space
   else:
@@ -60,11 +60,11 @@ def after_greek_letter():
       return no_space
 
 def after_commands():
-  if t[1] and t[1][0] not in ['_', '^', ' ', '+', '-', '\\', ',']:
-      space = ' '
+  if t[1] and t[1][0] not in ['_', '^', ' ', '+', '-', '\\', ',', '(', ')', '[', ']', '{', '}', '<', '>', "'"]:
+      space=' '
       return space
   else:
-      no_space = ''
+      no_space=''
       return no_space
 
 def after_delimiters():
@@ -105,8 +105,8 @@ endsnippet
 #  TEXTO NORMAL  #
 ##################
 #smart quotes
-snippet "\"([a-zA-Z0-9\_\´\sáíóéúÁÉÍÓÚ]+)\b\"\s" "smart quotes" Ar
-\`\``!p snip.rv = match.group(1)`'' $0
+snippet "\"([a-zA-Z0-9\_\´\sáíóéúÁÉÍÓÚ,.;:]+)\b\"\s" "smart quotes" Ar
+\`\``!p snip.rv = match.group(1)`''$0
 endsnippet
 
 # context "math()"
@@ -161,10 +161,19 @@ endsnippet
 #cajas
 
 #multicol
+priority 100
 snippet mul2 "two-column environment with multicol" i
 \begin{multicols}{2}
 	${0}
 \end{multicols}
+endsnippet
+
+#multicol
+priority 200
+snippet amul2 "two-column environment with multicol" i
+\begin{artmulticols}{2}
+	${0}
+\end{artmulticols}
 endsnippet
 
 snippet mul3 "En tres columna" i
@@ -181,6 +190,11 @@ snippet '(?<!\{)asy' "Entorno asymptote" ri
 endsnippet
 
 #minipage
+snippet minipage "Minipage" i
+\begin{minipage}[$1]{$2}
+  $0
+\end{minipage}
+endsnippet
 
 #parbox
 snippet parboxImage "Parbox image" i
@@ -248,9 +262,21 @@ endsnippet
 #cajas
 
 #notas en el margen
-# snippet nt "Note" i
-# \\note{$0}
-# endsnippet
+priority 200
+snippet nt "Note" i
+\\note{$0}
+endsnippet
+
+priority 400
+snippet lnt "long note" i
+\begin{longnote}
+  $0
+\end{longnote}
+endsnippet
+
+snippet nts "Note" i
+\\note*{$0}
+endsnippet
 
 
 #enumerate
@@ -278,22 +304,22 @@ snippet enumd "Enumerate" i
 \end{enumdesc}
 endsnippet
 
-snippet lpremise "Enumerate" i
-\begin{listpremise}
+snippet premise "Enumerate" i
+\begin{premises}
   \item $0
-\end{listpremise}
+\end{premises}
 endsnippet
 
-snippet laxiom "Enumerate" i
-\begin{listaxiom}
+snippet axiom "Enumerate" i
+\begin{axioms}[$1]
   \item $0
-\end{listaxiom}
+\end{axioms}
 endsnippet
 
-snippet lproposition "Enumerate" i
-\begin{listproposition}
+snippet props "Enumerate" i
+\begin{props}
   \item $0
-\end{listproposition}
+\end{props}
 endsnippet
 
 # Itemize
@@ -340,7 +366,7 @@ endsnippet
 
 
 priority -100
-context "env('listdescription')"
+context "env('desc')"
 snippet "\s\sit" "item" riA
 \item[$1] $0
 endsnippet
@@ -355,10 +381,10 @@ endsnippet
 
 #list description
 priority 500
-snippet ldescription "List description" i
-\begin{listdescription}
+snippet ldes "List description" i
+\begin{desc}
   \item[$1] $0
-\end{listdescription}
+\end{desc}
 endsnippet
 
 #otra entornos de enumeracion o listas
@@ -485,7 +511,19 @@ snippet def "Definición" i
 	$0
 \end{definition}
 endsnippet
-  
+
+snippet prop "Proposición" i
+\begin{proposition}[$1]
+  $0
+\end{proposition}
+endsnippet
+
+snippet cor "Corolario" i
+\begin{corollary}[$1]
+  $0
+\end{corollary}
+endsnippet
+
 #teoremas demostraciones
 snippet dem "Demostracion" i
 \begin{demostration}
@@ -886,9 +924,9 @@ endsnippet
 # `!p snip.rv ="$" if match.group(1)=="$" else " "`\overline{`!p snip.rv=match.group(2)`}$0
 # endsnippet
 
-# snippet "latex" "overline" riA
-# \LaTeX
-# endsnippet 
+snippet "latex" "overline" riA
+\LaTeX
+endsnippet 
 
 context "math()"
 snippet "¯(\w|\d+)" "overline" riA
@@ -914,19 +952,38 @@ endsnippet
 priority 100
 context "math()"
 snippet "\su(\w+)\b\s" "Vector postfix" riA
-\hat{`!p snip.rv=match.group(1)`} $0
+\hat{`!p snip.rv=match.group(1)`}$0
 endsnippet 
 
 #vectores a,.
+priority 100
 context "math()"
-snippet "→([a-zA-Z0])" "Vector postfix" riA
-\vv{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
+snippet "(?<!→)→([a-zA-Z0])" "Vector postfix" riA
+\vv{`!p snip.rv=match.group(1)`}$1
 endsnippet
+#→a ---> \vv{a}
 
+priority 100
 context "math()"
 snippet "(?<!\\|n|\w|\d)([a-zA-Z]+)→" "Vector postfix" riA
-\vv{`!p snip.rv=match.group(1)`}`!p snip.rv = after_commands()`$1
+\vv{`!p snip.rv=match.group(1)`}$1
 endsnippet
+#a→ ---> \vv{a}
+
+priority 500
+context "math()"
+snippet "→→([\\a-zA-Z]+)" "Vector postfix" ri
+\vv{`!p snip.rv=match.group(1)`}$1
+endsnippet
+#→→{[a-Z]+} ---> \vv{[a-Z]+}
+
+
+
+#vectores generalizado
+# context "math()"
+# snippet → "Vector postfix" iA
+# \vv{$1}$0
+# endsnippet
 
 
 # context "math()"
@@ -1142,7 +1199,7 @@ endsnippet
 
 context "math()"   
 snippet `p "letra griega minuscula" iA
-\pi`!p snip.rv = after_greek_letter()`$1 
+\pi`!p snip.rv = after_greek_letter()`$1
 endsnippet  
 
 context "math()"   
@@ -1363,9 +1420,10 @@ snippet +- "mp" iA
 \pm $0
 endsnippet
 
+priority 1000
 context "math()"
 snippet xx "cross" iA
-\times $0
+\times`!p snip.rv = after_commands()`$1
 endsnippet
 
 context "math()"
@@ -1529,7 +1587,7 @@ endsnippet
 
 context "math()"
 snippet `8 "\infty" iA
-\infty $0
+\infty`!p snip.rv = after_greek_letter()`$1
 endsnippet
 
 context "math()"
@@ -1558,7 +1616,20 @@ snippet AA "forall" iA
 \forall $0
 endsnippet
 
-#funciones matematicos 
+#implementar un snippet tal que al presiona fx se convierta a f(x) de manera automática. f puede ser f,x,y,z, x puede ser cualquier letra del alfabeto.
+priority 200
+context "math()"
+snippet '(?<!\\)(f|x|y|z)([a-z]+)' "function" rwA
+`!p snip.rv = match.group(1)`(`!p snip.rv = match.group(2)`)`!p snip.rv = after_commands()`$1
+endsnippet
+
+#implementar un snippet para funciones vectoriales de forma que al presionar vfx se convierta a \vv{f}(x) de manera automática. f puede ser f,x,y,z, x puede ser cualquier letra del alfabeto.
+priority 500
+context "math()"
+snippet '(?<!\\)(v)(f|x|y|z|r|v|a|b|c)([a-z]+)' "vector function" rwA
+\vv{`!p snip.rv = match.group(2)`}(`!p snip.rv = match.group(3)`)`!p snip.rv = after_commands()`$1
+endsnippet
+
 priority 200
 context "math()"
 snippet '(?<!\\|a)(sin|cos|tan|sec|csc|cot|ln|log|adj)' "functions math" rwA
@@ -1571,14 +1642,20 @@ snippet '(?<!\\)(asin|acos|atan|asec|acss|acot)' "function trig inverse" rwA
 \\`!p 
 function_trig=match.group(1)[1:]
 snip.rv="arc"+function_trig
-`\left($1\right) $0
+`\left($1\right)$0
 endsnippet
 
 #especiales
 
+#crear un snippet para notación científica 10E65
+context "math()"
+snippet '(\d+)E([\+\-]?\d+)' "notación científica" ri
+`!p snip.rv = match.group(1)`\times10^{`!p snip.rv = match.group(2)`}$0
+endsnippet
+
 #simbolos del paquete amssymb
 context "math()"
-snippet "\\(R|Q|Z|I|N)" "mathbb R Q Z I" ri
+snippet "\|(R|Q|Z|I|N)" "mathbb R Q Z I" ri
 \\mathbb{`!p snip.rv=match.group(1)`}
 endsnippet
 

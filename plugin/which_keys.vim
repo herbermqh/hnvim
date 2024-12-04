@@ -112,6 +112,13 @@
       \ 'v' :   [':VimtexView'  ,   'view pdf'],
       \ 'i' :   [':ToggleFileTexIllustrator'  ,   'LaTeX output in illustrator'],
       \ }
+  let g:which_key_map.w = {
+      \ 'name'  : 'web',
+      \ 's' :   [':LivePreview start',   'live preview start'],
+      \ 'c' :   [':LivePreview close',   'live preview close'],
+      \ 'p' :   [':LivePreview pick',   'live preview picker'],
+      \ }
+
 " Register which key map
   call which_key#register('<Space>', "g:which_key_map")
 

@@ -8,20 +8,20 @@ npairs.add_rule(Rule("'","","tex"))
 
 -- blankline config
 local highlight = {
-    -- "RainbowGreen",
-    -- "RainbowRed",
-    -- "RainbowYellow",
-    -- "RainbowBlue",
-    -- "RainbowOrange",
-    -- "RainbowViolet",
-    -- "RainbowCyan",
- 'TSRainbowGreen',
- 'TSRainbowYellow',
- 'TSRainbowOrange',
- 'TSRainbowRed',
- 'TSRainbowViolet',
- 'TSRainbowCyan',
- 'TSRainbowBlue',
+    "RainbowGreen",
+    "RainbowRed",
+    "RainbowYellow",
+    "RainbowBlue",
+    "RainbowOrange",
+    "RainbowViolet",
+    "RainbowCyan",
+ -- 'TSRainbowGreen',
+ -- 'TSRainbowYellow',
+ -- 'TSRainbowOrange',
+ -- 'TSRainbowRed',
+ -- 'TSRainbowViolet',
+ -- 'TSRainbowCyan',
+ -- 'TSRainbowBlue',
 }
 
 local hooks = require "ibl.hooks"
