@@ -88,11 +88,21 @@ snippet usepackage "usepackage" b
 \usepackage`!p snip.rv='[' if t[1] else ""`${1:options}`!p snip.rv = ']' if t[1] else ""`{${2:package}}$0
 endsnippet
 
+priority 500
+snippet doc "document" i
+\begin{document}
+${0}
+\end{document}
+endsnippet
+
+
 snippet "(?<!\\)beg" "begin{} / end{}" riA
 \begin{$1}
   $0
 \end{$1}
 endsnippet
+
+
 
 snippet "be(gin)?( (\S+))?" "begin{} / end{}" ir
 \begin{${1:`!p

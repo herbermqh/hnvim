@@ -29,6 +29,13 @@ nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble
 
 
 
+nnoremap <C-g> <cmd>lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>
+inoremap <C-g> <cmd>lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>
+
+
+nnoremap <A-z> :lua require("toggle-fullscreen"):toggle_fullscreen()<CR>
+inoremap <A-z> <Esc>:lua require("toggle-fullscreen"):toggle_fullscreen()<CR>i
+
 
 
 

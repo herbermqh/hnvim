@@ -41,7 +41,7 @@ vim.g.rainbow_delimiters = {
     }
 
 require'nvim-treesitter.configs'.setup{
-  ensure_installed = {"python","lua","latex","html", "css", "javascript"},
+  ensure_installed = {"python","lua","latex","html", "css", "javascript","markdown"},
   sync_install=true,
   auto_install=true,
   incremental_selection = {

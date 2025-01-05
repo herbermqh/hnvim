@@ -31,7 +31,7 @@ require("ibl").setup {
     show_start = true,
     show_end = true
   },
-  exclude = {filetypes = {"help", "terminal", "dashboard"}}
+  exclude = {filetypes = {"help", "terminal", "dashboard",}}
 }
 
 hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)

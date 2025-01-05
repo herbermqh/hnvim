@@ -59,6 +59,14 @@ require('packer').startup({function()
     use 'hrsh7th/cmp-cmdline'
     -- use 'hrsh7th/cmp-copilot'
     use {'github/copilot.vim'}
+    use({
+      'CopilotC-Nvim/CopilotChat.nvim',
+      requires = {
+        "github/copilot.vim",
+        "nvim-lua/plenary.nvim",
+      },
+      build = "make tiktoken",
+    })
     -- LaTeX
     use({'lervag/vimtex'})
     -- use({'herbermqh/vimtex'})
@@ -105,11 +113,14 @@ require('packer').startup({function()
     -- use({'nvim-lua/plenary.nvim'})
     use({
         'nvim-telescope/telescope.nvim',
-        --[[ requires = {
-            'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim',
+        requires = {
+            -- 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzy-native.nvim'
-        } ]]
+        }
     })
+    use {
+      "nvim-telescope/telescope-live-grep-args.nvim",
+    }
     use {
       'nvim-tree/nvim-tree.lua',
       requires = {
@@ -229,32 +240,41 @@ require('packer').startup({function()
         ''
       }
     }
+    use {
+      'b0o/incline.nvim'
+    }
+   use {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}
+    use({
+      'ray-x/navigator.lua',
+    })
 
     -- others
     use({'voldikss/vim-floaterm'})
     use({'liuchengxu/vim-which-key'})
     -- use({'liuchengxu/vim-clap'})
-    use {"akinsho/toggleterm.nvim"}
+    -- use {"akinsho/toggleterm.nvim"}
     -- use {"herbermqh/nvim-workbench"}
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
     -- use({'Pocco81/TrueZen.nvim', opt = true})
+    use({'propet/toggle-fullscreen.nvim'})
   
 
     --- dev web
-    use({
-      'brianhuster/live-preview.nvim',
-      requires = {
-          -- 'brianhuster/autosave.nvim'  -- Not required, but recomended for autosaving and sync scrolling
+    -- use({
+    --   'brianhuster/live-preview.nvim',
+    --   requires = {
+    --       -- 'brianhuster/autosave.nvim'  -- Not required, but recomended for autosaving and sync scrolling
 
-          -- You can choose one of the following pickers
-          -- 'nvim-telescope/telescope.nvim',
-          'ibhagwan/fzf-lua',
-          'echasnovski/mini.pick',
-      },
-      opts = {},
-    })
+    --       -- You can choose one of the following pickers
+    --       -- 'nvim-telescope/telescope.nvim',
+    --       'ibhagwan/fzf-lua',
+    --       'echasnovski/mini.pick',
+    --   },
+    --   opts = {},
+    -- })
     -- use{'weilbith/nvim-lsp-smag'}
+    use({'ibhagwan/fzf-lua'})
     use{
       'weilbith/nvim-floating-tag-preview',
       cmd = {'Ptag', 'Ptselect', 'Ptjump', 'Psearch', 'Pedit' },

@@ -35,6 +35,10 @@ require'lspconfig'.cssls.setup{
   capabilities = capabilities
 }
 
+require'lspconfig'.markdown_oxide.setup{
+  capabilities = capabilities
+}
+
 -- require'lspconfig'.sumneko_lua.setup{
 --   capabilities = capabilities
 -- }
