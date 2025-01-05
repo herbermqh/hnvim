@@ -16,7 +16,7 @@ require'navigator'.setup({
   -- The attach code will apply to all LSP clients
 
   ts_fold = {
-    enable = false,
+    enable = true,
     -- comment_fold = true, -- fold with comment string
     max_lines_scan_comments = 20, -- only fold when the fold level higher than this value
     disable_filetypes = {'help', 'guihua', 'text'}, -- list of filetypes which doesn't fold using treesitter
@@ -154,7 +154,7 @@ require'navigator'.setup({
       sumneko_root_path = vim.fn.expand("$HOME") .. "/github/sumneko/lua-language-server",
       sumneko_binary = vim.fn.expand("$HOME") .. "/github/sumneko/lua-language-server/bin/macOS/lua-language-server",
     },
-    servers = {'cmake', 'ltex', 'pyright', 'texlab', 'html', 'ts_ls', 'bashls', 'vimls', 'cssls'}, -- by default empty, and it should load all LSP clients available based on filetype
+    servers = {'cmake', 'pyright', 'texlab', 'html', 'ts_ls', 'bashls', 'vimls', 'cssls'}, -- by default empty, and it should load all LSP clients available based on filetype
     -- but if you want navigator load  e.g. `cmake` and `ltex` for you , you
     -- can put them in the `servers` list and navigator will auto load them.
     -- you could still specify the custom config  like this

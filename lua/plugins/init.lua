@@ -76,7 +76,7 @@ require('packer').startup({function()
     use 'duane9/nvim-rg'
     -- use 'rhysd/vim-grammarous'
     -- use({'Pocco81/AutoSave.nvim', opt = true})
-    -- use 'kevinhwang91/nvim-bqf'
+    use 'kevinhwang91/nvim-bqf'
     use({
         'AckslD/nvim-neoclip.lua',
         config = function()
@@ -244,9 +244,9 @@ require('packer').startup({function()
       'b0o/incline.nvim'
     }
    use {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}
-    use({
-      'ray-x/navigator.lua',
-    })
+    -- use({
+    --   'ray-x/navigator.lua',
+    -- })
 
     -- others
     use({'voldikss/vim-floaterm'})
