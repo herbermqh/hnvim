@@ -22,6 +22,7 @@ require('autopairs-config')
 require('lsp')
 require('colorizer-config')
 require('indentline')
+require('rainbow')
 require('config-notify')
 require('lualine-config')
 require('config-guihua')
@@ -37,6 +38,7 @@ require('transparent-config')
 require('telescope-config')
 -- require('copilotchat-config')
 require('config.copilot')
+
 
 -- require('alpha-nvim-config')
 vim.deprecate = function() end
