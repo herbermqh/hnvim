@@ -19,8 +19,8 @@ require'lspconfig'.pyright.setup{
   capabilities = capabilities
 }
 
-require'lspconfig'.tsserver.setup{
-  capabilities = capabilities
+require'lspconfig'.ts_ls.setup{
+  capabilities = capabilities,
 }
 
 require'lspconfig'.bashls.setup{
@@ -35,6 +35,10 @@ require'lspconfig'.cssls.setup{
   capabilities = capabilities
 }
 
+require'lspconfig'.markdown_oxide.setup{
+  capabilities = capabilities
+}
+
 -- require'lspconfig'.sumneko_lua.setup{
 --   capabilities = capabilities
 -- }
@@ -42,6 +46,7 @@ require'lspconfig'.cssls.setup{
 -- require'lspconfig'.zeta_note.setup{
   -- capabilities = capabilities
 -- }
-
+--
+--
 
 

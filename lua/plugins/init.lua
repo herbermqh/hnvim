@@ -58,7 +58,15 @@ require('packer').startup({function()
     use 'hrsh7th/cmp-path'
     use 'hrsh7th/cmp-cmdline'
     -- use 'hrsh7th/cmp-copilot'
-    use {'github/copilot.vim'}
+    use {'github/copilot.vim', depth=1}
+    use({
+      'CopilotC-Nvim/CopilotChat.nvim',
+      requires = {
+        "github/copilot.vim",
+        "nvim-lua/plenary.nvim",
+      },
+      build = "make tiktoken",
+    })
     -- LaTeX
     use({'lervag/vimtex'})
     -- use({'herbermqh/vimtex'})
@@ -68,7 +76,7 @@ require('packer').startup({function()
     use 'duane9/nvim-rg'
     -- use 'rhysd/vim-grammarous'
     -- use({'Pocco81/AutoSave.nvim', opt = true})
-    -- use 'kevinhwang91/nvim-bqf'
+    use 'kevinhwang91/nvim-bqf'
     use({
         'AckslD/nvim-neoclip.lua',
         config = function()
@@ -105,11 +113,14 @@ require('packer').startup({function()
     -- use({'nvim-lua/plenary.nvim'})
     use({
         'nvim-telescope/telescope.nvim',
-        --[[ requires = {
-            'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim',
+        requires = {
+            -- 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-fzy-native.nvim'
-        } ]]
+        }
     })
+    use {
+      "nvim-telescope/telescope-live-grep-args.nvim",
+    }
     use {
       'nvim-tree/nvim-tree.lua',
       requires = {
@@ -122,7 +133,6 @@ require('packer').startup({function()
     use({'tpope/vim-surround'})
 
     -- Syntax Highlighting
-    use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
     -- use({'airblade/vim-gitgutter'})
 
     -- UI Plugins
@@ -152,10 +162,12 @@ require('packer').startup({function()
     }) ]]
     -- modules ts
     -- use('p00f/nvim-ts-rainbow') -- discontinuado en vez de esto se utiliza nvim-ts-rainbow2
-    use 'HiPhish/nvim-ts-rainbow2'
+    -- use 'HiPhish/nvim-ts-rainbow2'
+    use 'HiPhish/rainbow-delimiters.nvim' 
     -- use 'windwp/nvim-ts-autotag'
     use 'nvim-treesitter/playground'
     use 'tree-sitter/tree-sitter-regex'
+    use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
 
     -- use({'frazrepo/vim-rainbow'})
     -- use({'luochen1990/rainbow'})
@@ -228,16 +240,45 @@ require('packer').startup({function()
         ''
       }
     }
+    use {
+      'b0o/incline.nvim'
+    }
+   use {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}
+    -- use({
+    --   'ray-x/navigator.lua',
+    -- })
 
     -- others
     use({'voldikss/vim-floaterm'})
     use({'liuchengxu/vim-which-key'})
     -- use({'liuchengxu/vim-clap'})
-    use {"akinsho/toggleterm.nvim"}
+    -- use {"akinsho/toggleterm.nvim"}
     -- use {"herbermqh/nvim-workbench"}
     -- Ocasional Plugins
     use({'kdheepak/lazygit.nvim', opt = true})
     -- use({'Pocco81/TrueZen.nvim', opt = true})
+    use({'propet/toggle-fullscreen.nvim'})
+  
+
+    --- dev web
+    -- use({
+    --   'brianhuster/live-preview.nvim',
+    --   requires = {
+    --       -- 'brianhuster/autosave.nvim'  -- Not required, but recomended for autosaving and sync scrolling
+
+    --       -- You can choose one of the following pickers
+    --       -- 'nvim-telescope/telescope.nvim',
+    --       'ibhagwan/fzf-lua',
+    --       'echasnovski/mini.pick',
+    --   },
+    --   opts = {},
+    -- })
+    -- use{'weilbith/nvim-lsp-smag'}
+    use({'ibhagwan/fzf-lua'})
+    use{
+      'weilbith/nvim-floating-tag-preview',
+      cmd = {'Ptag', 'Ptselect', 'Ptjump', 'Psearch', 'Pedit' },
+    }
 end,
 config = {
     clone_timeout = false

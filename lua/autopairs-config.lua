@@ -1,9 +1,10 @@
 require('nvim-autopairs').setup{
   check_ts = true,
   enable_check_bracket_line = true,
-  ignored_next_char = "[%w%.]", -- will ignore alphanumeric and `.` symbol
-  fast_wrap = {},
+
 }
+
+
 
 -- nvim-cmp Mapping <CR>
 -- If you want insert `(` after select function or method item

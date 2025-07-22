@@ -8,21 +8,21 @@ npairs.add_rule(Rule("'","","tex"))
 
 -- blankline config
 local highlight = {
-    -- "RainbowGreen",
-    -- "RainbowRed",
-    -- "RainbowYellow",
-    -- "RainbowBlue",
-    -- "RainbowOrange",
-    -- "RainbowViolet",
-    -- "RainbowCyan",
- 'TSRainbowGreen',
- 'TSRainbowYellow',
- 'TSRainbowOrange',
- 'TSRainbowRed',
- 'TSRainbowViolet',
- 'TSRainbowCyan',
- 'TSRainbowBlue',
+            'RainbowDelimiterRed',
+            'RainbowDelimiterYellow',
+            'RainbowDelimiterBlue',
+            'RainbowDelimiterOrange',
+            'RainbowDelimiterGreen',
+            'RainbowDelimiterViolet',
+            'RainbowDelimiterCyan',
 }
+            -- 'RainbowDelimiterRed',
+            -- 'RainbowDelimiterYellow',
+            -- 'RainbowDelimiterBlue',
+            -- 'RainbowDelimiterOrange',
+            -- 'RainbowDelimiterGreen',
+            -- 'RainbowDelimiterViolet',
+            -- 'RainbowDelimiterCyan',
 
 local hooks = require "ibl.hooks"
 -- create the highlight groups in the highlight setup hook, so they are reset

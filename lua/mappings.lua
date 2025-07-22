@@ -100,3 +100,5 @@ plug_mapper('n', '<leader>kf', '<Plug>(coc-fix-current)')
 -- nnoremap  <silent> <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
 -- nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
 -- ]])
+--
+--

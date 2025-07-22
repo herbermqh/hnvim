@@ -82,19 +82,28 @@ endsnippet
 priority 1000
 context "math()"
 snippet "([0-9^{}\-\+])\s([a-zA-Z]+)\s([a-zA-Z0-9]+)" "valor unidada sustancia" ir
-`!p snip.rv = match.group(1)+'\;\\unit{'+match.group(2)+'}\;\\ce{'+match.group(3)+'}'`
+`!p snip.rv = match.group(1)+'\\;\\unit{'+match.group(2)+'}\\;\\ce{'+match.group(3)+'}'`
 endsnippet
+# 10 g agua
 
 priority -1000
 context "math()"
 snippet "([0-9^{}\-\+]+)\s([a-zA-Z]+)\s([\\a-zA-Z0-9]+)" "valor unidada macro" ir
-`!p snip.rv = match.group(1)+'\;\\unit{'+match.group(2)+'}\;'+match.group(3)`
+`!p snip.rv = match.group(1)+'\\;\\unit{'+match.group(2)+'}\\;'+match.group(3)`
 endsnippet
+# 120 g \ce{H2O}
+
+# context "math()"
+# snippet "([0-9^{}\-\+\\a-zA-Z]+)\s([a-zA-Z\\\{\}\/íó\^0-9]+)" "valor unidada" ir
+# `!p snip.rv = match.group(1)+'\;\\unit{'+match.group(2)+'}'`
+# endsnippet
+# # 107 m
 
 context "math()"
-snippet "([0-9^{}\-\+]+)\s([a-zA-Z\\\{\}/íó\^0-9]+)" "valor unidada" ir
-`!p snip.rv = match.group(1)+'\;\\unit{'+match.group(2)+'}'`
+snippet "([\+\-]?[0-9\,\.\\pi]+(?:\\times10\^\{[\+\-0-9]+\})?)\s([a-zA-Z\\\{\}\/íó\^0-9]+)" "valor unidada" ir
+`!p snip.rv = match.group(1)+'\\;\\unit{'+match.group(2)+'}'`
 endsnippet
+# 107 m or 10.2 m or 10,2 m or 10\times10^{2} m
 
 priority 1000
 context "math()"

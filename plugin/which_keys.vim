@@ -112,6 +112,34 @@
       \ 'v' :   [':VimtexView'  ,   'view pdf'],
       \ 'i' :   [':ToggleFileTexIllustrator'  ,   'LaTeX output in illustrator'],
       \ }
+  " let g:which_key_map.w = {
+  "     \ 'name'  : 'web',
+  "     \ 's' :   [':LivePreview start',   'live preview start'],
+  "     \ 'c' :   [':LivePreview close',   'live preview close'],
+  "     \ 'p' :   [':LivePreview pick',   'live preview picker'],
+  "     \ }
+  "
+let g:which_key_map.c = {
+  \ 'name'  : 'copilot chat',
+  \ 'c' :   [':CopilotChat',   'chat'],
+  \ 'o' :   [':CopilotChatOpen',   'open'],
+  \ 'C' :   [':CopilotChatClose',   'close'],
+  \ 't' :   [':CopilotChatToggle',   'toggle'],
+  \ 's' :   [':CopilotChatStop',   'stop'],
+  \ 'r' :   [':CopilotChatReset',   'reset'],
+  \ 'S' :   [':CopilotChatSave',   'save'],
+  \ 'L' :   [':CopilotChatLoad',   'load'],
+  \ 'd' :   [':CopilotChatDebugInfo',   'debug'],
+  \ 'm' :   [':CopilotChatModels',   'models'],
+  \ 'a' :   [':CopilotChatAgents',   'agents'],
+  \ 'e' :   [':CopilotChatExplain',   'explain'],
+  \ 'g' :   [':CopilotChatGenerate',   'generate'],
+  \ 'i' :   [':CopilotChatImage',   'image'],
+  \ 'l' :   [':CopilotChatList',   'list'],
+  \ 'p' :   [':CopilotChatPrompt',   'prompt'],
+  \}
+
+
 " Register which key map
   call which_key#register('<Space>', "g:which_key_map")
 

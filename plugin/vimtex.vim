@@ -3,7 +3,11 @@
 let g:vimtex_enabled = 1
 let g:vimtex_compiler_enable = 1
 let g:vimtex_compiler_method = 'latexmk'
-let g:vimtex_compiler_latexmk = {}
+let g:vimtex_compiler_latexmk = {
+      \ 'options': [
+      \   '-verbose',
+      \ ]
+      \}
         " \ 'out_dir' : 'build',
         " \}
 " let g:vimtex_compiler_latexmk_engines = {
@@ -12,6 +16,7 @@ let g:vimtex_compiler_latexmk = {}
 "         \}
 "note: no está definido latexmk_engines por que en el arhicov .latexmkrc se
 "define $pdf_mode=5; 5 para xelatex, 4 para lualatex y 0 para pdflatex.
+
 let g:vimtex_delim_list = {
         \ 'delim_tex' : {
         \   'name' : [
@@ -182,3 +187,7 @@ let g:vimtex_syntax_packages = {
           \ 'hyperref': {'conceal': 1},
           \ 'fontawesome5': {'conceal': 1},
           \}
+
+
+
+
