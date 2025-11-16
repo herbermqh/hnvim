@@ -1,22 +1,22 @@
-local util = require 'lspconfig.util'
+-- Utility functions for texlab LSP
 
--- local texlab_build_status = vim.tbl_add_reverse_lookup {
---   Success = 0,
---   Error = 1,
---   Failure = 2,
---   Cancelled = 3,
--- }
+local texlab_build_status = vim.tbl_add_reverse_lookup {
+  Success = 0,
+  Error = 1,
+  Failure = 2,
+  Cancelled = 3,
+}
 
--- local texlab_forward_status = vim.tbl_add_reverse_lookup {
---   Success = 0,
---   Error = 1,
---   Failure = 2,
---   Unconfigured = 3,
--- }
+local texlab_forward_status = vim.tbl_add_reverse_lookup {
+  Success = 0,
+  Error = 1,
+  Failure = 2,
+  Unconfigured = 3,
+}
 
 local function buf_build(bufnr)
-  bufnr = util.validate_bufnr(bufnr)
-  local texlab_client = util.get_active_client_by_name(bufnr, 'texlab')
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  local texlab_client = vim.lsp.get_clients({ bufnr = bufnr, name = 'texlab' })[1]
 
   local pos = vim.api.nvim_win_get_cursor(0)
   local params = {
@@ -39,8 +39,8 @@ end
 
 
 local function buf_search(bufnr)
-  bufnr = util.validate_bufnr(bufnr)
-  local texlab_client = util.get_active_client_by_name(bufnr, 'texlab')
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  local texlab_client = vim.lsp.get_clients({ bufnr = bufnr, name = 'texlab' })[1]
   local pos = vim.api.nvim_win_get_cursor(0)
 
   local params = {
@@ -80,8 +80,12 @@ return {
 
     filetypes = { 'tex', 'plaintex', 'bib', 'cls', 'latex'},
     root_dir = function(fname)
-
-      return util.root_pattern '.latexmkrc'(fname) or util.find_git_ancestor(fname)
+      -- Use vim.fs.find to locate root markers
+      local root_pattern = function(patterns)
+        return vim.fs.root(fname, patterns)
+      end
+      
+      return root_pattern({ '.latexmkrc' }) or root_pattern({ '.git' })
     end,
 
     single_file_support = true,

@@ -1,52 +1,44 @@
--- -----------------------------------Setup lspconfig.
+-- -----------------------------------Setup LSP servers using vim.lsp.config (Neovim 0.11+)
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
--- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-require'lspconfig'.html.setup {
-  capabilities = capabilities
+
+-- Configure LSP servers using the new vim.lsp.config API
+local servers = {
+  html = {
+    capabilities = capabilities,
+  },
+  texlab = {
+    capabilities = capabilities,
+    cmd = { "texlab" },
+    filetypes = { "tex", "bib", "sty", "latex", "cls" },
+  },
+  pyright = {
+    capabilities = capabilities,
+  },
+  ts_ls = {
+    capabilities = capabilities,
+  },
+  bashls = {
+    capabilities = capabilities,
+  },
+  vimls = {
+    capabilities = capabilities,
+  },
+  cssls = {
+    capabilities = capabilities,
+  },
+  markdown_oxide = {
+    capabilities = capabilities,
+  },
 }
 
-require'lspconfig'.texlab.setup {
-  capabilities = capabilities,
-  cmd = { "texlab" },
-  filetypes = { "tex", "bib", "sty", "latex", "cls"},
-}
+-- Set up each server using vim.lsp.config
+for server_name, config in pairs(servers) do
+  vim.lsp.config(server_name, config)
+end
 
---[[ require'lspconfig'.ltex.setup{
-  capabilities = capabilities
-} ]]
-
-require'lspconfig'.pyright.setup{
-  capabilities = capabilities
-}
-
-require'lspconfig'.ts_ls.setup{
-  capabilities = capabilities,
-}
-
-require'lspconfig'.bashls.setup{
-  capabilities = capabilities
-}
-
-require'lspconfig'.vimls.setup{
-  capabilities = capabilities
-}
-
-require'lspconfig'.cssls.setup{
-  capabilities = capabilities
-}
-
-require'lspconfig'.markdown_oxide.setup{
-  capabilities = capabilities
-}
-
--- require'lspconfig'.sumneko_lua.setup{
---   capabilities = capabilities
--- }
-
--- require'lspconfig'.zeta_note.setup{
-  -- capabilities = capabilities
--- }
---
---
+-- Uncommented servers for reference:
+-- ltex = { capabilities = capabilities }
+-- sumneko_lua = { capabilities = capabilities }
+-- zeta_note = { capabilities = capabilities }
 
 
