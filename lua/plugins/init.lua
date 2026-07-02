@@ -7,7 +7,12 @@ require('packer').startup({function()
         branch = 'master',
         run = 'yarn install --frozen-lockfile'
     }) ]]
-    use 'neovim/nvim-lspconfig'
+    use {
+      'neovim/nvim-lspconfig',
+      tag = 'v2.5.0',
+    }
+
+
     -- use 'hrsh7th/nvim-compe'
     -- use 'onsails/lspkind-nvim'
     -- use {

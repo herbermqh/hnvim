@@ -121,10 +121,7 @@ require'nvim-tree'.setup {
     ignore_list = {}
   },
   -- ignore_ft_on_setup = {},
-  system_open = {
-    cmd  = nil,
-    args = {},
-  },
+
   diagnostics = {
     enable = true,
     show_on_dirs = false,

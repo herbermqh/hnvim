@@ -4,17 +4,22 @@ local icons = require('config.icons')
 --
 -- Copilot chat
 local chat = require('CopilotChat')
-local actions = require('CopilotChat.actions')
+-- local actions = require('CopilotChat.actions')
 local select = require('CopilotChat.select')
-local integration = require('CopilotChat.integrations.fzflua')
+-- local integration = require('CopilotChat.integrations.fzflua')
 
 chat.setup({
     -- system_prompt = prompts.COPILOT_INSTRUCTIONS,
-    model = 'gpt-4o',
+    model = 'gpt-5',
     agent = 'copilot',
-    question_header = ' ' .. icons.ui.User .. ' Heber MQ ',
-    answer_header = ' ' .. icons.ui.Bot .. ' ',
-    error_header = '> ' .. icons.diagnostics.Warn .. ' ',
+    -- question_header = ' ' .. icons.ui.User .. ' Heber MQ ',
+    -- answer_header = ' ' .. icons.ui.Bot .. ' ',
+    -- error_header = '> ' .. icons.diagnostics.Warn .. ' ',
+    headers = {
+      user = ' ' .. icons.ui.User .. ' Heber -',
+      assistant = ' ' .. icons.ui.Bot .. ' ',
+      tool = '🔧 Tool: ',
+    },
     context = nil,
     temperature = 0.8,
     -- selection = select.buffer,
@@ -30,7 +35,7 @@ chat.setup({
       border = 'rounded', -- 'none', single', 'double', 'rounded', 'solid', 'shadow'
       row = nil, -- row position of the window, default is centered
       col = nil, -- column position of the window, default is centered
-      title = 'Copilot Chat', -- title of chat window
+      title = ' ' .. icons.ui.Bot .. 'IA', -- title of chat window
       footer = nil, -- footer of chat window
       zindex = 1, -- determines if window is on top or below other floating windows
     },
@@ -73,8 +78,17 @@ chat.setup({
             description = 'AI Generar commit',
         },
     },
-    {
-  }
+    -- Auto-command to customize chat buffer behavior
+    vim.api.nvim_create_autocmd('BufEnter', {
+      pattern = 'copilot-*',
+      callback = function()
+        vim.opt_local.relativenumber = false
+        vim.opt_local.number = false
+        vim.opt_local.conceallevel = 0
+      end,
+    }),
+    -- vim.api.nvim_set_hl(0, 'CopilotChatHeader', { fg = '#7C3AED', bold = true }),
+    -- vim.api.nvim_set_hl(0, 'CopilotChatSeparator', { fg = '#374151' })
 })
 
 

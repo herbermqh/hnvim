@@ -22,7 +22,11 @@ nnoremap <C-A-l> :w<CR>:silent exec '!latexindent -w' '%:p'<CR>:e<CR>
 
 " -- create files latex
 nnoremap <A-c> <Esc>:silent exec '.!python -m gestor-archivos-latex create "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
-nnoremap <A-e> <Esc>:silent exec '!python -m gestor-archivos-latex edit "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
+" nnoremap <A-e> <Esc>:silent exec '!python -m gestor-archivos-latex edit "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
+
+
+" -- geneera una exemen con referencias
+nnoremap <A-e> <Esc>:silent exec '!python -m gestor-archivos-latex examenhoja "'.getline('.').'"' '%:p:h'<CR><CR>:w<CR>
 
 " -- preabulo precompilador
 nnoremap <A-m> :w<Esc>:execute '!python -m gestor-archivos-latex compilepreamble ' '%:p'<CR>
