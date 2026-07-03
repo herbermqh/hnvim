@@ -95,6 +95,22 @@ require'nvim-tree'.setup {
   sort_by              = "case_sensitive",
   update_cwd           = true,
   view = {
+    float = {
+      enable = true,
+      open_win_config = function()
+        local lines = vim.api.nvim_get_option("lines")
+        local width = 45
+        local height = lines - 3
+        return {
+          relative = "editor",
+          border = "rounded",
+          width = width,
+          height = height,
+          col = 0,
+          row = 2,
+        }
+      end,
+    },
     width = 30,
     -- height = 30,
     side = "left",
@@ -154,7 +170,7 @@ require'nvim-tree'.setup {
         enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         exclude = {
-          filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
+          filetype = { "notify", "lazy", "qf", "diff", "fugitive", "fugitiveblame" },
           buftype  = { "nofile", "terminal", "help" },
         },
       },
@@ -174,4 +190,38 @@ require'nvim-tree'.setup {
     },
   },
 }
+
+-- Limpiamos los hacks anteriores y usamos la configuración limpia
+vim.api.nvim_create_autocmd({"UIEnter", "ColorScheme", "BufEnter"}, {
+  pattern = "NvimTree_*",
+  callback = function()
+    vim.wo.cursorline = true
+    vim.wo.cursorlineopt = "both"
+    vim.api.nvim_set_hl(0, "NvimTreeCursorLine", { bg = "#292e42", bold = true, default = false })
+  end,
+})
+
+-- Ocultar el cursor rosado de hardware solo dentro de NvimTree
+vim.api.nvim_set_hl(0, "NvimTreeHiddenCursor", { blend = 100, nocombine = true })
+
+vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+  pattern = "NvimTree_*",
+  callback = function()
+    vim.g.old_guicursor = vim.opt.guicursor:get()
+    vim.opt.guicursor = "n-v-c:block-NvimTreeHiddenCursor"
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
+  pattern = "NvimTree_*",
+  callback = function()
+    if vim.g.old_guicursor then
+      vim.opt.guicursor = vim.g.old_guicursor
+    else
+      vim.cmd("set guicursor&")
+    end
+  end,
+})
+
+
 

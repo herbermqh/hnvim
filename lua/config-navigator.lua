@@ -81,7 +81,7 @@ require'navigator'.setup({
                                           -- default value: {}
     diagnostic = {
       underline = true,
-      virtual_text = true, -- show virtual for diagnostic message
+      virtual_text = false, -- show virtual for diagnostic message
       update_in_insert = false, -- update diagnostic message in insert mode
       float = {                 -- setup for floating windows style
         focusable = false,
@@ -114,7 +114,7 @@ require'navigator'.setup({
 
     diagnostic_scrollbar_sign = {'▃', '▆', '█'}, -- experimental:  diagnostic status in scroll bar area; set to false to disable the diagnostic sign,
                                                  --                for other style, set to {'╍', 'ﮆ'} or {'-', '='}
-    diagnostic_virtual_text = true,  -- show virtual for diagnostic message
+    diagnostic_virtual_text = false,  -- show virtual for diagnostic message
     diagnostic_update_in_insert = false, -- update diagnostic message in insert mode
     display_diagnostic_qf = true, -- always show quickfix if there are diagnostic errors, set to false if you want to ignore it
                                   -- set to 'trouble' to show diagnostcs in Trouble

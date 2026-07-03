@@ -171,3 +171,6 @@ vim.g.history = 1000
 
 -- Add chars to '%'
 vim.bo.matchpairs = "(:),{:},[:],<:>,':',$:$"
+
+-- Add vertical space (margin) between the tabline and the code buffer
+vim.opt.winbar = "%#Normal# "

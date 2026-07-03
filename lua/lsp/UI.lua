@@ -1,28 +1,20 @@
--- ------------------------Borders
+-- =========================================================================
+-- LSP UI CONFIGURATION (Ultra Clean & Beautiful)
+-- =========================================================================
 
-local border = {
-      {"╭", "FloatBorder"},
-      {"─", "FloatBorder"},
-      {"╮", "FloatBorder"},
-      {"│", "FloatBorder"},
-      {"╯", "FloatBorder"},
-      {"─", "FloatBorder"},
-      {"╰", "FloatBorder"},
-      {"│", "FloatBorder"},
-}
+-- 1. Bordes redondeados elegantes para todas las ventanas flotantes
+local border = "rounded"
 
--- LSP settings (for overriding per client)
-local handlers =  {
-  ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = border}),
-  ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = border }),
-}
+-- 2. Sobrescribir los manejadores globales del LSP
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = border,
+})
 
--- Do not forget to use the on_attach function
--- require 'lspconfig'.myserver.setup { handlers=handlers }
--- require 'lspconfig'.texlab.setup { handlers=handlers }
--- require 'lspconfig'.pyright.setup { handlers=handlers }
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = border,
+})
 
--- To instead override globally
+-- Función de rescate para forzar bordes redondeados en cualquier otra ventana flotante del LSP
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
 function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   opts = opts or {}
@@ -30,94 +22,42 @@ function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
   return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
--- require 'lspconfig'.myservertwo.setup {}
--- require 'lspconfig'.texlab.setup {}
--- require 'lspconfig'.pyright.setup {}
-
-
--- -------------------------------Completion kinds
--- local M = {}
--- M.icons = {
---   Class = " ",
---   Color = " ",
---   Constant = " ",
---   Constructor = " ",
---   Enum = " ",
---   EnumMember = " ",
---   Field = " ",
---   File = " ",
---   Folder = " ",
---   Function = " ",
---   Interface = "ﰮ ",
---   Keyword = " ",
---   Method = "ƒ ",
---   Module = " ",
---   Property = " ",
---   Snippet = "﬌ ",
---   Struct = " ",
---   Text = " ",
---   Unit = " ",
---   Value = " ",
---   Variable = " ",
--- }
--- function M.setup()
---   local kinds = vim.lsp.protocol.CompletionItemKind
---   for i, kind in ipairs(kinds) do
---     kinds[i] = M.icons[kind] or kind
---   end
--- end
--- return M
-
--- ---------------------------------Customizing how diagnostics are displayed
+-- 3. Configuración principal de Diagnósticos
 vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  underline = true,
-  update_in_insert = true,
-  severity_sort = true,
+  virtual_text = false,        -- Texto virtual apagado (código limpio)
+  signs = true,                -- Mostrar íconos en el margen izquierdo
+  underline = true,            -- Subrayar el código problemático
+  update_in_insert = false,    -- No actualizar mientras escribes (evita distracciones)
+  severity_sort = true,        -- Mostrar errores antes que advertencias
+  
+  -- Configuración de la ventana flotante de diagnósticos (al dejar el cursor quieto)
+  float = {
+    focusable = false,
+    style = "minimal",
+    border = "rounded",
+    source = "always",         -- Mostrar de qué plugin/LSP viene el error
+    header = "",               -- Eliminar el título por defecto "Diagnostics:" (se ve feo)
+    prefix = "  ",            -- Un pequeño punto elegante antes del texto del error
+    format = function(diagnostic)
+      -- Formato hermoso: "Mensaje de error [Fuente]"
+      return string.format("%s  [%s]", diagnostic.message, diagnostic.source)
+    end,
+  },
 })
 
-
--- --------------------------------Change diagnostic symbols in the sign column (gutter)
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+-- 4. Íconos premium para el margen izquierdo (Gutter)
+-- Usamos íconos clásicos y limpios de NerdFonts
+local signs = { 
+  Error = " ", 
+  Warn  = " ", 
+  Hint  = " ", 
+  Info  = " " 
+}
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
--- -------------------------------Print diagnostics to message area
-
-
-
--- -------------------------------Show line diagnostics automatically in hover window
-
-vim.o.updatetime = 10
+-- 5. Mostrar ventana flotante de diagnóstico automáticamente
+vim.o.updatetime = 250 -- Tiempo de espera suave de un cuarto de segundo
 vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false, scope="cursor"})]]
-
--- --------------------------------Go-to definition in a split window
-
-
--- --------------------------Show source in diagnostics
-vim.diagnostic.config({
-  virtual_text = {
-    source = "always",  -- Or "if_many"
-  },
-  float = {
-    source = "always",  -- Or "if_many"
-  },
-})
-
--- ------------------------------Change prefix/character preceding the diagnostics' virtual text
-vim.diagnostic.config({
-  virtual_text = {
-    prefix = '󱎸', -- Could be '●', '▎', 'x'
-  }
-})
-
-
-
--- ------------------------------Highlight line number instead of having icons in sign column
-
-
-
-

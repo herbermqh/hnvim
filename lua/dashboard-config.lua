@@ -16,12 +16,12 @@ db.setup({
     }, --your header
     center = {
       {icon = '  ',
-      desc = 'Recently latest session                 ',
+      desc = 'Restore Local Session                   ',
       shortcut = 'SPC s l',
-      action ='Telescope oldfiles'},
+      action ='lua require("persistence").load()'},
       {icon = '󱞛  ',
       desc = 'Recently opened files                   ',
-      action =  'DashboardFindHistory',
+      action =  'Telescope oldfiles',
       shortcut = 'SPC f h'},
       {icon = '  ',
       desc = 'Find  File                              ',
@@ -29,7 +29,7 @@ db.setup({
       shortcut = 'SPC f f'},
       {icon = '  ',
       desc ='File Browser                            ',
-      action =  'Telescope file_browser',
+      action =  'NvimTreeToggle',
       shortcut = 'SPC f b'},
       {icon = '  ',
       desc = 'Find  word                              ',
@@ -43,14 +43,25 @@ db.setup({
     tabline = true,
     winbar = true,
   },
-  -- preview = {
-  --   command = 'cat | lolcat -F 0.3',
-  --   -- command = 'chafa',
-  --   file_path = home .. '/.config/nvim/static/neovim.cat',
-  --   file_height = 5,
-  --   file_width = 63,
-  -- },
 })
+
+-- Configurar el plugin genérico de resaltado de píldora
+require('pill-highlighter').setup({
+  hl_group = "DashboardTextSelect",
+  bg_color = "#292e42",
+  hide_cursor = true,
+  rounded = true
+})
+
+-- Consumir el API del plugin al cargar el dashboard
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "dashboard",
+  callback = function()
+    require('pill-highlighter').attach()
+  end,
+})
+
+
 -- db.preview_command = 'cat | lolcat -F 0.3'
 -- db.preview_file_path = home .. '/.config/nvim/static/neovim.cat'
 -- db.preview_file_height = 5

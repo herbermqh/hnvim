@@ -19,7 +19,7 @@ require'barbar'.setup {
   clickable = true,
 
   -- Excludes buffers from the tabline
-  exclude_ft = {'javascript'},
+  exclude_ft = {'NvimTree'},
   exclude_name = {'package.json'},
 
   -- A buffer to this direction will be focused (if it exists) when closing the current buffer.
@@ -42,13 +42,13 @@ require'barbar'.setup {
     -- Configure the base icons on the bufferline.
     buffer_index = false,
     buffer_number = false,
-    button = '󰏫',
+    button = ' 󰏫',
     -- Enables / disables diagnostic symbols
     diagnostics = {
-      [vim.diagnostic.severity.ERROR] = {enabled = true, icon = 'ﬀ'},
-      [vim.diagnostic.severity.WARN] = {enabled = false},
+      [vim.diagnostic.severity.ERROR] = {enabled = true, icon = '  '},
+      [vim.diagnostic.severity.WARN] = {enabled = true, icon = '  '},
       [vim.diagnostic.severity.INFO] = {enabled = false},
-      [vim.diagnostic.severity.HINT] = {enabled = true},
+      [vim.diagnostic.severity.HINT] = {enabled = false},
     },
     filetype = {
       -- Sets the icon's highlight group.
@@ -58,17 +58,17 @@ require'barbar'.setup {
       -- Requires `nvim-web-devicons` if `true`
       enabled = true,
     },
-    separator = {left = '▎', right = ''},
+    separator = {left = '', right = ''},
     -- Configure the icons on the bufferline when modified or pinned.
     -- Supports all the base icon options.
-    modified = {button = '●'},
-    pinned = {button = '󰐃', filename = true, separator = {right = ''}},
+    modified = {button = ' ●'},
+    pinned = {button = ' 󰐃', filename = true, separator = {right = ''}},
 
     -- Configure the icons on the bufferline based on the visibility of a buffer.
     -- Supports all the base icon options, plus `modified` and `pinned`.
     alternate = {filetype = {enabled = false}},
-    current = {buffer_index = true},
-    inactive = {button = '×'},
+    current = {buffer_index = false},
+    inactive = {button = ' ×', separator = {left = ' ', right = ' '}},
     visible = {modified = {buffer_number = false}},
   },
 
@@ -78,10 +78,10 @@ require'barbar'.setup {
   insert_at_start = false,
 
   -- Sets the maximum padding width with which to surround each tab
-  maximum_padding = 1,
+  maximum_padding = 0,
 
   -- Sets the minimum padding width with which to surround each tab
-  minimum_padding = 1,
+  minimum_padding = 0,
 
   -- Sets the maximum buffer name length.
   maximum_length = 30,
@@ -94,8 +94,6 @@ require'barbar'.setup {
 
   -- Set the filetypes which barbar will offset itself for
   sidebar_filetypes = {
-    -- Use the default values: {event = 'BufWinLeave', text = nil}
-    NvimTree = true,
     -- Or, specify the text used for the offset:
     undotree = {text = 'undotree'},
     -- Or, specify the event which the sidebar executes when leaving:

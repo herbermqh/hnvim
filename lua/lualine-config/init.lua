@@ -44,7 +44,7 @@ local lualine = require('lualine')
 -- Color table for highlights
 -- stylua: ignore
 local colors = {
-  bg       = 'guibg',
+  bg       = 'NONE',
   fg       = 'guifg',
   yellow   = '#ECBE7B',
   cyan     = '#008080',
@@ -109,13 +109,17 @@ local config = {
     -- Disable sections and component separators
     component_separators = '',
     section_separators = '',
+    disabled_filetypes = {
+      statusline = { 'dashboard' },
+      winbar = { 'dashboard' },
+    },
     theme = {
       -- We are going to use lualine_c an lualine_x as left and
       -- right section. Both are highlighted by c theme .  So we
       -- are just setting default looks o statusline
 
-      normal = { c = { fg = colors.fg, bg = colors.bg } },
-      inactive = { c = { fg = colors.fg, bg = colors.bg } },
+      normal = { c = { fg = colors.fg } },
+      inactive = { c = { fg = colors.fg } },
     },
   },
   sections = {
@@ -287,6 +291,17 @@ ins_right {
     return { fg = mode_color[vim.fn.mode()] }
   end,
   padding = { left = 1 },
+}
+
+-- Extension to completely hide the statusline in NvimTree
+config.extensions = {
+  {
+    sections = {
+      lualine_a = {}, lualine_b = {}, lualine_c = {},
+      lualine_x = {}, lualine_y = {}, lualine_z = {}
+    },
+    filetypes = { 'NvimTree' }
+  }
 }
 
 -- Now don't forget to initialize lualine
