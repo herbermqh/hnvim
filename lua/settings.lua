@@ -43,7 +43,7 @@ vim.o.smartcase = true
 vim.o.swapfile = true
 
 -- Swapfile config
-vim.o.shortmess = vim.o.shortmess .. 'c'
+vim.o.shortmess = vim.o.shortmess .. 'cF'
 vim.o.directory = vim.fn.expand(vim.fn.stdpath('data') .. '/swap//')
 
 -- Backups are nice

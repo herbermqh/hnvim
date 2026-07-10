@@ -4,7 +4,23 @@ local function my_on_attach(bufnr)
   local function opts(desc)
     return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
   end
+  local function toggle_width()
+    local win = vim.api.nvim_get_current_win()
+    local config = vim.api.nvim_win_get_config(win)
+    if config.relative ~= "" then
+      local new_width = config.width == 45 and 100 or 45
+      vim.api.nvim_win_set_config(win, {
+        relative = config.relative,
+        row = config.row,
+        col = config.col,
+        width = new_width,
+        height = config.height
+      })
+    end
+  end
+
   -- custom mappings
+  vim.keymap.set('n', 'w',       toggle_width,                        opts('Toggle Float Width'))
   vim.keymap.set('n', '<C-]>',   api.tree.change_root_to_node,        opts('CD'))
   vim.keymap.set('n', '<C-e>',   api.node.open.replace_tree_buffer,   opts('Open: In Place'))
   vim.keymap.set('n', '<C-k>',   api.node.show_info_popup,            opts('Info'))
@@ -192,11 +208,13 @@ require'nvim-tree'.setup {
 }
 
 -- Limpiamos los hacks anteriores y usamos la configuración limpia
-vim.api.nvim_create_autocmd({"UIEnter", "ColorScheme", "BufEnter"}, {
-  pattern = "NvimTree_*",
+vim.api.nvim_create_autocmd({"FileType"}, {
+  pattern = "NvimTree",
   callback = function()
     vim.wo.cursorline = true
-    vim.wo.cursorlineopt = "both"
+    vim.wo.cursorlineopt = "both" -- O 'line'
+    -- Forzar que la ventana de NvimTree use nuestro propio highlight en la línea actual
+    vim.opt_local.winhl = "CursorLine:NvimTreeCursorLine"
     vim.api.nvim_set_hl(0, "NvimTreeCursorLine", { bg = "#292e42", bold = true, default = false })
   end,
 })

@@ -1,0 +1,35 @@
+{
+  "use": {
+    "prefix": "use",
+    "description": "use file/package",
+    "body": "@use \"$1\";"
+  },
+  "use*": {
+    "prefix": "use*",
+    "description": "use file/package as *",
+    "body": "@use \"$1\" as *;"
+  },
+  "forw": {
+    "prefix": "forw",
+    "description": "forward package with",
+    "body": [
+      "@forward \"$1\" with (",
+      "\t$2",
+      ");"
+    ]
+  },
+  "imp": {
+    "prefix": "imp",
+    "description": "import package (legacy)",
+    "body": "@import \"$1\";"
+  },
+  "pcs": {
+    "prefix": "pcs",
+    "description": "prefers-color-scheme media query",
+    "body": [
+      "@media (prefers-color-scheme: ${1:dark}) {",
+      "\t$2",
+      "\\}"
+    ]
+  }
+}

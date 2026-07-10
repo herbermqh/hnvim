@@ -1,0 +1,782 @@
+{
+  "rc": {
+    "prefix": "rc",
+    "description": "require package that converts from camelCase or PascalCase to kebab-cased",
+    "body": "const $1 = require('$2')"
+  },
+  "rcn": {
+    "prefix": "rcn",
+    "description": "const { nested } = require('package')",
+    "body": "const { $1 \\} = require('$2');"
+  },
+  "imp": {
+    "prefix": "imp",
+    "description": "import package that converts from camelCase or PascalCase to kebab-cased",
+    "body": "import $1 from '$2'"
+  },
+  "impf": {
+    "prefix": "impf",
+    "description": "import File from './File'",
+    "body": "import $1 from '${2:./}${3:$1}'"
+  },
+  "impn": {
+    "prefix": "impn",
+    "description": "import { nested } from",
+    "body": "import { $1 \\} from '$2'"
+  },
+  "impa": {
+    "prefix": "impa",
+    "description": "import * as Thing from",
+    "body": "import * as $1 from \"$2\""
+  },
+  "impp": {
+    "prefix": "impp",
+    "description": "import file without a declaration",
+    "body": "import '$1'"
+  },
+  "icn": {
+    "prefix": "icn",
+    "description": "import classnames as cn",
+    "body": "import cn from 'classnames'"
+  },
+  "icnb": {
+    "prefix": "icnb",
+    "description": "import { cnb } from 'cnbuilder'",
+    "body": "import { cnb \\} from 'cnbuilder'"
+  },
+  "ism": {
+    "prefix": "ism",
+    "description": "import scss module",
+    "body": "import ${2:styles} from './${1:}.module.scss'"
+  },
+  "exp": {
+    "prefix": "exp",
+    "description": "export { default } from './CurrentFolderName'",
+    "body": "export { default \\} from './${1:}'"
+  },
+  "expf": {
+    "prefix": "expf",
+    "description": "export File from './File'",
+    "body": "export $1 from '${2:./}$1'"
+  },
+  "expn": {
+    "prefix": "expn",
+    "description": "export nested",
+    "body": "export { $1 \\} from '$2'"
+  },
+  "expd": {
+    "prefix": "expd",
+    "description": "export { default as File } from './File'",
+    "body": "export { default as $1 \\} from '${2:./}$1'"
+  },
+  "expa": {
+    "prefix": "expa",
+    "description": "export * from",
+    "body": "export * from '$1'"
+  },
+  "cl": {
+    "prefix": "cl",
+    "description": "console.log",
+    "body": "console.log($1)"
+  },
+  "clv": {
+    "prefix": "clv",
+    "description": "console.log variable",
+    "body": "console.log('$1:', ${1:})"
+  },
+  "ce": {
+    "prefix": "ce",
+    "description": "console.error",
+    "body": "console.error($1)"
+  },
+  "cev": {
+    "prefix": "cev",
+    "description": "console.error variable",
+    "body": "console.error('$1: ', ${1:})"
+  },
+  "cw": {
+    "prefix": "cw",
+    "description": "console.warn",
+    "body": "console.warn($1)"
+  },
+  "cwv": {
+    "prefix": "cwv",
+    "description": "console.warn variable",
+    "body": "console.warn('$1: ', ${1:})"
+  },
+  "ct": {
+    "prefix": "ct",
+    "description": "console.table",
+    "body": "console.table($1)"
+  },
+  "cd": {
+    "prefix": "cd",
+    "description": "console.debug",
+    "body": "console.debug($1)"
+  },
+  "cdv": {
+    "prefix": "cdv",
+    "description": "console.debug variable",
+    "body": "console.debug('$1: ', ${1:})"
+  },
+  "dev": {
+    "prefix": "dev",
+    "description": "process.env.NODE_ENV !== 'production'",
+    "body": "process.env.NODE_ENV !== 'production'"
+  },
+  "prod": {
+    "prefix": "prod",
+    "description": "process.env.NODE_ENV === 'production'",
+    "body": "process.env.NODE_ENV === 'production'"
+  },
+  "noop": {
+    "prefix": "noop",
+    "description": "const noop = () => {}",
+    "body": "const noop = () => {\\}"
+  },
+  "rtf": {
+    "prefix": "rtf",
+    "description": "React Test File",
+    "body": [
+      "import { render \\} from '@testing-library/react'",
+      "",
+      "import ${1:} from '../$1'",
+      "",
+      "describe('$1', () => {",
+      "\tit('should $2', () => {",
+      "\t\t$0",
+      "\t\\})",
+      "\\})"
+    ]
+  },
+  "desc": {
+    "prefix": "desc",
+    "description": "describe a test",
+    "body": [
+      "describe('$1', () => {",
+      "\tit('should $2', () => {",
+      "\t\t$0",
+      "\t\\})",
+      "\\})"
+    ]
+  },
+  "it": {
+    "prefix": "it",
+    "description": "create a test block",
+    "body": [
+      "it('should $1', () => {",
+      "\t$0",
+      "\\})"
+    ]
+  },
+  "ait": {
+    "prefix": "ait",
+    "description": "create an async test block",
+    "body": [
+      "it('should $1', async () => {",
+      "\t$0",
+      "\\})"
+    ]
+  },
+  "todo": {
+    "prefix": "todo",
+    "description": "it.todo()",
+    "body": "it.todo('should $1')"
+  },
+  "es": {
+    "prefix": "es",
+    "description": "expect(container).toMatchSnapshot()",
+    "body": "expect(${1:container}).toMatchSnapshot()$0"
+  },
+  "rce": {
+    "prefix": "rce",
+    "description": "React class exported",
+    "body": [
+      "import { Component \\} from 'react'",
+      "",
+      "export default class ${1:} extends Component {",
+      "\tconstructor(props) {",
+      "\t\tsuper(props)",
+      "",
+      "\t\tthis.state = {\\}",
+      "\t\\}",
+      "",
+      "\trender() {",
+      "\t\treturn null$0",
+      "\t\\}",
+      "\\}"
+    ]
+  },
+  "rcc": {
+    "prefix": "rcc",
+    "description": "React class component",
+    "body": [
+      "class $1 extends Component {",
+      "\trender() {",
+      "\t\treturn null$0",
+      "\t\\}",
+      "\\}"
+    ]
+  },
+  "rcon": {
+    "prefix": "rcon",
+    "description": "React class constructor",
+    "body": [
+      "constructor(props) {",
+      "\tsuper(props)",
+      "",
+      "\tthis.state = ${1:{\\}}$0",
+      "\\}"
+    ]
+  },
+  "fce": {
+    "prefix": "fce",
+    "description": "function component exported",
+    "body": [
+      "const ${1:} = props => {",
+      "\treturn null$0",
+      "\\}",
+      "",
+      "export default $1"
+    ]
+  },
+  "sfce": {
+    "prefix": "sfce",
+    "description": "simple function component export (no props)",
+    "body": [
+      "const ${1:} = () => {",
+      "\treturn null$0",
+      "\\}",
+      "",
+      "export default $1"
+    ]
+  },
+  "ffce": {
+    "prefix": "ffce",
+    "description": "forwarded function component export",
+    "body": [
+      "import { forwardRef \\} from 'react'",
+      "",
+      "const $1 = forwardRef(function ${1:}(props, ref) {",
+      "\treturn (",
+      "\t\t<div ref={ref\\}>$0",
+      "\t\t</div>",
+      "\t)",
+      "\\})",
+      "",
+      "export default $1"
+    ]
+  },
+  "rcf": {
+    "prefix": "rcf",
+    "description": "react class function",
+    "body": [
+      "$1 = (${2:e}) => {",
+      "\t$3",
+      "\\}"
+    ]
+  },
+  "sdp": {
+    "prefix": "sdp",
+    "description": "static default props",
+    "body": [
+      "static defaultProps = {",
+      "\t$1",
+      "\\}"
+    ]
+  },
+  "cdp": {
+    "prefix": "cdp",
+    "description": "component default props",
+    "body": [
+      "${1:}.defaultProps = {",
+      "\t$2",
+      "\\}"
+    ]
+  },
+  "spt": {
+    "prefix": "spt",
+    "description": "static prop types",
+    "body": [
+      "static propTypes = {",
+      "\t${1:className}: ${2:PropTypes.string},$0",
+      "\\}"
+    ]
+  },
+  "cpt": {
+    "prefix": "cpt",
+    "description": "component prop types",
+    "body": [
+      "${1:}.propTypes = {",
+      "\t${2:className}: ${3:PropTypes.string},$0",
+      "\\}"
+    ]
+  },
+  "gds": {
+    "prefix": "gds",
+    "description": "get derived state from props",
+    "body": [
+      "static getDerivedStateFromProps(nextProps, prevState) {",
+      "\treturn ${1:null}$0",
+      "\\}"
+    ]
+  },
+  "gde": {
+    "prefix": "gde",
+    "description": "get derived state from error",
+    "body": [
+      "static getDerivedStateFromError(error) {",
+      "\treturn ${1:null}$0",
+      "\\}"
+    ]
+  },
+  "cdm": {
+    "prefix": "cdm",
+    "description": "component did mount",
+    "body": [
+      "componentDidMount() {",
+      "\t$1",
+      "\\}"
+    ]
+  },
+  "scu": {
+    "prefix": "scu",
+    "description": "should component update",
+    "body": [
+      "shouldComponentUpdate(nextProps, nextState) {",
+      "\treturn ${1:true}$0",
+      "\\}"
+    ]
+  },
+  "gsbu": {
+    "prefix": "gsbu",
+    "description": "get snapshot before update",
+    "body": [
+      "getSnapshotBeforeUpdate(prevProps, prevState) {",
+      "\treturn ${1:null}$0",
+      "\\}"
+    ]
+  },
+  "cdu": {
+    "prefix": "cdu",
+    "description": "component did update",
+    "body": [
+      "componentDidUpdate(prevProps, prevState${1:, snapshot}) {",
+      "\t$0",
+      "\\}"
+    ]
+  },
+  "cdc": {
+    "prefix": "cdc",
+    "description": "component did catch",
+    "body": [
+      "componentDidCatch(error, info) {",
+      "\t$0",
+      "\\}"
+    ]
+  },
+  "cwum": {
+    "prefix": "cwum",
+    "description": "component will unmount",
+    "body": [
+      "componentWillUnmount() {",
+      "\t$1",
+      "\\}"
+    ]
+  },
+  "cwm": {
+    "prefix": "cwm",
+    "description": "component will mount",
+    "body": [
+      "componentWillMount() {",
+      "\t$1",
+      "\\}"
+    ]
+  },
+  "cwrp": {
+    "prefix": "cwrp",
+    "description": "component will receive props",
+    "body": [
+      "componentWillReceiveProps(nextProps) {",
+      "\t$1",
+      "\\}"
+    ]
+  },
+  "cwu": {
+    "prefix": "cwu",
+    "description": "component will update",
+    "body": [
+      "componentWillUpdate(nextProps, nextState) {",
+      "\t$3",
+      "\\}"
+    ]
+  },
+  "useS": {
+    "prefix": "useS",
+    "description": "useState()",
+    "body": "const [$1, set] = useState($2)"
+  },
+  "useE": {
+    "prefix": "useE",
+    "description": "useEffect()",
+    "body": [
+      "useEffect(() => {",
+      "\t$0",
+      "\\}, [])"
+    ]
+  },
+  "useEA": {
+    "prefix": "useEA",
+    "description": "useEffect() async",
+    "body": [
+      "useEffect(() => {",
+      "\tlet cancelled = false",
+      "",
+      "\t;(async function ${3:doWork}() {",
+      "\t\t${1:// async work here}",
+      "\t\tif (cancelled) {",
+      "\t\t\treturn",
+      "\t\t\\}",
+      "",
+      "\t\t$2",
+      "\t\\})()",
+      "",
+      "\treturn () => {",
+      "\t\tcancelled = true",
+      "\t\\}",
+      "\\}, [])"
+    ]
+  },
+  "useRed": {
+    "prefix": "useRed",
+    "description": "useReducer(reducer, initialState, getInitialState)",
+    "body": [
+      "const [${1:state}, ${2:dispatch}] = useReducer(function reducer(state, action) {",
+      "\treturn state",
+      "\\}, ${3:null})"
+    ]
+  },
+  "useI": {
+    "prefix": "useI",
+    "description": "useImperativeHandle(ref, createHandle, [inputs])",
+    "body": [
+      "useImperativeHandle(${1:ref}, () => ({",
+      "\t$0",
+      "\\}), [])"
+    ]
+  },
+  "useL": {
+    "prefix": "useL",
+    "description": "useLayoutEffect()",
+    "body": [
+      "useLayoutEffect(() => {",
+      "\t$0",
+      "\\}, [])"
+    ]
+  },
+  "useDV": {
+    "prefix": "useDV",
+    "description": "useDebugValue(value)",
+    "body": "useDebugValue(${1:null})"
+  },
+  "useT": {
+    "prefix": "useT",
+    "description": "useTransition",
+    "body": "const [${1:isPending}, ${2:startTransition}] = useTransition()"
+  },
+  "useC": {
+    "prefix": "useC",
+    "description": "useContext()",
+    "body": "useContext($1)$0",
+    "luasnip": {
+      "priority": -1
+    }
+  },
+  "useCB": {
+    "prefix": "useCB",
+    "description": "useCallback(fn, inputs)",
+    "body": [
+      "useCallback(($1) => {",
+      "\t$0",
+      "\\}, [])"
+    ]
+  },
+  "useM": {
+    "prefix": "useM",
+    "description": "useMemo",
+    "body": [
+      "useMemo(() => ({",
+      "\t$0",
+      "\\}), [])"
+    ]
+  },
+  "useMR": {
+    "prefix": "useMR",
+    "description": "useMemo return",
+    "body": [
+      "useMemo(() => {",
+      "\t$0",
+      "\\}, [])"
+    ]
+  },
+  "useR": {
+    "prefix": "useR",
+    "description": "useRef(defaultValue)",
+    "body": "useRef(${1:null})$0"
+  },
+  "mc": {
+    "prefix": "mc",
+    "description": "mirrored const",
+    "body": "const $1 = '$1'",
+    "luasnip": {
+      "priority": 0
+    }
+  },
+  "useD": {
+    "prefix": "useD",
+    "description": "useDispatch",
+    "body": "useDispatch()",
+    "luasnip": {
+      "priority": -1
+    }
+  },
+  "useSL": {
+    "prefix": "useSL",
+    "description": "useSelector(state)",
+    "body": "useSelector((${1:state => $2}))"
+  },
+  "useAS": {
+    "prefix": "useAS",
+    "description": "useSelector(state)",
+    "body": "useAppSelector(${1:state => $2})"
+  },
+  "cs": {
+    "prefix": "cs",
+    "description": "createSlice()",
+    "body": [
+      "const { actions, reducer \\} = createSlice({",
+      "\tname: \"${1:}\",",
+      "\tinitialState: $2,",
+      "\treducers: {",
+      "\t\t$0",
+      "\t\\}",
+      "\\})"
+    ],
+    "luasnip": {
+      "priority": 0
+    }
+  },
+  "ecs": {
+    "prefix": "ecs",
+    "description": "export createSlice()",
+    "body": [
+      "import { createSlice \\} from \"@reduxjs/toolkit\"",
+      "",
+      "const { actions, reducer \\} = createSlice({",
+      "\tname: \"${1:}\",",
+      "\tinitialState: $2,",
+      "\treducers: {",
+      "\t\t$3: (state) => state,",
+      "\t\\}",
+      "\\})",
+      "",
+      "export const { $3 \\} = actions",
+      "",
+      "export default reducer"
+    ]
+  },
+  "cpr": {
+    "prefix": "cpr",
+    "description": "create prepare reducer",
+    "body": [
+      "$1: {",
+      "\treducer(state, action) {",
+      "\t\t$0",
+      "\t\\},",
+      "\tprepare($2) {",
+      "\t\treturn { payload: { $3 \\} \\}",
+      "\t\\}",
+      "\\}"
+    ]
+  },
+  "cat": {
+    "prefix": "cat",
+    "description": "create async thunk (inline)",
+    "body": [
+      "createAsyncThunk(\"$1\", async ($2) => {",
+      "\t$0",
+      "\\})"
+    ],
+    "luasnip": {
+      "priority": -1
+    }
+  },
+  "/**": {
+    "prefix": "/**",
+    "description": "jsdoc comment",
+    "body": [
+      "/**",
+      " * $0",
+      " */"
+    ],
+    "luasnip": {
+      "priority": 0
+    }
+  },
+  "pt.a": {
+    "prefix": "pt.a",
+    "description": "PropTypes.array",
+    "body": "PropTypes.array"
+  },
+  "pt.ar": {
+    "prefix": "pt.ar",
+    "description": "PropTypes.array.isRequired",
+    "body": "PropTypes.array.isRequired"
+  },
+  "pt.b": {
+    "prefix": "pt.b",
+    "description": "PropTypes.bool",
+    "body": "PropTypes.bool"
+  },
+  "pt.br": {
+    "prefix": "pt.br",
+    "description": "PropTypes.bool.isRequired",
+    "body": "PropTypes.bool.isRequired"
+  },
+  "pt.f": {
+    "prefix": "pt.f",
+    "description": "PropTypes.func",
+    "body": "PropTypes.func"
+  },
+  "pt.fr": {
+    "prefix": "pt.fr",
+    "description": "PropTypes.func.isRequired",
+    "body": "PropTypes.func.isRequired"
+  },
+  "pt.nu": {
+    "prefix": "pt.nu",
+    "description": "PropTypes.number",
+    "body": "PropTypes.number"
+  },
+  "pt.nur": {
+    "prefix": "pt.nur",
+    "description": "PropTypes.number.isRequired",
+    "body": "PropTypes.number.isRequired"
+  },
+  "pt.o": {
+    "prefix": "pt.o",
+    "description": "PropTypes.object",
+    "body": "PropTypes.object"
+  },
+  "pt.or": {
+    "prefix": "pt.or",
+    "description": "PropTypes.object.isRequired",
+    "body": "PropTypes.object.isRequired"
+  },
+  "pt.s": {
+    "prefix": "pt.s",
+    "description": "PropTyes.string",
+    "body": "PropTypes.string"
+  },
+  "pt.sr": {
+    "prefix": "pt.sr",
+    "description": "PropTyes.string.isRequired",
+    "body": "PropTypes.string.isRequired"
+  },
+  "pt.no": {
+    "prefix": "pt.no",
+    "description": "PropTypes.node",
+    "body": "PropTypes.node"
+  },
+  "pt.nor": {
+    "prefix": "pt.nor",
+    "description": "PropTypes.node.isRequired",
+    "body": "PropTypes.node.isRequired"
+  },
+  "pt.e": {
+    "prefix": "pt.e",
+    "description": "PropTypes.element",
+    "body": "PropTypes.element"
+  },
+  "pt.er": {
+    "prefix": "pt.er",
+    "description": "PropTypes.element.isRequired",
+    "body": "PropTypes.element.isRequired"
+  },
+  "pt.ao": {
+    "prefix": "pt.ao",
+    "description": "PropTypes.arrayOf()",
+    "body": "PropTypes.arrayOf(${1:PropTypes.string})"
+  },
+  "pt.aor": {
+    "prefix": "pt.aor",
+    "description": "PropTypes.arrayOf().isRequired",
+    "body": "PropTypes.arrayOf(${1:PropTypes.string}).isRequired"
+  },
+  "pt.io": {
+    "prefix": "pt.io",
+    "description": "PropTypes.instanceOf()",
+    "body": "PropTypes.instanceOf(${1:PropTypes.string})"
+  },
+  "pt.ior": {
+    "prefix": "pt.ior",
+    "description": "PropTypes.instanceOf().isRequired",
+    "body": "PropTypes.instanceOf(${1:PropTypes.string}).isRequired"
+  },
+  "pt.oo": {
+    "prefix": "pt.oo",
+    "description": "PropTypes.objectOf()",
+    "body": "PropTypes.objectOf(${1:PropTypes.string})"
+  },
+  "pt.oor": {
+    "prefix": "pt.oor",
+    "description": "PropTypes.objectOf().isRequired",
+    "body": "PropTypes.objectOf(${1:PropTypes.string}).isRequired"
+  },
+  "pt.one": {
+    "prefix": "pt.one",
+    "description": "PropTypes.oneOf([])",
+    "body": "PropTypes.oneOf(['$1'$2])"
+  },
+  "pt.oner": {
+    "prefix": "pt.oner",
+    "description": "PropTypes.oneOf([]).isRequired",
+    "body": "PropTypes.oneOf(['$1'$2]).isRequired"
+  },
+  "pt.onet": {
+    "prefix": "pt.onet",
+    "description": "PropTYpes.oneOfType([])",
+    "body": [
+      "PropTypes.oneOfType([",
+      "\t$1",
+      "])"
+    ]
+  },
+  "pt.onetr": {
+    "prefix": "pt.onetr",
+    "description": "PropTYpes.oneOfType([]).isRequired",
+    "body": [
+      "PropTypes.oneOfType([",
+      "\t$1",
+      "]).isRequired"
+    ]
+  },
+  "pt.sh": {
+    "prefix": "pt.sh",
+    "description": "PropTypes.shape",
+    "body": [
+      "PropTypes.shape({",
+      "\t$1",
+      "\\})"
+    ]
+  },
+  "pt.shr": {
+    "prefix": "pt.shr",
+    "description": "PropTypes.shape.isRequired",
+    "body": [
+      "PropTypes.shape({",
+      "\t$1",
+      "\\}).isRequired"
+    ]
+  }
+}

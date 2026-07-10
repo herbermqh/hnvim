@@ -1,0 +1,2 @@
+# Ignorar el symlink del cerebro del sistema para no subir logs gigantes a repositorios
+system_brain/

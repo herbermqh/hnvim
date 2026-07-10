@@ -1,46 +1,36 @@
+-- Configuracion de teclas y copilot
+vim.g.copilot_no_tab_map = true
+
 require('plugins')
-require('treesitter-config')
 require('dashboard-config')
 require('tokyonight-config')
-require('floaterm')
-require('babar')
+-- require('floaterm')
 -- require('dap')
 require('autosave')
 require('icons')
-require('nvim-tree-config')
+-- require('nvim-tree-config')
 -- require('providers')
 require('gitsigns-config')
 require('utils')
 require('settings')
 require('mappings')
 require('gui')
--- require('config-incline')
+
 -- require('hgalaxyline')
 -- require('compe-config')
-require('autopairs-config')
 -- require('lspkind-config')
-require('lsp')
-require('colorizer-config')
-require('indentline')
-require('rainbow')
 require('config-notify')
-require('lualine-config')
-require('config-guihua')
--- require('config-navigator')añade nuevas líneas dentro de entorno latex. cambiado por nvim-bqf
+
 require('config-bqf')
 -- require('wildermenu-config')
 -- require('alpha-nvim-config')
 -- require('cmdline')
-require('config-noice')
 require('devscript')
 require('latextoillustrator')
 require('transparent-config')
-require('telescope-config')
+-- require('telescope-config')
 -- require('copilotchat-config')
 require('config.copilot')
 
-
 -- require('alpha-nvim-config')
 vim.deprecate = function() end
-
-

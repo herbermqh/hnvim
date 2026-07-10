@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "db_postgres_local": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://user:pass@localhost:5432/mydb"],
+      "description": "Servidor MCP exclusivo para esta skill de base de datos. Modular y aislado."
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "neovim_server_local": {
+      "command": "node",
+      "args": ["/home/userh/.config/nvim/artplugins/mcp-neovim-server/build/index.js"],
+      "env": {
+        "ALLOW_SHELL_COMMANDS": "true",
+        "NVIM_SOCKET_PATH": "/tmp/nvim"
+      },
+      "description": "Servidor MCP para conectar el agente con la instancia activa de Neovim."
+    }
+  }
+}

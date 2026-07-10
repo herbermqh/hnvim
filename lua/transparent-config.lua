@@ -11,13 +11,20 @@ require("transparent").setup({ -- Optional, you don't have to run setup.
     "NvimTreeNormal", -- NvimTree
     "BufferTabpageFill"
   }, -- table: additional groups that should be cleared
-  exclude_groups = {'BufferCurrent', 'BufferCurrentIndex', 'BufferCurrentMod', 'BufferCurrentTarget', 'BufferCurrentIcon', 'BufferCurrentBtn', 'BufferCurrentModBtn', 'BufferCurrentPinBtn', 'BufferVisible', 'BufferVisibleIndex', 'BufferVisibleMod', 'BufferVisibleTarget', 'BufferVisibleIcon', 'BufferVisibleBtn', 'BufferVisibleModBtn', 'BufferVisiblePinBtn'}, -- table: groups you don't want to clear
+  exclude_groups = {
+    'BufferCurrent', 'BufferCurrentIndex', 'BufferCurrentMod', 'BufferCurrentTarget', 'BufferCurrentIcon', 'BufferCurrentBtn', 'BufferCurrentModBtn', 'BufferCurrentPinBtn', 
+    'BufferCurrentWARN', 'BufferCurrentERROR', 'BufferCurrentINFO', 'BufferCurrentHINT',
+    'BufferCurrentDiagnostic', 'BufferCurrentDiagnosticWarn', 'BufferCurrentDiagnosticError', 'BufferCurrentDiagnosticInfo', 'BufferCurrentDiagnosticHint',
+    'BufferVisible', 'BufferVisibleIndex', 'BufferVisibleMod', 'BufferVisibleTarget', 'BufferVisibleIcon', 'BufferVisibleBtn', 'BufferVisibleModBtn', 'BufferVisiblePinBtn',
+    'BufferVisibleWARN', 'BufferVisibleERROR', 'BufferVisibleINFO', 'BufferVisibleHINT',
+    'BufferVisibleDiagnostic', 'BufferVisibleDiagnosticWarn', 'BufferVisibleDiagnosticError', 'BufferVisibleDiagnosticInfo', 'BufferVisibleDiagnosticHint',
+    'NvimTreeCursorLine'
+  }, -- table: groups you don't want to clear
 })
 require('transparent').clear_prefix('BufferLine')
 require('transparent').clear_prefix('Buffer')
 require('transparent').clear_prefix('NeoTree')
 require('transparent').clear_prefix('lualine')
-require('transparent').clear_prefix('NvimTree')
 
 -- execute TransparentEnable
 vim.cmd('autocmd ColorScheme * lua require("transparent").enable()')

@@ -1,43 +1,40 @@
 local rainbow_delimiters = require 'rainbow-delimiters'
+
+-- Inyectamos colores personalizados vibrantes (Estilo TokyoNight Premium)
+vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#f7768e", bold = true })
+vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#ff9e64", bold = true })
+vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#e0af68", bold = true })
+vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#9ece6a", bold = true })
+vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#7dcfff", bold = true })
+vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#7aa2f7", bold = true })
+vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#bb9af7", bold = true })
+
 vim.g.rainbow_delimiters = {
-        strategy = {
-            [''] = rainbow_delimiters.strategy['global'],
-            commonlisp = rainbow_delimiters.strategy['local'],
-            html = rainbow_delimiters.strategy['local'],
-            -- Use local for HTML
-            -- html = rainbow.strategy['local'],
-            -- Pick the strategy for LaTeX dynamically based on the buffer size
-            -- latex = function(bufnr)
-            --     -- Disabled for very large files, global strategy for large files,
-            --     -- local strategy otherwise
-            --     local line_count = vim.api.nvim_buf_line_count(bufnr)
-            --     if line_count > 10000 then
-            --         return nil
-            --     elseif line_count > 1000 then
-            --         return rainbow_delimiters.strategy['global']
-            --     end
-            --     return rainbow_delimiters.strategy['local']
-            -- end
-            latex = rainbow_delimiters.strategy['global'],
-        },
-        query = {
-            [''] = 'rainbow-delimiters',
-            lua = 'rainbow-blocks',
-            latex = 'rainbow-art',
-            tex = 'rainbow-blocks',
-        },
-        priority = {
-            [''] = 110,
-            lua = 210,
-        },
-        highlight = {
-            'RainbowDelimiterRed',
-            'RainbowDelimiterYellow',
-            'RainbowDelimiterBlue',
-            'RainbowDelimiterOrange',
-            'RainbowDelimiterGreen',
-            'RainbowDelimiterViolet',
-            'RainbowDelimiterCyan',
-        },
-        blacklist = {'c', 'cpp'},
-    }
+    strategy = {
+        [''] = rainbow_delimiters.strategy['global'],
+        -- Usamos estrategia local para LaTeX porque tiene entornos muy anidados
+        latex = rainbow_delimiters.strategy['local'],
+        tex = rainbow_delimiters.strategy['local'],
+    },
+    query = {
+        [''] = 'rainbow-delimiters',
+        -- Para LaTeX, rainbow-blocks colorea los \begin{} y \end{}
+        latex = 'rainbow-blocks',
+        tex = 'rainbow-blocks',
+        lua = 'rainbow-blocks',
+    },
+    priority = {
+        [''] = 110,
+        latex = 210,
+    },
+    highlight = {
+        'RainbowRed',
+        'RainbowOrange',
+        'RainbowYellow',
+        'RainbowGreen',
+        'RainbowCyan',
+        'RainbowBlue',
+        'RainbowViolet',
+    },
+    blacklist = { 'c', 'cpp' },
+}

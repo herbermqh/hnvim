@@ -7,12 +7,13 @@ M.setup = function(opts)
   M.fg_color = opts.fg_color or "NONE"
   M.hide_cursor = opts.hide_cursor == nil and true or opts.hide_cursor
   M.rounded = opts.rounded or false
+  M.blend = opts.blend or 0
 
   -- Definir colores globales para el plugin
-  vim.api.nvim_set_hl(0, M.hl_group, { bg = M.bg_color, fg = M.fg_color, bold = true, default = false })
+  vim.api.nvim_set_hl(0, M.hl_group, { bg = M.bg_color, fg = M.fg_color, bold = true, blend = M.blend, default = false })
   
   if M.rounded then
-    vim.api.nvim_set_hl(0, M.hl_group .. "Rounded", { fg = M.bg_color, bg = "NONE", default = false })
+    vim.api.nvim_set_hl(0, M.hl_group .. "Rounded", { fg = M.bg_color, bg = "NONE", blend = M.blend, default = false })
   end
   
   if M.hide_cursor then

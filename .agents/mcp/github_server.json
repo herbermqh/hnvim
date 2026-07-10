@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "github_global": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "TUPAT_AQUI"
+      },
+      "description": "Servidor MCP centralizado. Puede ser accedido tanto por el orquestador como por múltiples subagentes."
+    }
+  }
+}

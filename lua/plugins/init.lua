@@ -20,8 +20,13 @@ require("lazy").setup({
         build = 'yarn install --frozen-lockfile'
     }) ]]
     {
-      'neovim/nvim-lspconfig',
-      tag = 'v2.5.0',
+      "neovim/nvim-lspconfig",
+      event = {"BufReadPre", "BufNewFile"},
+      dependencies = {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+      },
+      config = function() require("lsp") end,
     },
 
 
@@ -39,8 +44,9 @@ require("lazy").setup({
     'ryanoasis/vim-devicons',
     'kyazdani42/nvim-web-devicons',
     --autocomplete
-    'SirVer/ultisnips',
-    'quangnguyen30192/cmp-nvim-ultisnips',
+  -- 'SirVer/ultisnips',
+  -- 'quangnguyen30192/cmp-nvim-ultisnips',
+
     -- {
     --   "jackMort/ChatGPT.nvim",
     --   config = function()
@@ -57,45 +63,58 @@ require("lazy").setup({
     -- 'dcampos/nvim-snippy',
     -- 'hrsh7th/vim-vsnip',
     -- 'hrsh7th/vim-vsnip-integ',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-buffer',
+
     {
       'hrsh7th/nvim-cmp',
+      event = { "InsertEnter", "CmdlineEnter" },
       dependencies = {
-        "quangnguyen30192/cmp-nvim-ultisnips",
+        {
+          "L3MON4D3/LuaSnip",
+          version = "v2.*",
+          build = "make install_jsregexp"
+        },
+        "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-nvim-lsp",
         "kdheepak/cmp-latex-symbols",
-        config = function()
-          require("cmp_nvim_ultisnips").setup{}
-        end,
+        "hrsh7th/cmp-buffer",
+        "hrsh7th/cmp-cmdline",
+        "hrsh7th/cmp-path",
       },
-      sources = {
-        {name = "latex_symbols"},
-      },
+      config = function()
+        require("cmp-config")
+      end,
     },
-    'hrsh7th/cmp-path',
-    'hrsh7th/cmp-cmdline',
-    -- 'hrsh7th/cmp-copilot',
-    {'github/copilot.vim', depth=1},
+
+    {
+      'github/copilot.vim',
+      depth = 1,
+      event = "InsertEnter",
+    },
     {
       'CopilotC-Nvim/CopilotChat.nvim',
+      cmd = {
+        "CopilotChat",
+        "CopilotChatOpen",
+        "CopilotChatToggle",
+      },
       dependencies = {
         "github/copilot.vim",
         "nvim-lua/plenary.nvim",
       },
       build = "make tiktoken",
     },
-    -- LaTeX
-    'lervag/vimtex',
-    -- 'herbermqh/vimtex',
-    -- 'herbermqh/vim-latex',
 
     -- Utilities
     'duane9/nvim-rg',
     -- 'rhysd/vim-grammarous',
     -- {'Pocco81/AutoSave.nvim', lazy = true},
-    'kevinhwang91/nvim-bqf',
+    {
+      'kevinhwang91/nvim-bqf',
+      ft = "qf",
+    },
     {
         'AckslD/nvim-neoclip.lua',
+        event = "VeryLazy",
         dependencies = {'nvim-telescope/telescope.nvim'},
         config = function()
             require('neoclip').setup()
@@ -104,9 +123,13 @@ require("lazy").setup({
     },
     -- 'djoshea/vim-autoread', -- recargado automaticio
     -- 'junegunn/fzf.vim',
-    'Shougo/denite.nvim',
     {
-      'lewis6991/gitsigns.nvim',
+      'Shougo/denite.nvim',
+      cmd = "Denite",
+    },
+    {
+      "lewis6991/gitsigns.nvim",
+      event = {"BufReadPre", "BufNewFile"},
       dependencies = {'nvim-lua/plenary.nvim'},
       config = function()
         require('gitsigns').setup()
@@ -132,17 +155,17 @@ require("lazy").setup({
         {
           "<leader>y",
           "<cmd>Yazi<cr>",
-          desc = "Abrir Yazi en el archivo actual",
+          desc = "Yazi File",
         },
         {
           "<leader>cw",
           "<cmd>Yazi cwd<cr>",
-          desc = "Abrir Yazi en el directorio actual",
+          desc = "Yazi Dir",
         },
         {
           "<c-up>",
           "<cmd>Yazi toggle<cr>",
-          desc = "Continuar la última sesión de Yazi",
+          desc = "Yazi Resume",
         },
       },
       opts = {
@@ -177,21 +200,48 @@ require("lazy").setup({
     -- 'rbgrouleff/bclose.vim',
     -- 'nvim-lua/popup.nvim',
     -- 'nvim-lua/plenary.nvim',
+    -- HERRAMIENTA VISUAL PARA ERRORES (Trouble)
+    {
+      "romgrk/barbar.nvim",
+      event = { "BufReadPre", "BufNewFile" },
+      config = function()
+        require("babar")
+        vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+          callback = function()
+            if vim.bo.filetype ~= "dashboard" and vim.bo.filetype ~= "alpha" then
+              vim.opt.showtabline = 2
+            end
+          end
+        })
+      end
+    },
+    {
+      "folke/trouble.nvim",
+      config = function() require("config-trouble") end,
+      cmd = "Trouble",
+    },
     {
         'nvim-telescope/telescope.nvim',
+        cmd = "Telescope",
         dependencies = {
             -- 'nvim-lua/popup.nvim', 'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-fzy-native.nvim'
+            'nvim-telescope/telescope-fzy-native.nvim',
+            'nvim-telescope/telescope-live-grep-args.nvim'
         },
+        config = function()
+          require("telescope-config")
+        end
     },
-    {
-      "nvim-telescope/telescope-live-grep-args.nvim",
-    },
+
     {
       'nvim-tree/nvim-tree.lua',
+      cmd = { "NvimTreeToggle", "NvimTreeOpen", "NvimTreeFocus", "NvimTreeFindFileToggle" },
       dependencies = {
         'nvim-tree/nvim-web-devicons', -- optional
       },
+      config = function()
+        require("nvim-tree-config")
+      end
     },
     --typing
     'terryma/vim-multiple-cursors',
@@ -228,25 +278,37 @@ require("lazy").setup({
     -- modules ts
     -- 'p00f/nvim-ts-rainbow', -- discontinuado en vez de esto se utiliza nvim-ts-rainbow2
     -- 'HiPhish/nvim-ts-rainbow2',
-    'HiPhish/rainbow-delimiters.nvim', 
+    { "HiPhish/rainbow-delimiters.nvim", event = "BufReadPre", config = function() require("rainbow") end }, 
     -- 'windwp/nvim-ts-autotag',
-    {'nvim-treesitter/nvim-treesitter', branch = 'master', build = ':TSUpdate'},
+    {
+      "nvim-treesitter/nvim-treesitter",
+      event = {"BufReadPost", "BufNewFile"},
+      config = function() require("treesitter-config") end,
+      branch = 'master',
+      build = ':TSUpdate'
+    },
     -- 'luochen1990/rainbow',
     -- 'akinsho/nvim-bufferline.lua',
     -- 'powerline/fonts',
-    {'romgrk/barbar.nvim',},
-    'nvim-lualine/lualine.nvim',
+
+    {
+      "stevearc/conform.nvim",
+      event = { "BufWritePre" },
+      cmd = { "ConformInfo" },
+      config = function() require("conform-config") end
+    },
+    { "nvim-lualine/lualine.nvim", event = "VeryLazy", config = function() require("lualine-config") end },
 
     -- Themes
     -- 'mhinz/vim-startify',
-    'norcalli/nvim-colorizer.lua',
+    { "norcalli/nvim-colorizer.lua", event = "BufReadPre", config = function() require("colorizer-config") end },
     -- {'marko-cerovac/material.nvim', lazy = false, as = 'material'},
     'folke/tokyonight.nvim',
     -- 'herbermqh/tokyonight.nvim',
-    'Mofiqul/vscode.nvim',
+    -- 'Mofiqul/vscode.nvim',
     -- 'bluz71/vim-moonfly-colors',
     -- 'bluz71/vim-nightfly-guicolors',
-    'christianchiarulli/nvcode-color-schemes.vim',
+    -- 'christianchiarulli/nvcode-color-schemes.vim',
     --[[ {
       'PHSix/nvim-hybrid',
       config = function()
@@ -257,7 +319,7 @@ require("lazy").setup({
     -- 'yonlu/omni.vim',
     -- 'ray-x/aurora',
     -- 'nekonako/xresources-nvim',
-    'shaunsingh/nord.nvim',
+    -- 'shaunsingh/nord.nvim',
     -- {'MordechaiHadad/nvim-papadark', dependencies = {'rktjmp/lush.nvim'}},
     -- 'shaunsingh/moonlight.nvim',
     -- 'navarasu/onedark.nvim',
@@ -276,12 +338,31 @@ require("lazy").setup({
     -- 'olimorris/onedark.nvim',
 
     -- IDE
-    "xiyaowong/transparent.nvim",
+    {
+      "xiyaowong/transparent.nvim",
+      config = function()
+        require("transparent").setup({
+          extra_groups = {
+            "RenderMarkdownH1Bg",
+            "RenderMarkdownH2Bg",
+            "RenderMarkdownH3Bg",
+            "RenderMarkdownH4Bg",
+            "RenderMarkdownH5Bg",
+            "RenderMarkdownH6Bg",
+            "RenderMarkdownCode",
+            "RenderMarkdownCodeInline",
+            "RenderMarkdownTableHead",
+            "RenderMarkdownTableRow",
+            "RenderMarkdownTableFill",
+          },
+        })
+      end
+    },
     -- 'micha/vim-colors-solarized',
     -- 'mg979/vim-visual-multi',
     -- 'arzg/vim-colors-xcode',
-    "lukas-reineke/indent-blankline.nvim",
-    'windwp/nvim-autopairs',
+    { "lukas-reineke/indent-blankline.nvim", event = "BufReadPre", config = function() require("indentline") end },
+    { "windwp/nvim-autopairs", event = "InsertEnter", config = function() require("autopairs-config") end },
     'tpope/vim-sensible',
     'tpope/vim-unimpaired',
     {
@@ -298,29 +379,36 @@ require("lazy").setup({
     --   },
     -- },
     {
-      'folke/noice.nvim',
+      "folke/noice.nvim",
+      event = "VeryLazy",
+      config = function() require("config-noice") end,
       dependencies = {
         'MunifTanjim/nui.nvim',
         'rcarriga/nvim-notify',
-
       },
     },
-    {
-      'b0o/incline.nvim'
-    },
+
    {'ray-x/guihua.lua', build = 'cd lua/fzy && make'},
     -- {
     --   'ray-x/navigator.lua',
     -- },
     -- others
-    'voldikss/vim-floaterm',
-    'liuchengxu/vim-which-key',
+    -- 'voldikss/vim-floaterm',
+    {
+      "folke/which-key.nvim",
+      event = "VeryLazy",
+      config = function() require("whichkey-config") end,
+      keys = {
+        { "<leader>", mode = { "n", "v" } },
+      },
+    },
     -- 'liuchengxu/vim-clap',
-    -- {"akinsho/toggleterm.nvim"},
+    {"akinsho/toggleterm.nvim", config = function() require("config-toggleterm") end},
     -- {"herbermqh/nvim-workbench"},
     -- Ocasional Plugins
     {'kdheepak/lazygit.nvim', lazy = true},
-    -- {'Pocco81/TrueZen.nvim', lazy = true},
+    { "folke/zen-mode.nvim", config = function() require("zen-mode").setup({}) end },
+    { "folke/twilight.nvim", config = function() require("twilight").setup({}) end },
     'propet/toggle-fullscreen.nvim',
   
 
@@ -378,5 +466,129 @@ require("lazy").setup({
         signs = true, -- Mostrar íconos en el Gutter
       }
     },
+    {
+      "MeanderingProgrammer/render-markdown.nvim",
+      dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+      config = function()
+        require("render-markdown").setup({
+          heading = { sign = false },
+          code = { sign = false, style = "normal" },
+          table = { cell = "normal" },
+        })
+
+        -- BRUTE FORCE TRANSPARENCY (Delayed to override dynamic plugin themes)
+        local function clear_bgs()
+          local groups = {
+            "RenderMarkdownH1Bg", "RenderMarkdownH2Bg", "RenderMarkdownH3Bg",
+            "RenderMarkdownH4Bg", "RenderMarkdownH5Bg", "RenderMarkdownH6Bg",
+            "RenderMarkdownCode", "RenderMarkdownCodeInline",
+            "@markup.raw.markdown_inline", "markdownCode", "markdownCodeBlock",
+            "RenderMarkdownTableHead", "RenderMarkdownTableRow", "RenderMarkdownTableFill",
+            
+            -- Añadimos los grupos base de Markdown que Tokyonight suele pintar
+            "markdownH1", "markdownH2", "markdownH3", 
+            "markdownH4", "markdownH5", "markdownH6",
+            "@markup.heading.1.markdown", "@markup.heading.2.markdown", "@markup.heading.3.markdown",
+            "@markup.heading.4.markdown", "@markup.heading.5.markdown", "@markup.heading.6.markdown",
+            "Headline1", "Headline2", "Headline3", "Headline4", "Headline5", "Headline6"
+          }
+          for _, group in ipairs(groups) do
+            pcall(vim.cmd, "hi " .. group .. " guibg=NONE ctermbg=NONE")
+          end
+        end
+
+        vim.api.nvim_create_autocmd({ "ColorScheme", "BufEnter" }, {
+          pattern = "*",
+          callback = function()
+            vim.defer_fn(clear_bgs, 100) -- Espera 100ms para asegurar que el tema ya pintó
+          end,
+        })
+        -- Run once immediately just in case
+        vim.defer_fn(clear_bgs, 200)
+      end,
+    },
+    {
+      "stevearc/aerial.nvim",
+      cmd = { "AerialToggle", "AerialNavToggle", "AerialOpen", "AerialInfo" },
+      opts = {},
+      dependencies = {
+         "nvim-treesitter/nvim-treesitter",
+         "nvim-tree/nvim-web-devicons",
+         "nvim-telescope/telescope.nvim"
+      },
+      config = function()
+        require('aerial').setup({
+          layout = {
+            default_direction = "float",
+          },
+          backends = { "treesitter", "lsp", "markdown", "asciidoc", "man" },
+        })
+        require('telescope').load_extension('aerial')
+      end,
+    },
+    
+    -- PLUGIN PROPIO PARA LATEX (Desarrollado para la comunidad y cargado localmente)
+    {
+      dir = vim.fn.stdpath("config") .. "/artplugins/arttexsourcecolor.nvim",
+      dependencies = { "nvim-treesitter/nvim-treesitter" },
+      ft = { "tex", "sty", "cls", "dtx" },
+      config = function()
+        require("arttexsourcecolor").setup()
+      end,
+    },
+    
+    -- PLUGIN DE CONCEAL MÁGICO PARA LATEX
+    {
+      dir = "~/.config/nvim/artplugins/arttexworkspace.nvim",
+      name = "arttexworkspace",
+      config = function()
+        require("arttexworkspace").setup({
+          library_paths = {
+            "~/Documents/LaTeX/paquetes", -- Ruta relativa sugerida por la IA
+            "~/Documents/LaTeX/devclass", -- Ruta relativa sugerida por la IA
+          }
+        })
+      end
+    },
+    {
+      dir = "~/.config/nvim/artplugins/arttexcompiler.nvim",
+      name = "arttexcompiler",
+      ft = "tex",
+      dependencies = { "arttexworkspace" },
+      config = function()
+        require("arttexcompiler").setup({
+          use_latexmk = true
+        })
+      end
+    },
+    {
+      dir = vim.fn.stdpath("config") .. "/artplugins/arttexconceal.nvim",
+      ft = { "tex", "sty", "cls", "dtx" },
+      config = function()
+        require("arttexconceal").setup()
+      end,
+    },
+
+    -- ART-TEX MODULAR PLUGINS
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexsynctex.nvim", ft = "tex", dependencies = { "arttexworkspace" }, config = function() require("arttexsynctex").setup() end },
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexfolding.nvim", ft = "tex", config = function() require("arttexfolding").setup() end },
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexhover.nvim", ft = "tex", config = function() require("arttexhover").setup() end },
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexsnippets.nvim", ft = "tex", config = function() require("arttexsnippets").setup() end },
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexformat.nvim", ft = "tex", config = function() require("arttexformat").setup() end },
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttextoc.nvim", ft = "tex", config = function() require("arttextoc").setup() end },
+    
+    {
+      "jbyuki/nabla.nvim",
+      config = function()
+        -- Nabla doesn't require setup by default, but it's good to declare it
+      end
+    },
+    { 
+      dir = vim.fn.stdpath("config") .. "/artplugins/arttexpreview.nvim", 
+      ft = "tex", 
+      dependencies = { "jbyuki/nabla.nvim", "arttexworkspace" },
+      config = function() require("arttexpreview").setup() end 
+    },
+
 
 })

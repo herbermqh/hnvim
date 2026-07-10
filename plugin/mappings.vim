@@ -1,8 +1,8 @@
 " -- Buffers
-nnoremap <C-Right> :BufferNext<CR>
-nnoremap <C-l> :BufferNext<CR>
-nnoremap <C-Left> :BufferPrevious<CR>
-nnoremap <C-h> :BufferPrevious<CR>
+nnoremap <C-Right> <cmd>BufferNext<CR>
+nnoremap <C-l> <cmd>BufferNext<CR>
+nnoremap <C-Left> <cmd>BufferPrevious<CR>
+nnoremap <C-h> <cmd>BufferPrevious<CR>
 
 inoremap <A-g> <Esc>:silent execute '!python -m pdf2img convert %:p'<CR><CR>:w<CR>
 nnoremap <A-g> <Esc>:silent execute '!python -m pdf2img convert %:p'<CR><CR>:w<CR>

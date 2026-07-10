@@ -40,6 +40,7 @@ require("noice").setup({
       lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
       help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
       input = {}, -- Used by input()
+      calculator = false, -- Desactivar completamente en Noice para que Neovim lo maneje en silencio (sin parpadeos de lualine)
       -- lua = false, -- to disable a format, set to `false`
     },
   },
@@ -143,11 +144,11 @@ require("noice").setup({
     },
     override = {
       -- override the default lsp markdown formatter with Noice
-      ["vim.lsp.util.convert_input_to_markdown_lines"] = false,
+      ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
       -- override the lsp markdown formatter with Noice
-      ["vim.lsp.util.stylize_markdown"] = false,
+      ["vim.lsp.util.stylize_markdown"] = true,
       -- override cmp documentation with Noice (needs the other options to work)
-      ["cmp.entry.get_documentation"] = false,
+      ["cmp.entry.get_documentation"] = true,
     },
     hover = {
       enabled = true,
@@ -220,24 +221,40 @@ require("noice").setup({
   },
   ---@type NoicePresets
   presets = {
-
-    -- you can enable a preset by setting it to true, or a table that will override the preset config
-
-    -- you can also add custom presets that you can enable/disable with enabled=true
-    bottom_search = false, -- use a classic bottom cmdline for search
-    command_palette = false, -- position the cmdline and popupmenu together
-    long_message_to_split = false, -- long messages will be sent to a split
-    inc_rename = false, -- enables an input dialog for inc-rename.nvim
-    lsp_doc_border = false, -- add a border to hover docs and signature help
+    bottom_search = false,
+    command_palette = true, -- position the cmdline and popupmenu together (Premium UI)
+    long_message_to_split = true, -- long messages will be sent to a split
+    inc_rename = false,
+    lsp_doc_border = true, -- add a border to hover docs and signature help
   },
   throttle = 1000 / 30, -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
   ---@type NoiceConfigViews
 
   views = {}, ---@see section on views
   ---@type NoiceRouteConfig[]
-  routes = {}, --- @see section on routes
+  routes = {
+    {
+      filter = {
+        event = "msg_show",
+        kind = "",
+      },
+      opts = { skip = true },
+    },
+  }, --- @see section on routes
   ---@type table<string, NoiceFilter>
   status = {}, --- @see section on statusline components
-  ---@type NoiceFormatOptions
-  format = {}, --- @see section on formatting
+  format = {
+    lsp_progress = {
+      "{spinner} ",
+      "{data.progress.title} ",
+      "  ",
+      "{data.progress.message}",
+    },
+    lsp_progress_done = {
+      "✔ ",
+      "{data.progress.title} ",
+      "  ",
+      "{data.progress.message}",
+    },
+  },
 })

@@ -8,7 +8,7 @@ require'barbar'.setup {
   animation = true,
 
   -- Enable/disable auto-hiding the tab bar when there is a single buffer
-  auto_hide = true,
+  auto_hide = false,
 
   -- Enable/disable current/total tabpages indicator (top right corner)
   tabpages = true,
@@ -19,7 +19,7 @@ require'barbar'.setup {
   clickable = true,
 
   -- Excludes buffers from the tabline
-  exclude_ft = {'NvimTree'},
+  exclude_ft = {'NvimTree', 'qf'},
   exclude_name = {'package.json'},
 
   -- A buffer to this direction will be focused (if it exists) when closing the current buffer.
@@ -129,4 +129,21 @@ require'barbar'.setup {
 --    require'bufferline.state'.set_offset(0)
 --    require'nvim-tree'.close()
 -- end
+
+-- Desactivar la desambiguación de nombres por directorio
+vim.schedule(function()
+  local ok, buffer = pcall(require, 'barbar.buffer')
+  local ok_fs, fs = pcall(require, 'barbar.fs')
+  if ok and ok_fs then
+    buffer.get_unique_names = function(buffer_numbers)
+      local names = {}
+      for _, bufnr in ipairs(buffer_numbers) do
+        local name = buffer.get_name(bufnr, 1)
+        table.insert(names, fs.slice_parts_from_end(name, 1))
+      end
+      return names
+    end
+  end
+end)
+
 return tree

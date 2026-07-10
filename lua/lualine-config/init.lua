@@ -218,6 +218,20 @@ ins_left {
   end,
 }
 
+-- Indicador principal de compilación (Listo / Falló / Compilando)
+ins_left {
+  function()
+    local ok, compiler = pcall(require, "arttexcompiler")
+    if ok and compiler.api then
+      return compiler.api.get_status_string(0)
+    end
+    return ""
+  end,
+  color = { fg = colors.yellow, gui = 'bold' },
+}
+
+
+
 ins_left {
   -- Lsp server name .
 

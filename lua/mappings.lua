@@ -16,8 +16,8 @@ end
 vim.g.mapleader = ' '
 
 -- save document
-plug_mapper('n', '<C-s>', ':w!<CR>')
-plug_mapper('i', '<C-s>', '<Esc>:w!<CR>')
+plug_mapper('n', '<C-s>', '<cmd>w!<CR>')
+plug_mapper('i', '<C-s>', '<cmd>w!<CR>')
 
 -- exit neovim
 mapper('n', 'q', ':x! <CR>')
@@ -67,8 +67,7 @@ mapper('n', 'J', 'mzJ`z')
 -- LazyGIT
 -- mapper('n', '<Leader>gg', ':LazyGit<CR>')
 
--- Switch Theme
-mapper('n', '<leader>mm', [[<Cmd>lua require('material.functions').toggle_style()<CR>]])
+-- Switch Theme (Removed broken material mapping)
 
 -- Coc.nvim
 -- mapper('n', '<F12>', ':CocCommand terminal.Toggle<CR>')
