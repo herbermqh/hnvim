@@ -390,10 +390,10 @@ function M.process_lines(buf, first_row, last_row)
                     section = "§",
                     subsection = "§§",
                     subsubsection = "§§§",
-                    label = "󰃳",
-                    ref = "󰌷",
+                    label = "󰃳 ",
+                    ref = "󰌷 ",
                     caption = "󰦨 ",
-                    cite = "󰌷",
+                    cite = "󰌷 ",
                     includegraphics = " "
                 }
                 local hl = hl_map[name]
