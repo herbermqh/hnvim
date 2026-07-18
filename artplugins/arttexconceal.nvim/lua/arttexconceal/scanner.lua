@@ -196,8 +196,18 @@ function M.process_lines(buf, first_row, last_row)
         elseif name == "delim" then
             local in_math = mathzone.is_in_mathzone_list(math_zones, node:range())
             if in_math and config.options.enable_math_conceal then
+                local depth = get_unified_depth(node, buf)
+                local hl_idx = ((depth - 1) % 6) + 1
+                local hl = "ArtTexConcealRainbow" .. hl_idx
+                
                 local sr, sc, er, ec = node:range()
-                extmarks.set(buf, sr, sc, er, ec, "", "")
+                extmarks.set(buf, sr, sc, er, ec, "", hl)
+                
+                local ns = node:next_sibling()
+                if ns then
+                    local nsr, nsc, ner, nec = ns:range()
+                    extmarks.set_hl(buf, nsr, nsc, ner, nec, hl)
+                end
             end
             
         elseif name == "cmd" then
