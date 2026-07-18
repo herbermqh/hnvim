@@ -228,6 +228,13 @@ function M.process_lines(buf, first_row, last_row)
                 
                 if cmd_text == "\\frac" or cmd_text == "\\dfrac" or cmd_text == "\\tfrac" or cmd_text == "\\cfrac" or cmd_text == "\\binom" or cmd_text == "\\dbinom" or cmd_text == "\\tbinom" then
                     if in_math and config.options.enable_math_conceal then
+                        local depth = get_unified_depth(cmd_node, buf)
+                        local hl_idx = ((depth - 1) % 6) + 1
+                        local rainbow_hl = "ArtTexConcealRainbow" .. hl_idx
+                        
+                        local cmd_sr, cmd_sc, cmd_er, cmd_ec = cmd_node:range()
+                        extmarks.set_hl(buf, cmd_sr, cmd_sc, cmd_er, cmd_ec, rainbow_hl)
+                        
                         local arg1 = node:child(1)
                         local arg2 = node:child(2)
                         if arg1 and arg2 and arg1:type() == "curly_group" and arg2:type() == "curly_group" then
@@ -235,12 +242,9 @@ function M.process_lines(buf, first_row, last_row)
                             local t2 = vim.treesitter.get_node_text(arg2, buf):gsub("[{}]", ""):match("^%s*(.-)%s*$")
                             local frac_char = symbols.fractions[t1 .. "/" .. t2]
                             if frac_char then
-                                local depth = get_unified_depth(node:child(0) or node, buf)
-                                local hl_idx = ((depth - 1) % 6) + 1
-                                
                                 local sr, sc = node:range()
                                 local _, _, er, ec = arg2:range()
-                                extmarks.set(buf, sr, sc, er, ec, frac_char, "ArtTexConcealRainbow" .. hl_idx)
+                                extmarks.set(buf, sr, sc, er, ec, frac_char, rainbow_hl)
                             end
                         end
                     end
@@ -319,6 +323,13 @@ function M.process_lines(buf, first_row, last_row)
                     end
                 elseif cmd_text:match("^\\math") then
                     if in_math and config.options.enable_math_conceal then
+                        local depth = get_unified_depth(cmd_node, buf)
+                        local hl_idx = ((depth - 1) % 6) + 1
+                        local rainbow_hl = "ArtTexConcealRainbow" .. hl_idx
+                        
+                        local cmd_sr, cmd_sc, cmd_er, cmd_ec = cmd_node:range()
+                        extmarks.set_hl(buf, cmd_sr, cmd_sc, cmd_er, cmd_ec, rainbow_hl)
+                        
                         local arg = node:child(1)
                         if arg and arg:type() == "curly_group" then
                             local inner = vim.treesitter.get_node_text(arg, buf):gsub("[{}]", ""):match("^%s*(.-)%s*$")
