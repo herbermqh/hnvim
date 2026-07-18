@@ -166,6 +166,8 @@ function M.process_lines(buf, first_row, last_row)
         (caption) @caption
         (label_definition) @label
         (label_reference) @ref
+        (citation) @cite
+        (graphics_include) @includegraphics
         (subscript) @sub
         (superscript) @sup
         (word) @word
@@ -272,7 +274,8 @@ function M.process_lines(buf, first_row, last_row)
                             -- Process curly_group if \textbf-like (child is curly_group)
                             local target_group = nil
                             for child in node:iter_children() do
-                                if child:type() == "curly_group" then
+                                local ct = child:type()
+                                if ct == "curly_group" or ct == "curly_group_text" or ct == "curly_group_text_list" or ct == "curly_group_path" then
                                     target_group = child
                                     break
                                 end
@@ -340,15 +343,21 @@ function M.process_lines(buf, first_row, last_row)
                             local sr, sc, er, ec = cmd_node:range()
                             extmarks.set(buf, sr, sc, er, ec, item.char, hl)
                             
-                            -- Process curly_group to hide braces
+                            -- Process curly_group variants
+                            local target_group = nil
                             for child in node:iter_children() do
-                                if child:type() == "curly_group" then
-                                    for cg_child in child:iter_children() do
-                                        local t = cg_child:type()
-                                        if t == "{" or t == "}" then
-                                            local csr, csc, cer, cec = cg_child:range()
-                                            extmarks.set(buf, csr, csc, cer, cec, "", nil)
-                                        end
+                                local ct = child:type()
+                                if ct == "curly_group" or ct == "curly_group_text" or ct == "curly_group_text_list" or ct == "curly_group_path" then
+                                    target_group = child
+                                    break
+                                end
+                            end
+                            if target_group then
+                                for cg_child in target_group:iter_children() do
+                                    local t = cg_child:type()
+                                    if t == "{" or t == "}" then
+                                        local csr, csc, cer, cec = cg_child:range()
+                                        extmarks.set(buf, csr, csc, cer, cec, "", nil)
                                     end
                                 end
                             end
@@ -357,7 +366,7 @@ function M.process_lines(buf, first_row, last_row)
                 end
             end
             
-        elseif name == "chapter" or name == "section" or name == "subsection" or name == "subsubsection" or name == "label" or name == "ref" or name == "caption" then
+        elseif name == "chapter" or name == "section" or name == "subsection" or name == "subsubsection" or name == "label" or name == "ref" or name == "caption" or name == "cite" or name == "includegraphics" then
             if not in_math then
                 local hl_map = {
                     chapter = "ArtTexConcealChapter",
@@ -366,7 +375,9 @@ function M.process_lines(buf, first_row, last_row)
                     subsubsection = "ArtTexConcealSubSubSection",
                     label = "ArtTexConcealLabel",
                     ref = "ArtTexConcealRef",
-                    caption = "ArtTexConcealSpecial"
+                    caption = "ArtTexConcealSpecial",
+                    cite = "ArtTexConcealRef",
+                    includegraphics = "ArtTexConcealRef"
                 }
                 local icon_map = {
                     chapter = "¶",
@@ -375,7 +386,9 @@ function M.process_lines(buf, first_row, last_row)
                     subsubsection = "§§§",
                     label = "󰃳",
                     ref = "󰌷",
-                    caption = "󰦨 "
+                    caption = "󰦨 ",
+                    cite = "󰌷",
+                    includegraphics = " "
                 }
                 local hl = hl_map[name]
                 local icon = icon_map[name]
