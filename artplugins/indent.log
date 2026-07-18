@@ -1,0 +1,580 @@
+INFO:  latexindent version 3.24.7, 2025-08-15, a script to indent .tex files
+       latexindent lives here: /usr/local/texlive/2026/texmf-dist/scripts/latexindent/
+       Mon Jul 13 22:16:10 2026
+       Reading input from STDIN
+INFO:  Processing switches:
+       -l|--localSettings: Read localSettings YAML file
+INFO:  Directory for backup files and log file indent.log:
+       .
+INFO:  YAML settings read: defaultSettings.yaml
+       Reading defaultSettings.yaml from /usr/local/texlive/2026/texmf-dist/scripts/latexindent/defaultSettings.yaml
+INFO:  YAML reading settings
+       The config file in "/home/userh/indentconfig.yaml" will be read
+       Reading path information from /home/userh/indentconfig.yaml
+       ---
+       paths:
+         - C:\Users\heber\Documents\latexindent-config\setting_latexindent.yaml
+         - /home/userh/Documents/latexindent-config/setting_latexindent.yaml
+
+INFO:  YAML settings read: -l switch
+       Adding /home/userh/.config/nvim/artplugins/arttexformat.nvim/setting_latexindent.yaml to YAML read paths
+INFO:  YAML settings, reading from the following files:
+WARN:  /home/userh/indentconfig.yaml
+       specifies C:\Users\heber\Documents\latexindent-config\setting_latexindent.yaml but this file does not exist - unable to read settings from this file
+       Reading USER settings from /home/userh/Documents/latexindent-config/setting_latexindent.yaml
+       ---
+       backupExtension: .backindent
+       commandCodeBlocks:
+         commandNameSpecial:
+           -
+             amalgamate: '1'
+           - '@ifnextchar\['
+         roundParenthesesAllowed: '1'
+         stringsAllowedBetweenArguments:
+           -
+             amalgamate: '1'
+           - \\x\/\\y
+           - in
+           - node
+           - at
+           - to
+           - decoration
+           - \+\+
+           - \-\-
+           - \#\#\d
+       defaultIndent: '  '
+       fileContentsEnvironments:
+         filecontents: '1'
+         filecontents*: '1'
+       fileExtensionPreference:
+         .bib: '4'
+         .cls: '3'
+         .sty: '2'
+         .tex: '1'
+       fineTuning:
+         UnNamedGroupingBracesBrackets:
+           follow: \{|\[|,|&|\)|\(|\$
+         arguments:
+           before: (?:#\d\h*;?,?\/?)+|\<.*?\>
+           between: _|\^|\*|\->|\-|\+|h|H|g|G
+         commands:
+           name: '[+a-zA-Z@\*0-9_\:]+?'
+         environments:
+           name: '[a-zA-Z@\*0-9_\\]+'
+         ifElseFi:
+           name: (?!@?if[a-zA-Z@]*?\{)@?if[a-zA-Z@]*?
+         items:
+           canBeFollowedBy: (?:\[[^]]*?\])|(?:<[^>]*?>)
+         keyEqualsValuesBracesBrackets:
+           follow: (?:(?<!\\)\{)|,|(?:(?<!\\)\[)
+           name: '[a-zA-Z@\*0-9_\/.:\#-]+[a-zA-Z@\*0-9_\/.\h\{\}:\#-]*?'
+         modifyLineBreaks:
+           betterFullStop: (?:\.\)(?!\h*[a-z]))|(?:(?<!(?:(?:e\.g)|(?:E\.g)|(?:i\.e)|(?:I\.e)|(?:etc))))\.(?!(?:[a-z]|[A-Z]|\-|~|\,|[0-9]))
+           comma: ','
+           doubleBackSlash: \\\\(?:\h*\[\h*\d+\h*[a-zA-Z]+\h*\])?
+         namedGroupingBracesBrackets:
+           follow: \h|\R|\{|\[|\$|\)|\(
+           name: '[0-9\.a-zA-Z@\*><]+?'
+         trailingComments:
+           notPreceededBy: (?<!\\)
+       indentAfterHeadings:
+         chapter:
+           indentAfterThisHeading: '0'
+           level: '2'
+         paragraph:
+           indentAfterThisHeading: '0'
+           level: '6'
+         part:
+           indentAfterThisHeading: '0'
+           level: '1'
+         section:
+           indentAfterThisHeading: '0'
+           level: '3'
+         subsection:
+           indentAfterThisHeading: '0'
+           level: '4'
+         subsubsection:
+           indentAfterThisHeading: '0'
+           level: '5'
+       indentAfterItems:
+         NameItem: '1'
+         description: '1'
+         enumerate: '1'
+         itemize: '1'
+         list: '1'
+         question: '1'
+       indentRules:
+         displayMath: '  '
+         draw:
+           body: '  '
+         ifnum: '  '
+         item: '0'
+         mycommand:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         myenv:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         paragraph: '  '
+         section: '  '
+         subsection: '  '
+         subsubsection: '  '
+       indentRulesGlobal:
+         environments:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         ifElseFi: '  '
+         item: '  '
+         specialBeginEnd: '  '
+       lookForAlignDelims:
+         align*:
+           alignDoubleBackSlash: '0'
+           alignFinalDoubleBackSlash: '0'
+           alignRowsWithoutMaxDelims: '1'
+           delimiterJustification: left
+           delimiterRegEx: ((?:&=))
+           delims: '1'
+           dontMeasure: '1'
+           justification: left
+           lookForChildCodeBlocks: '1'
+           multiColumnGrouping: '1'
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+           spacesBeforeDoubleBackSlash: '1'
+         aligned:
+           alignDoubleBackSlash: '1'
+           alignFinalDoubleBackSlash: '1'
+           alignRowsWithoutMaxDelims: '1'
+           delimiterJustification: left
+           delimiterRegEx: ((?:=|&))
+           delims: '1'
+           dontMeasure: '1'
+           justification: left
+           lookForChildCodeBlocks: '1'
+           multiColumnGrouping: '1'
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+           spacesBeforeDoubleBackSlash: '1'
+         answer:
+           alignDoubleBackSlash: '0'
+           alignFinalDoubleBackSlash: '0'
+           alignRowsWithoutMaxDelims: '1'
+           delimiterJustification: left
+           delimiterRegEx: ((?:&=))
+           delims: '1'
+           dontMeasure: '1'
+           justification: left
+           lookForChildCodeBlocks: '1'
+           multiColumnGrouping: '1'
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+           spacesBeforeDoubleBackSlash: '1'
+         array: '1'
+         htabular: '1'
+         longtable: '1'
+         matrix: '1'
+         path:
+           delimiterRegEx: (edge|node\h*\{[0-9,A-Z]+\})
+         tabbing:
+           delimiterRegEx: (\\(?:=|>))
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+         tabular:
+           alignDoubleBackSlash: '1'
+           alignFinalDoubleBackSlash: '1'
+           alignRowsWithoutMaxDelims: '1'
+           delimiterJustification: left
+           delims: '1'
+           dontMeasure: '1'
+           justification: left
+           lookForChildCodeBlocks: '1'
+           multiColumnGrouping: '1'
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+           spacesBeforeDoubleBackSlash: '1'
+         tabularx:
+           delims: '1'
+       lookForPreamble:
+         .bib: '0'
+         .cls: '0'
+         .sty: '0'
+         .tex: '0'
+       maxNumberOfBackUps: '1'
+       noAdditionalIndent:
+         aligned: '0'
+         item: '0'
+         mycommand:
+           body: '1'
+           mandatoryArguments: '0'
+           optionalArguments: '0'
+         nyenv:
+           body: '0'
+           mandatoryArguments: '1'
+           optionalArguments: '1'
+         systeme: '0'
+       noAdditionalIndentGlobal:
+         commands: '1'
+         environments:
+           body: '0'
+           mandatoryArguments: '1'
+           optionalArguments: '1'
+         item: '1'
+       noIndentBlock:
+         artcircuit: '1'
+         cmhtest: '1'
+         minted: '1'
+         noindent: '1'
+         texcode: '1'
+       onlyOneBackUp: '1'
+       removeTrailingWhitespace:
+         afterProcessing: '1'
+         beforeProcessing: '1'
+       specialBeginEnd:
+         If:
+           begin: \\If
+           end: \\EndIf
+           lookForThis: '1'
+           middle:
+             - \\ElsIf
+             - \\Else
+         displayMath:
+           begin: \\\[
+           end: \\\]
+           lookForThis: '1'
+         displayMathTeX:
+           begin: \$\$
+           end: \$\$
+           lookForThis: '1'
+         inlineMath:
+           begin: (?<!\$)(?<!\\)\$(?!\$)
+           end: (?<!\\)\$(?!\$)
+           lookForThis: '1'
+         leftRightSquare:
+           begin: \\left\[
+           end: \\right\]
+           lookForThis: '1'
+         path:
+           begin: \\path
+           end: ;
+           lookForThis: '1'
+         specialBeforeCommand: '1'
+       verbatimCommands:
+         lstinline: '1'
+         nameAsRegex:
+           lookForThis: '1'
+           name: \w+inline
+         verb: '1'
+       verbatimEnvironments:
+         artcircuit: '1'
+         latexcode: '1'
+         latexcode*: '1'
+         lstlisting: '1'
+         minted: '1'
+         nameAsRegex:
+           lookForThis: '1'
+           name: \w+code\*?
+         pythoncode: '1'
+         pythoncode*: '1'
+         texcode: '1'
+         verbatim: '1'
+
+       Reading USER settings from /home/userh/.config/nvim/artplugins/arttexformat.nvim/setting_latexindent.yaml
+       ---
+       backupExtension: .backindent
+       commandCodeBlocks:
+         commandNameSpecial:
+           -
+             amalgamate: '1'
+           - '@ifnextchar\['
+         roundParenthesesAllowed: '1'
+         stringsAllowedBetweenArguments:
+           -
+             amalgamate: '1'
+           - \\x\/\\y
+           - in
+           - node
+           - at
+           - to
+           - decoration
+           - \+\+
+           - \-\-
+           - \#\#\d
+       defaultIndent: '  '
+       fileContentsEnvironments:
+         filecontents: '1'
+         filecontents*: '1'
+       fileExtensionPreference:
+         .bib: '4'
+         .cls: '3'
+         .sty: '2'
+         .tex: '1'
+       fineTuning:
+         UnNamedGroupingBracesBrackets:
+           follow: \{|\[|,|&|\)|\(|\$
+         arguments:
+           before: (?:#\d\h*;?,?\/?)+|\<.*?\>
+           between: _|\^|\*|\->|\-|\+|h|H|g|G
+         commands:
+           name: '[+a-zA-Z@\*0-9_\:]+?'
+         environments:
+           name: '[a-zA-Z@\*0-9_\\]+'
+         ifElseFi:
+           name: (?!@?if[a-zA-Z@]*?\{)@?if[a-zA-Z@]*?
+         items:
+           canBeFollowedBy: (?:\[[^]]*?\])|(?:<[^>]*?>)
+         keyEqualsValuesBracesBrackets:
+           follow: (?:(?<!\\)\{)|,|(?:(?<!\\)\[)
+           name: '[a-zA-Z@\*0-9_\/.:\#-]+[a-zA-Z@\*0-9_\/.\h\{\}:\#-]*?'
+         modifyLineBreaks:
+           betterFullStop: (?:\.\)(?!\h*[a-z]))|(?:(?<!(?:(?:e\.g)|(?:E\.g)|(?:i\.e)|(?:I\.e)|(?:etc))))\.(?!(?:[a-z]|[A-Z]|\-|~|\,|[0-9]))
+           comma: ','
+           doubleBackSlash: \\\\(?:\h*\[\h*\d+\h*[a-zA-Z]+\h*\])?
+         namedGroupingBracesBrackets:
+           follow: \h|\R|\{|\[|\$|\)|\(
+           name: '[0-9\.a-zA-Z@\*><]+?'
+         trailingComments:
+           notPreceededBy: (?<!\\)
+       indentAfterHeadings:
+         chapter:
+           indentAfterThisHeading: '0'
+           level: '2'
+         paragraph:
+           indentAfterThisHeading: '0'
+           level: '6'
+         part:
+           indentAfterThisHeading: '0'
+           level: '1'
+         section:
+           indentAfterThisHeading: '0'
+           level: '3'
+         subsection:
+           indentAfterThisHeading: '0'
+           level: '4'
+         subsubsection:
+           indentAfterThisHeading: '0'
+           level: '5'
+       indentAfterItems:
+         NameItem: '1'
+         description: '1'
+         ejercicios: '1'
+         ejerciciosCaja: '1'
+         enumdesc: '1'
+         enumerate: '1'
+         exercises: '1'
+         itemize: '1'
+         list: '1'
+         problemasResueltasPropuestas: '1'
+         problist: '1'
+         question: '1'
+         questions: '1'
+       indentRules:
+         displayMath: '  '
+         draw:
+           body: '  '
+         ifnum: '  '
+         imagebody:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         item: '0'
+         mycommand:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         myenv:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         paragraph: '  '
+         section: '  '
+         subsection: '  '
+         subsubsection: '  '
+         usarexamen:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         usarpractica:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         usarproblema:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+       indentRulesGlobal:
+         environments:
+           body: '  '
+           mandatoryArguments: '  '
+           optionalArguments: '  '
+         ifElseFi: '  '
+         item: '  '
+         specialBeginEnd: '  '
+       lookForAlignDelims:
+         align*:
+           alignDoubleBackSlash: '0'
+           alignFinalDoubleBackSlash: '0'
+           alignRowsWithoutMaxDelims: '1'
+           delimiterJustification: left
+           delimiterRegEx: ((?:&=))
+           delims: '1'
+           dontMeasure: '1'
+           justification: left
+           lookForChildCodeBlocks: '1'
+           multiColumnGrouping: '1'
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+           spacesBeforeDoubleBackSlash: '1'
+         aligned:
+           alignDoubleBackSlash: '1'
+           alignFinalDoubleBackSlash: '1'
+           alignRowsWithoutMaxDelims: '1'
+           delimiterJustification: left
+           delimiterRegEx: ((?:=|&))
+           delims: '1'
+           dontMeasure: '1'
+           justification: left
+           lookForChildCodeBlocks: '1'
+           multiColumnGrouping: '1'
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+           spacesBeforeDoubleBackSlash: '1'
+         answer:
+           alignDoubleBackSlash: '0'
+           alignFinalDoubleBackSlash: '0'
+           alignRowsWithoutMaxDelims: '1'
+           delimiterJustification: left
+           delimiterRegEx: ((?:&=))
+           delims: '1'
+           dontMeasure: '1'
+           justification: left
+           lookForChildCodeBlocks: '1'
+           multiColumnGrouping: '1'
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+           spacesBeforeDoubleBackSlash: '1'
+         array: '1'
+         htabular: '1'
+         longtable: '1'
+         matrix: '1'
+         path:
+           delimiterRegEx: (edge|node\h*\{[0-9,A-Z]+\})
+         tabbing:
+           delimiterRegEx: (\\(?:=|>))
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+         tabular:
+           alignDoubleBackSlash: '1'
+           alignFinalDoubleBackSlash: '1'
+           alignRowsWithoutMaxDelims: '1'
+           delimiterJustification: left
+           delims: '1'
+           dontMeasure: '1'
+           justification: left
+           lookForChildCodeBlocks: '1'
+           multiColumnGrouping: '1'
+           spacesAfterAmpersand: '1'
+           spacesBeforeAmpersand: '1'
+           spacesBeforeDoubleBackSlash: '1'
+         tabularx:
+           delims: '1'
+       lookForPreamble:
+         .bib: '0'
+         .cls: '0'
+         .sty: '0'
+         .tex: '0'
+       maxNumberOfBackUps: '1'
+       noAdditionalIndent:
+         PResueltasOneColumn: '0'
+         PResueltasOtherColumn: '0'
+         aligned: '0'
+         fisica: '0'
+         fragment: '0'
+         item: '0'
+         mycommand:
+           body: '1'
+           mandatoryArguments: '0'
+           optionalArguments: '0'
+         nyenv:
+           body: '0'
+           mandatoryArguments: '1'
+           optionalArguments: '1'
+         systeme: '0'
+       noAdditionalIndentGlobal:
+         commands: '1'
+         environments:
+           body: '0'
+           mandatoryArguments: '1'
+           optionalArguments: '1'
+         item: '1'
+       noIndentBlock:
+         artcircuit: '1'
+         cmhtest: '1'
+         minted: '1'
+         noindent: '1'
+         texcode: '1'
+       onlyOneBackUp: '1'
+       removeTrailingWhitespace:
+         afterProcessing: '1'
+         beforeProcessing: '1'
+       specialBeginEnd:
+         If:
+           begin: \\If
+           end: \\EndIf
+           lookForThis: '1'
+           middle:
+             - \\ElsIf
+             - \\Else
+         displayMath:
+           begin: \\\[
+           end: \\\]
+           lookForThis: '1'
+         displayMathTeX:
+           begin: \$\$
+           end: \$\$
+           lookForThis: '1'
+         inlineMath:
+           begin: (?<!\$)(?<!\\)\$(?!\$)
+           end: (?<!\\)\$(?!\$)
+           lookForThis: '1'
+         leftRightSquare:
+           begin: \\left\[
+           end: \\right\]
+           lookForThis: '1'
+         path:
+           begin: \\path
+           end: ;
+           lookForThis: '1'
+         specialBeforeCommand: '1'
+       verbatimCommands:
+         lstinline: '1'
+         nameAsRegex:
+           lookForThis: '1'
+           name: \w+inline
+         verb: '1'
+       verbatimEnvironments:
+         artcircuit: '1'
+         latexcode: '1'
+         latexcode*: '1'
+         lstlisting: '1'
+         minted: '1'
+         nameAsRegex:
+           lookForThis: '1'
+           name: \w+code\*?
+         pythoncode: '1'
+         pythoncode*: '1'
+         texcode: '1'
+         verbatim: '1'
+
+WARN:  fineTuning:trailingComments:notPreceededBy is ok for now, but in future versions, fineTuning:trailingComments:notPrecededBy will be used
+INFO:  Phase 1: searching for objects
+INFO:  Phase 2: finding surrounding indentation
+INFO:  Phase 3: indenting objects
+INFO:  Phase 4: final indentation check
+INFO:  Output routine:
+       Not outputting to file; see -w and -o switches for more options.
+       --------------
+INFO:  Please direct all communication/issues to:
+        https://github.com/cmhughes/latexindent.pl

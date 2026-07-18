@@ -1,0 +1,331 @@
+fileExtensionPreference:
+    .tex: 1
+    .sty: 2
+    .cls: 3
+    .bib: 4
+
+backupExtension: ".backindent"
+onlyOneBackUp: 1
+maxNumberOfBackUps: 1
+
+# 5.2. Bloques de código literal
+verbatimEnvironments:
+    verbatim: 1
+    lstlisting: 1
+    minted: 1
+    artcircuit: 1
+    latexcode: 1
+    latexcode*: 1
+    texcode: 1
+    pythoncode: 1
+    pythoncode*: 1
+    nameAsRegex:
+      name: '\w+code\*?'
+      lookForThis: 1
+
+verbatimCommands:
+    verb: 1
+    lstinline: 1
+    nameAsRegex:
+      name: '\w+inline'
+      lookForThis: 1
+
+noIndentBlock:
+    noindent: 1
+    cmhtest: 1
+    minted: 1
+    texcode: 1
+    artcircuit: 1
+
+# 5.3. contenidos de archivos y preámbulo
+fileContentsEnvironments:
+    filecontents: 1
+    filecontents*: 1
+
+lookForPreamble:
+    .tex: 0
+    .sty: 0
+    .cls: 0
+    .bib: 0
+
+# 5.4. Sangría y espacio horizontal
+defaultIndent: "  "
+
+removeTrailingWhitespace:
+    beforeProcessing: 1
+    afterProcessing: 1
+
+# 5.5. Alineación en los delimitadores
+lookForAlignDelims:
+  matrix: 1
+  array: 1
+  longtable: 1
+  tabular:
+    delims: 1
+    alignDoubleBackSlash: 1
+    spacesBeforeDoubleBackSlash: 1
+    multiColumnGrouping: 1
+    alignRowsWithoutMaxDelims: 1
+    spacesBeforeAmpersand: 1
+    spacesAfterAmpersand: 1
+    justification: left
+    alignFinalDoubleBackSlash: 1
+    dontMeasure: 1
+    delimiterJustification: left
+    lookForChildCodeBlocks: 1
+  align*:
+    delims: 1
+    alignDoubleBackSlash: 0
+    spacesBeforeDoubleBackSlash: 1
+    multiColumnGrouping: 1
+    alignRowsWithoutMaxDelims: 1
+    spacesBeforeAmpersand: 1
+    spacesAfterAmpersand: 1
+    justification: left
+    alignFinalDoubleBackSlash: 0
+    dontMeasure: 1
+    delimiterRegEx: '((?:&=))'
+    delimiterJustification: left
+    lookForChildCodeBlocks: 1
+  answer:
+    delims: 1
+    alignDoubleBackSlash: 0
+    spacesBeforeDoubleBackSlash: 1
+    multiColumnGrouping: 1
+    alignRowsWithoutMaxDelims: 1
+    spacesBeforeAmpersand: 1
+    spacesAfterAmpersand: 1
+    justification: left
+    alignFinalDoubleBackSlash: 0
+    dontMeasure: 1
+    delimiterRegEx: '((?:&=))'
+    delimiterJustification: left
+    lookForChildCodeBlocks: 1
+  htabular: 1
+  tabbing:
+    # delimiterRegEx: '(?<!\\)(&)'
+    delimiterRegEx: '(\\(?:=|>))'
+    spacesBeforeAmpersand: 1
+    spacesAfterAmpersand: 1
+  tabularx:
+    delims: 1
+  aligned:
+    delims: 1
+    alignDoubleBackSlash: 1
+    spacesBeforeDoubleBackSlash: 1
+    multiColumnGrouping: 1
+    alignRowsWithoutMaxDelims: 1
+    spacesBeforeAmpersand: 1
+    spacesAfterAmpersand: 1
+    justification: left
+    alignFinalDoubleBackSlash: 1
+    dontMeasure: 1
+    delimiterRegEx: '((?:=|&))'
+    delimiterJustification: left
+    lookForChildCodeBlocks: 1
+  path:
+    delimiterRegEx: '(edge|node\h*\{[0-9,A-Z]+\})'
+
+# 5.6. Sangría después de los artículos, especiales y partidas
+indentAfterItems:
+  itemize: 1
+  enumerate: 1
+  description: 1
+  list: 1
+  question: 1
+  NameItem: 1
+  exercises: 1
+  questions: 1
+  ejercicios: 1
+  ejerciciosCaja: 1
+  enumdesc: 1
+  problist: 1
+  problemasResueltasPropuestas: 1
+
+specialBeginEnd:
+    displayMath:
+        begin: '\\\['
+        end: '\\\]'
+        lookForThis: 1
+    inlineMath:
+        begin: '(?<!\$)(?<!\\)\$(?!\$)'
+        end: '(?<!\\)\$(?!\$)'
+        lookForThis: 1
+    displayMathTeX:
+        begin: '\$\$'
+        end: '\$\$'
+        lookForThis: 1
+    specialBeforeCommand: 1
+    leftRightSquare:
+        begin: '\\left\['
+        end: '\\right\]'
+        lookForThis: 1
+    If:
+        begin: '\\If'
+        middle:
+          - '\\ElsIf'
+          - '\\Else'
+        end: '\\EndIf'
+        lookForThis: 1
+    path:
+        begin: '\\path'
+        end: ';'
+        lookForThis: 1
+
+indentAfterHeadings:
+    part:
+       indentAfterThisHeading: 0
+       level: 1
+    chapter:
+       indentAfterThisHeading: 0
+       level: 2
+    section:
+       indentAfterThisHeading: 0
+       level: 3
+    subsection:
+       indentAfterThisHeading: 0
+       level: 4
+    subsubsection:
+       indentAfterThisHeading: 0
+       level: 5
+    paragraph:
+       indentAfterThisHeading: 0
+       level: 6
+
+# maximumIndentation: "\t"
+
+# 5.8. noAdditionalIndent y sangríaRules
+# 5.8.1. Entornos y sus argumentos
+noAdditionalIndent:
+    nyenv:
+      body: 0
+      optionalArguments: 1
+      mandatoryArguments: 1
+    # align*:
+      # body: 0
+      # optionalArguments: 1
+      # mandatoryArguments: 1
+    item: 0
+    aligned: 0
+    mycommand:
+      body: 1
+      optionalArguments: 0
+      mandatoryArguments: 0
+    systeme: 0
+    fisica: 0
+    fragment: 0
+    PResueltasOneColumn: 0
+    PResueltasOtherColumn: 0
+
+
+indentRules:
+    myenv:
+        body: "  "
+        optionalArguments: "  "
+        mandatoryArguments: "  "
+    item: 0
+    mycommand:
+      body: "  "
+      optionalArguments: "  "
+      mandatoryArguments: "  "
+    imagebody:
+      body: "  "
+      optionalArguments: "  "
+      mandatoryArguments: "  "
+    usarproblema:
+      body: "  "
+      optionalArguments: "  "
+      mandatoryArguments: "  "
+    usarexamen:
+      body: "  "
+      optionalArguments: "  "
+      mandatoryArguments: "  "
+    usarpractica:
+      body: "  "
+      optionalArguments: "  "
+      mandatoryArguments: "  "
+    ifnum: "  "
+    displayMath: "  "
+    draw:
+      body: "  "
+    section: "  "
+    subsection: "  "
+    subsubsection: "  "
+    paragraph: "  "
+
+
+
+noAdditionalIndentGlobal:
+  environments:
+    body: 0
+    optionalArguments: 1
+    mandatoryArguments: 1
+  item: 1
+  commands: 1
+
+indentRulesGlobal:
+  environments:
+    body: "  "
+    optionalArguments: "  "
+    mandatoryArguments: "  "
+  item: "  "
+  ifElseFi: "  "
+  specialBeginEnd: "  "
+
+# 5.9. Comandos y las cadenas entre sus argumentos
+commandCodeBlocks:
+    roundParenthesesAllowed: 1
+    stringsAllowedBetweenArguments:
+      -
+        amalgamate: 1
+      - '\\x\/\\y'
+      - 'in'
+      - 'node'
+      - 'at'
+      - 'to'
+      - 'decoration'
+      - '\+\+'
+      - '\-\-'
+      - '\#\#\d'
+    commandNameSpecial:
+      -
+        amalgamate: 1
+      - '@ifnextchar\['
+
+# 6.1. Ajuste de texto
+
+
+# 9. Ajuste fino
+
+fineTuning:
+    environments:
+      name: '[a-zA-Z@\*0-9_\\]+'
+    ifElseFi:
+      name: '(?!@?if[a-zA-Z@]*?\{)@?if[a-zA-Z@]*?'
+    commands:
+      name: '[+a-zA-Z@\*0-9_\:]+?'
+    items:
+      canBeFollowedBy: '(?:\[[^]]*?\])|(?:<[^>]*?>)'
+    keyEqualsValuesBracesBrackets:
+      name: '[a-zA-Z@\*0-9_\/.:\#-]+[a-zA-Z@\*0-9_\/.\h\{\}:\#-]*?'
+      follow: '(?:(?<!\\)\{)|,|(?:(?<!\\)\[)'
+    namedGroupingBracesBrackets:
+      name: '[0-9\.a-zA-Z@\*><]+?'
+      follow: '\h|\R|\{|\[|\$|\)|\('
+    UnNamedGroupingBracesBrackets:
+      follow: '\{|\[|,|&|\)|\(|\$'
+    arguments:
+      before: '(?:#\d\h*;?,?\/?)+|\<.*?\>'
+      between: '_|\^|\*|\->|\-|\+|h|H|g|G'
+    trailingComments:
+      notPreceededBy: '(?<!\\)'
+    modifyLineBreaks:
+      betterFullStop: '(?:\.\)(?!\h*[a-z]))|(?:(?<!(?:(?:e\.g)|(?:E\.g)|(?:i\.e)|(?:I\.e)|(?:etc))))\.(?!(?:[a-z]|[A-Z]|\-|~|\,|[0-9]))'
+      doubleBackSlash: '\\\\(?:\h*\[\h*\d+\h*[a-zA-Z]+\h*\])?'
+      comma: ','
+
+
+
+
+
+
