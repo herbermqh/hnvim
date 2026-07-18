@@ -27,6 +27,12 @@ function M.apply_globals()
   vim.api.nvim_set_hl(0, "@markup.math.latex", { fg = c.math }) 
   vim.api.nvim_set_hl(0, "@punctuation.special.latex", { fg = c.math_oper, bold = true })
   vim.api.nvim_set_hl(0, "@markup.link.latex", { fg = c.link, underline = true })
+  
+  -- Forzar a que negrita/cursiva no tengan color y hereden el color circundante
+  vim.api.nvim_set_hl(0, "@markup.strong", { bold = true })
+  vim.api.nvim_set_hl(0, "@markup.italic", { italic = true })
+  vim.api.nvim_set_hl(0, "texStyleBold", { bold = true })
+  vim.api.nvim_set_hl(0, "texStyleItal", { italic = true })
 
   -- 3. Kernel & Expl3
   vim.api.nvim_set_hl(0, "ArtTexKernelMacro", { fg = c.kernel_macro, italic = true })
