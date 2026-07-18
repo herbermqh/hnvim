@@ -24,15 +24,40 @@ function M.set(buf, sr, sc, er, ec, char, hl)
         return
     end
     
-    -- Hide the original text completely
-    M.set_extmark(buf, sr, sc, er, ec, {
-        end_col = ec, end_row = er, conceal = "", priority = 1000
-    })
+    local graphemes = vim.fn.split(char, '\\zs')
+    local num_graphemes = #graphemes
+    local text_len = ec - sc
     
-    -- Insert the icon/char as inline virtual text (handles double-width correctly)
-    M.set_extmark(buf, sr, sc, sr, sc, {
-        virt_text = {{char, hl}}, virt_text_pos = "inline", priority = 1000
-    })
+    if num_graphemes <= 1 then
+        M.set_extmark(buf, sr, sc, er, ec, {
+            end_col = ec, end_row = er, conceal = char, hl_group = hl, priority = 1000
+        })
+    else
+        if text_len >= num_graphemes then
+            for i = 1, num_graphemes do
+                local cur_sc = sc + i - 1
+                M.set_extmark(buf, sr, cur_sc, sr, cur_sc + 1, {
+                    end_col = cur_sc + 1, end_row = sr, conceal = graphemes[i], hl_group = hl, priority = 1000
+                })
+            end
+            if text_len > num_graphemes then
+                M.set_extmark(buf, sr, sc + num_graphemes, er, ec, {
+                    end_col = ec, end_row = er, conceal = "", hl_group = hl, priority = 1000
+                })
+            end
+        else
+            for i = 1, text_len do
+                local cur_sc = sc + i - 1
+                M.set_extmark(buf, sr, cur_sc, sr, cur_sc + 1, {
+                    end_col = cur_sc + 1, end_row = sr, conceal = graphemes[i], hl_group = hl, priority = 1000
+                })
+            end
+            local remaining_str = table.concat(graphemes, "", text_len + 1)
+            M.set_extmark(buf, er, ec, er, ec, {
+                virt_text = {{remaining_str, hl}}, virt_text_pos = "inline", priority = 1000
+            })
+        end
+    end
 end
 
 return M
