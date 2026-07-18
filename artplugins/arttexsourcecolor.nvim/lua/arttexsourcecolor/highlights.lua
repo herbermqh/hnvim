@@ -28,11 +28,15 @@ function M.apply_globals()
   vim.api.nvim_set_hl(0, "@punctuation.special.latex", { fg = c.math_oper, bold = true })
   vim.api.nvim_set_hl(0, "@markup.link.latex", { fg = c.link, underline = true })
   
+  -- Dynamically extract Normal fg
+  local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+  local fg_color = normal_hl.fg and string.format("#%06x", normal_hl.fg) or nil
+
   -- Forzar a que negrita/cursiva no tengan color y hereden el color circundante
-  vim.api.nvim_set_hl(0, "@markup.strong", { bold = true })
-  vim.api.nvim_set_hl(0, "@markup.italic", { italic = true })
-  vim.api.nvim_set_hl(0, "texStyleBold", { bold = true })
-  vim.api.nvim_set_hl(0, "texStyleItal", { italic = true })
+  vim.api.nvim_set_hl(0, "@markup.strong", { fg = fg_color, bold = true })
+  vim.api.nvim_set_hl(0, "@markup.italic", { fg = fg_color, italic = true })
+  vim.api.nvim_set_hl(0, "texStyleBold", { fg = fg_color, bold = true })
+  vim.api.nvim_set_hl(0, "texStyleItal", { fg = fg_color, italic = true })
 
   -- 3. Kernel & Expl3
   vim.api.nvim_set_hl(0, "ArtTexKernelMacro", { fg = c.kernel_macro, italic = true })

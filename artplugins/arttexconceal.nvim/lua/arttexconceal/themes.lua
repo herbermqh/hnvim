@@ -220,7 +220,18 @@ end
 --- Apply a specific theme
 function M.apply(theme_name)
     local theme = M.palette[theme_name] or M.palette["tokyonight"]
+    
+    -- Dynamically extract Normal fg to prevent bold/italic from inheriting unwanted colors
+    local normal_hl = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
+    local fg_color = normal_hl.fg and string.format("#%06x", normal_hl.fg) or nil
+
     for name, hl in pairs(theme) do
+        -- Explicitly apply Normal fg to text format groups
+        if name == "ArtTexConcealBold" or name == "ArtTexConcealItalic" or name == "ArtTexConcealMathsf" then
+            if not hl.fg and fg_color then
+                hl.fg = fg_color
+            end
+        end
         -- Remove default = true so it OVERRIDES any existing highlight definition
         vim.api.nvim_set_hl(0, name, hl)
     end
