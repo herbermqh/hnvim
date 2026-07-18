@@ -172,8 +172,8 @@ function M.process_lines(buf, first_row, last_row)
         (superscript) @sup
         (word) @word
         ["{" "}" "[" "]" "(" ")"] @bracket
-        "\\left" @left
-        "\\right" @right
+        "\\left" @delim
+        "\\right" @delim
         ((command_name) @sqrt (#eq? @sqrt "\\sqrt"))
     ]])
     if not ok_q then return end
