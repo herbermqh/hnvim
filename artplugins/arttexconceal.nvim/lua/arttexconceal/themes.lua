@@ -22,7 +22,7 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#2ac3de" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
-        ArtTexConcealMathsf = { fg = "#7aa2f7", italic = true },
+        ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#565f89" },
         ArtTexConcealChapter = { fg = "#bb9af7", bold = true },
@@ -63,7 +63,7 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#94e2d5" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
-        ArtTexConcealMathsf = { fg = "#89b4fa", italic = true },
+        ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#6c7086" },
         ArtTexConcealChapter = { fg = "#cba6f7", bold = true },
@@ -104,7 +104,7 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#bd93f9" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
-        ArtTexConcealMathsf = { fg = "#8be9fd", italic = true },
+        ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#6272a4" },
         ArtTexConcealChapter = { fg = "#bd93f9", bold = true },
@@ -145,7 +145,7 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#5e81ac" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
-        ArtTexConcealMathsf = { fg = "#81a1c1", italic = true },
+        ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#4c566a" },
         ArtTexConcealChapter = { fg = "#b48ead", bold = true },
@@ -186,7 +186,7 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#56b6c2" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
-        ArtTexConcealMathsf = { fg = "#61afef", italic = true },
+        ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#5c6370" },
         ArtTexConcealChapter = { fg = "#c678dd", bold = true },
