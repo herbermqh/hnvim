@@ -244,7 +244,7 @@ function M.process_lines(buf, first_row, last_row)
                         local char = cmd_text == "\\{" and "{" or "}"
                         extmarks.set(buf, sr, sc, er, ec, char, "ArtTexConcealRainbow" .. hl_idx)
                     end
-                elseif cmd_text == "\\textbf" or cmd_text == "\\textit" or cmd_text == "\\textsf" or cmd_text == "\\note" or cmd_text == "\\note*" or cmd_text == "\\bfseries" or cmd_text == "\\itshape" or cmd_text == "\\ttfamily" or cmd_text == "\\caption" or cmd_text == "\\caption*" or cmd_text == "\\captionof" then
+                elseif cmd_text == "\\textbf" or cmd_text == "\\textit" or cmd_text == "\\textsf" or cmd_text == "\\note" or cmd_text == "\\note*" or cmd_text == "\\bfseries" or cmd_text == "\\itshape" or cmd_text == "\\ttfamily" or cmd_text == "\\caption" or cmd_text == "\\caption*" or cmd_text == "\\captionof" or cmd_text == "\\image" then
                     if not in_math then
                         local hl = ""
                         local icon = ""
@@ -262,6 +262,12 @@ function M.process_lines(buf, first_row, last_row)
                         if cmd_text == "\\caption" or cmd_text == "\\caption*" or cmd_text == "\\captionof" then
                             hl = "ArtTexConcealSpecial"
                             icon = "󰦨 "
+                            left_brace = ""
+                            right_brace = ""
+                        end
+                        if cmd_text == "\\image" then
+                            hl = "ArtTexConcealImage"
+                            icon = " "
                             left_brace = ""
                             right_brace = ""
                         end
@@ -376,8 +382,8 @@ function M.process_lines(buf, first_row, last_row)
                     label = "ArtTexConcealLabel",
                     ref = "ArtTexConcealRef",
                     caption = "ArtTexConcealSpecial",
-                    cite = "ArtTexConcealRef",
-                    includegraphics = "ArtTexConcealRef"
+                    cite = "ArtTexConcealNote",
+                    includegraphics = "ArtTexConcealImage"
                 }
                 local icon_map = {
                     chapter = "¶",

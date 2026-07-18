@@ -575,8 +575,8 @@ require("lazy").setup({
           enable_env_conceal = false,
           custom_symbols = {
             -- Inclusión y Referencia
-            { pattern = "\\includegraphics", char = " ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
-            { pattern = "\\image",          char = " ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
+            { pattern = "\\includegraphics", char = " ", hl = "ArtTexConcealImage", is_regex = false, env = "text" },
+            { pattern = "\\image",          char = " ", hl = "ArtTexConcealImage", is_regex = false, env = "text" },
             -- Estructura
             { pattern = "\\item",           char = " ", hl = "ArtTexConcealNote", is_regex = false, env = "text" },
             -- Motores
