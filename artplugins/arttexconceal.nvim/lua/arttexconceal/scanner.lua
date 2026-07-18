@@ -171,12 +171,10 @@ function M.process_lines(buf, first_row, last_row)
         (subscript) @sub
         (superscript) @sup
         (word) @word
-        "(" @bracket
-        ")" @bracket
-        "[" @bracket
-        "]" @bracket
-        "\\left" @delim
-        "\\right" @delim
+        ["{" "}" "[" "]" "(" ")"] @bracket
+        "\\left" @left
+        "\\right" @right
+        ((command_name) @sqrt (#eq? @sqrt "\\sqrt"))
     ]])
     if not ok_q then return end
     
@@ -185,7 +183,7 @@ function M.process_lines(buf, first_row, last_row)
     for id, node in query:iter_captures(root, buf, first_row, last_row) do
         local name = query.captures[id]
         
-        if name == "bracket" then
+        if name == "bracket" or name == "left" or name == "right" or name == "sqrt" then
             local in_math = mathzone.is_in_mathzone_list(math_zones, node:range())
             if in_math and config.options.enable_math_conceal then
                 local txt = vim.treesitter.get_node_text(node, buf)
