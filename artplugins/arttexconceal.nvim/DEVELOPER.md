@@ -1,64 +1,65 @@
-# Documentación Privada del Desarrollador - ArtTex Conceal
+# 🛠️ ArtTexConceal - Developer Guide
 
-Esta documentación explica exhaustivamente el diseño, la estructura interna y la arquitectura del plugin `arttexconceal`, orientada exclusivamente para mantenimiento del desarrollador o del sistema de inteligencia artificial que asista en futuras mejoras.
+Este documento detalla la arquitectura interna, decisiones de diseño y flujo de datos del plugin `arttexconceal`. Está dirigido a desarrolladores que desean realizar mantenimiento, extender funcionalidades o comprender la profunda optimización de rendimiento implementada.
 
-## 1. Arquitectura General
-El plugin se divide en tres componentes clave, cada uno con una responsabilidad única, garantizando la filosofía modular:
+## 🏗️ Arquitectura del Sistema
 
-- `init.lua`: Actúa como punto de entrada público, expone la API y registra los comandos de usuario.
-- `core.lua`: Contiene la lógica interna de la API de Neovim y el *Render Cycle* (el motor de `decoration_provider`).
-- `symbols.lua`: Archivo de base de datos estática que mapea notaciones LaTeX a caracteres Unicode y grupos de resaltado.
+ArtTexConceal está fuertemente acoplado con **Neovim Extmarks** y **Tree-Sitter**. Evita intencionalmente los mecanismos de *syntax match* nativos de Vimscript (que son lentos y basados puramente en regex) a favor de un análisis sintáctico semántico real.
 
----
+### Grafo de Componentes y Flujo de Datos
 
-## 2. Descripción de Componentes Internos (`core.lua`)
+A continuación se muestra cómo interactúan los módulos internos del plugin.
 
-El módulo `core` es el corazón del plugin. Sus principales variables y funciones se describen a continuación:
+```mermaid
+graph TD
+    UI[ui.lua\nConfig Menus & Toggles] --> Config[config.lua\nState Management]
+    Core[core.lua\nEvent Orchestrator] --> Scanner[scanner.lua\nMain Entry & Query Engine]
+    Core --> UI
+    
+    Scanner --> Math[mathzone.lua\nCalculate Math Ranges]
+    Scanner --> Lits[scanner/literals.lua\nRegex Fallback]
+    Scanner --> Depth[scanner/depth.lua\nO(N) Caching Engine]
+    Scanner --> Dispatch[scanner/handlers.lua\nNode Handlers Dispatch]
+    
+    Dispatch --> Symbols[symbols.lua\nHardcoded Maps]
+    Dispatch --> ExtMarks[extmarks.lua\nNeovim API Wrapper]
+    Lits --> ExtMarks
+    
+    ExtMarks --> Buffer[(Neovim Buffer)]
+```
 
-### Variables de Estado (Privadas/Internas)
-- `M.namespace` (entero): El ID del *namespace* generado mediante `vim.api.nvim_create_namespace("arttexconceal")`. Todo extmark virtual que creamos pertenece a este ID, lo que permite control granular sin afectar otros plugins.
-- `M.active` (booleano): Indicador del estado del plugin. Si es `false`, las rutinas del decoration provider saldrán prematuramente, evitando consumo inútil de recursos.
+## 🧩 Descripción Detallada de los Módulos
 
-### `M.setup_highlights()`
-Rutina encargada de proveer estilos fallback si el usuario final no configuró en su tema de color (como Tokyonight o Catppuccin) los highlights custom. Comprueba de forma segura (con `pcall`) si un grupo está vacío y aplica colores base predeterminados.
+### 1. `core.lua` (El Motor de Ciclo de Vida)
+Es responsable de engancharse a los búferes de Neovim y manejar el "debounce" y procesamiento por chunks (lotes) de las líneas para evitar congelamientos de UI al escanear documentos largos. Utiliza `vim.api.nvim_buf_attach` para reaccionar a `on_lines`. Cuando una opción global es cambiada, la función expuesta `M.reprocess_all_buffers()` limpia los estados colgados en todos los buffers activos y los obliga a re-renderizarse desde cero.
 
-### Funciones de Ciclo de Vida del Decoration Provider
-La optimización más fuerte de este plugin radica en utilizar el API `nvim_set_decoration_provider`. Esto engancha lógica directamente en el ciclo de dibujado (`redraw`) de Neovim, procesando sólo lo que es visible en pantalla.
+### 2. `scanner.lua` (El Orquestador)
+En lugar de compilar la consulta de Treesitter repetidamente, este módulo lo hace **una sola vez** (`vim.treesitter.query.parse`) y la almacena en caché. 
+Cuando se solicita analizar un rango de líneas:
+1. Pide a `mathzone.lua` que marque dónde están todas las secciones matemáticas.
+2. Ejecuta el módulo de fallback literal para capturar cosas que Treesitter no parsea individualmente como nodos.
+3. Itera sobre las capturas y delega inmediatamente al `handler` correspondiente.
 
-#### `local function on_win(win, buf, topline, botline)`
-Es invocada por Neovim justo antes de renderizar una ventana.
-- **Retorno:** Si devuelve `false`, aborta el callback para esa ventana.
-- **Validación:** Verifica que `M.active == true` y que el tipo de archivo del buffer es `tex`. De esta forma, evitamos iteraciones innecesarias sobre otras ventanas o paneles.
+### 3. `scanner/handlers.lua` (Tabla de Despacho)
+Toda la lógica masiva de "Si esto es un comando, haz esto, si es una fracción haz lo otro" ha sido abstraída en una tabla limpia. 
+Cada captura de la consulta (ej. `@cmd`, `@bracket`, `@section`) tiene asignada una función en `M.dispatch`.
+Para extender el plugin y procesar una nueva estructura:
+1. Agrega una captura en el String de Query en `scanner.lua`.
+2. Agrega la lógica de procesamiento definiendo `M.dispatch.nombre_de_captura` en este archivo.
 
-#### `local function on_line(win, buf, row)`
-Es invocada línea por línea sobre el código visible.
-- **Optimizaciones Clave:**
-  1. Utiliza `string.find(line, "[\\%^_]")` como *fail-fast*. Si la línea no tiene caracteres típicos de inicio de macros o matemáticos, salta el parseo complejo instantáneamente.
-  2. Búsqueda *Fast-Path*: Para patrones literales (`symbols.literals`), utiliza `string.find` con el parámetro `plain=true`, lo que desactiva el parseo de regex.
-  3. Extmarks Efímeras: Utiliza `ephemeral = true` en `nvim_buf_set_extmark`. Los *extmarks* efímeros se eliminan de memoria automáticamente tras finalizar el cuadro de render, eliminando cualquier tipo de _memory leak_ provocado por crear decoraciones persistentes.
-- **Validación Semántica:** Invoca a `utils.in_mathzone(buf, row, col)` del plugin hermano `arttexworkspace`.
+### 4. `scanner/depth.lua` (Optimización O(N) Crítica)
+**Problema histórico:** Anteriormente, calcular el nivel de profundidad de un corchete `\left(` implicaba recorrer el árbol sintáctico hacia los padres, ubicar el contenedor delimitador de entorno y bajar a todos los hijos buscando llaves `{ }`. Hacer esto para cada corchete resultaba en una complejidad de $O(N^2)$, lo cual causaba altos picos de uso de CPU.
+**Solución actual:** `depth.lua` utiliza una función `get_container_flat_depths` que:
+* Recibe el ID de nodo del contenedor padre.
+* Si no está en su `container_cache`, atraviesa el contenedor padre **una sola vez**.
+* Guarda el cálculo de profundidad (`flat_depth`) de todos los nodos que lo componen en un mapa.
+* Cuando `handlers.lua` pide la profundidad para otro nodo en el mismo párrafo, se saca del caché de manera instantánea ($O(1)$).
 
----
+### 5. `themes.lua` y `highlights.lua` (Dinámicos)
+Garantizan que comandos de estilos de texto como `\textbf{}` o `\textit{}` mantengan coherencia de colores. Capturan el color dinámico del texto "Normal" de la terminal e inyectan el *Foreground* en tiempo real, evitando así "fugas de color" provenientes de títulos y encabezados.
 
-## 3. Descripción de la API Pública (`init.lua`)
+## 📌 Guía Rápida para Desarrolladores
 
-El objeto retornado por `init.lua` exporta un objeto `M.api` de manera explícita (para interoperabilidad con otros plugins) y la función estándar de configuración `setup()`.
-
-### `M.setup(opts)`
-- **`opts`** (tabla): Parámetros de configuración inicial. Actualmente soporta `enable_on_startup` (por defecto `true`).
-- **Comandos Creados:** Registra `ArtTexConcealEnable`, `ArtTexConcealDisable` y `ArtTexConcealToggle`.
-
-### `M.api`
-Expone punteros hacia el `core.lua` para que desarrolladores u otros plugins (ej. scripts Lua de automatización) puedan controlar la visibilidad del conceal programáticamente:
-- `M.api.enable()`: Activa el booleano de estado e instancia el `decoration_provider`.
-- `M.api.disable()`: Desactiva el booleano de estado y fuerza un `redraw!` en todas las ventanas con bufers `.tex` visibles para limpiar la interfaz.
-- `M.api.toggle()`: Función puente para alternar.
-- `M.api.is_active()`: Retorna el estado interno (`true`/`false`).
-
----
-
-## 4. Estructura de la Base de Datos (`symbols.lua`)
-
-La división de los mapeos permite priorizar la eficiencia de CPU:
-- **`M.literals`**: Arreglo de tablas `{ pattern = "string", char = "X", hl = "Group" }`. Representan comandos directos como `\frac12` o `\alpha` donde la búsqueda de strings (plain text) es óptima.
-- **`M.patterns`**: Arreglo que soporta Regex de Lua (ej. `%^{%s*x%s*}`). Ideal para atrapar agrupaciones dinámicas (superíndices con espacios). La rutina compila y evalúa éstos con la máquina regex normal.
+* **Si necesitas agregar una nueva palabra clave matemática:** Ve a `symbols.lua` y agrégala al mapa `math_words`.
+* **Si necesitas ocultar de manera especial una estructura (Ej: un entorno específico):** Define un nuevo Query Capture en `scanner.lua`, y procesa sus *Extmarks* dentro de `handlers.lua`.
+* **Si observas problemas de memoria (Memory Leaks):** Revisa que los variables como `container_cache` en `scanner.lua` se estén re-inicializando (`{}`) correctamente por cada ejecución de `process_lines` de modo que la basura de viejos escaneos pueda ser recolectada (GC). El plugin está diseñado para ser *"Stateless"* entre re-dibujados de buffer.

@@ -1,37 +1,29 @@
-# 🎨 ArtTexSourceColor.nvim
+# ArtTex SourceColor 🎨
 
-An advanced Neovim plugin focused purely on coloring LaTeX and TeX source code up to the kernel level using Treesitter's Abstract Syntax Tree (AST). Designed for those who write documents, packages (`.sty`), classes (`.cls`), and LaTeX3 `expl3` code.
+ArtTex SourceColor es un sistema de resaltado semántico y coloreado contextual altamente dinámico para documentos de LaTeX en Neovim. Más que colorear sintaxis plana, el plugin se comunica en tiempo real con la infraestructura de tu proyecto y analiza el contexto estructural, dibujando referencias, validando variables y aplicando colores con inteligencia.
 
-## ✨ Features
-- **Deep AST Parsing**: Uses Neovim's native Treesitter parser to inject extmarks.
-- **0-Cost CPU Rendering**: Built on Neovim's `Decoration Providers` (`nvim_set_decoration_provider`), guaranteeing that CPU and RAM usage stays at literally 0% by only executing visual processing on the lines currently visible on the screen.
-- **LaTeX2e & LaTeX3 Support**: Highlights structural components `\newcommand`, `\makeatletter`, `\ExplSyntaxOn`.
-- **Kernel Macros**: Safely highlights `@`-macros natively.
-- **Expl3 Code**: Colors modern LaTeX3 variables and macros (containing `_` and `:`).
-- **Virtual Text Annotations**: Instantly injects virtual signs like `📖 CAPÍTULO` or `📌` for visual hierarchy in books and articles.
-- **Native Rainbow Delimiters**: Full rainbow bracket architecture out-of-the-box (`{}`, `[]`, `\begin`, `\end`) with exact depth calculation, completely independent of other heavy rainbow plugins.
+## ✨ Características Especiales
 
-## 📦 Installation
+- **Resaltado Semántico Instantáneo:** Utiliza las nuevas API visuales de bajo nivel en Neovim (Decoration Providers) para aplicar colores que siguen los desplazamientos de la pantalla en tiempo real (60 FPS sin retraso).
+- **Entornos y Bloques Inteligentes:** Detecta y pinta entornos de Teoremas, Cajas y Bloques matemáticos usando colores semánticos, reaccionando a la configuración de `arttexworkspace`.
+- **Validación de Referencias y Texto Virtual:**
+  - Si escribes `\ref{eq:inexistente}`, instantáneamente aparecerá un texto virtual tachado (❌ No hallado).
+  - Los comandos como `\chapter` o `\section` se enriquecen con marcadores virtuales de colores al final de la línea.
+- **Detección Efímera de Errores Sintácticos:** Errores como etiquetas no cerradas resaltarán temporalmente su línea o porción relevante para llamar tu atención, filtrando ruidos y paquetes falsos.
+- **Paréntesis Arcoíris (Visual):** Acompañando a `arttexconceal`, este plugin también colorea dinámicamente entornos, delimitadores y corchetes en base a su nivel exacto de profundidad recursiva y matemática.
+- **Match-Paren Semántico:** Resalta los entornos `\begin` y `\end` de manera emparejada visualmente basándose puramente en la jerarquía del AST.
 
-With [lazy.nvim](https://github.com/folke/lazy.nvim):
+## ⚙️ Uso y Configuración
 
-```lua
-{
-    "tu-usuario/arttexsourcecolor.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    ft = { "tex", "sty", "cls", "dtx" },
-    config = function()
-        require("arttexsourcecolor").setup()
-    end,
-}
-```
+Usa la interfaz gráfica visual para controlar este motor en tiempo real.
 
-## 🚀 Setup
-The plugin requires no configuration to run. Just call `setup()` and it will attach to all LaTeX-related buffers automatically!
+**Comandos disponibles:**
+* `:ArtSourceColorConfig` - Abre un menú interactivo usando tu interfaz configurada por defecto de Neovim/ArtTex.
+* `:ArtSourceColorSync` - Sincroniza explícitamente y fuerza un refresco de información visual extraída de `arttexworkspace`.
 
-## 📚 Documentación
+### Menú Interactivo
+El menú interactivo te permite desactivar globalmente cualquier función sin recargar Neovim. Todas las desactivaciones borran instantáneamente todo su contexto visual asociado en todos los búferes abiertos simultáneamente.
 
-Para una guía completa y en profundidad, por favor consulta los manuales en la carpeta `doc/`:
+---
 
-- [📖 Manual del Usuario](doc/01_Manual_Usuario.md) - Aprende a configurar temas, cambiar atajos de teclado y definir tus propios grupos personalizados de colores.
-- [🛠️ Manual del Desarrollador](doc/02_Manual_Desarrollador.md) - Documentación arquitectónica, flujos de datos y diagramas de cómo el motor AST logra 0% de latencia.
+*Para detalles de arquitectura de integración con Neovim y desarrollo interno, consulta el archivo [DEVELOPER.md](./DEVELOPER.md).*
