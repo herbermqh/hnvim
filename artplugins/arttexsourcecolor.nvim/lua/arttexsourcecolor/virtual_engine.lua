@@ -23,6 +23,59 @@ local container_types = {
   displayed_equation = true,
 }
 
+local frame_cache = {}
+
+local function get_container_flat_depths(container, buf)
+  local container_id = container:id()
+  if frame_cache[container_id] then
+    return frame_cache[container_id]
+  end
+
+  local depths = {}
+  local current_flat_depth = 0
+
+  local function traverse(n)
+    depths[n:id()] = current_flat_depth
+    
+    local t = n:type()
+    local is_boundary = false
+    local pt = n:parent() and n:parent():type()
+    if pt == "math_delimiter" and (t == "(" or t == ")" or t == "[" or t == "]") then
+      is_boundary = true
+    end
+    
+    if not is_boundary then
+      if t == "(" or t == "[" then
+        current_flat_depth = current_flat_depth + 1
+      elseif t == ")" or t == "]" then
+        current_flat_depth = current_flat_depth - 1
+      elseif t == "command_name" then
+        local txt = vim.treesitter.get_node_text(n, buf)
+        if txt == "\\{" then current_flat_depth = current_flat_depth + 1
+        elseif txt == "\\}" then current_flat_depth = current_flat_depth - 1
+        end
+      end
+    end
+    
+    for child in n:iter_children() do
+      local ct = child:type()
+      if ct ~= "curly_group" and ct ~= "curly_group_text" and ct ~= "math_delimiter" and ct ~= "math_environment" and ct ~= "inline_formula" and ct ~= "displayed_equation" and ct ~= "generic_environment" then
+        traverse(child)
+      end
+    end
+  end
+
+  for child in container:iter_children() do
+    local ct = child:type()
+    if ct ~= "curly_group" and ct ~= "curly_group_text" and ct ~= "math_delimiter" and ct ~= "math_environment" and ct ~= "inline_formula" and ct ~= "displayed_equation" and ct ~= "generic_environment" then
+      traverse(child)
+    end
+  end
+
+  frame_cache[container_id] = depths
+  return depths
+end
+
 local function get_unified_depth(target_node, buf)
   local depth = 1
   
@@ -60,52 +113,9 @@ local function get_unified_depth(target_node, buf)
   end
   
   if container then
-    local flat_depth = 0
+    local flat_depths = get_container_flat_depths(container, buf)
+    local flat_depth = flat_depths[target_node:id()] or 0
     local is_close = (node_type == ")" or node_type == "]")
-    local target_id = target_node:id()
-    local found = false
-    
-    local function traverse(n)
-      if found then return end
-      if n:id() == target_id then
-        found = true
-        return
-      end
-      local t = n:type()
-      
-      local is_boundary = false
-      local pt = n:parent() and n:parent():type()
-      if pt == "math_delimiter" and (t == "(" or t == ")" or t == "[" or t == "]") then
-        is_boundary = true
-      end
-      
-      if not is_boundary then
-        if t == "(" or t == "[" then
-          flat_depth = flat_depth + 1
-        elseif t == ")" or t == "]" then
-          flat_depth = flat_depth - 1
-        elseif t == "command_name" then
-          local txt = vim.treesitter.get_node_text(n, buf)
-          if txt == "\\{" then flat_depth = flat_depth + 1
-          elseif txt == "\\}" then flat_depth = flat_depth - 1
-          end
-        end
-      end
-      for child in n:iter_children() do
-        local ct = child:type()
-        if ct ~= "curly_group" and ct ~= "curly_group_text" and ct ~= "math_delimiter" and ct ~= "math_environment" and ct ~= "inline_formula" and ct ~= "displayed_equation" and ct ~= "generic_environment" then
-          traverse(child)
-        end
-      end
-    end
-    
-    for child in container:iter_children() do
-      local ct = child:type()
-      if ct ~= "curly_group" and ct ~= "curly_group_text" and ct ~= "math_delimiter" and ct ~= "math_environment" and ct ~= "inline_formula" and ct ~= "displayed_equation" and ct ~= "generic_environment" then
-        traverse(child)
-      end
-      if found then break end
-    end
     
     if is_close and not is_structural_boundary then
       flat_depth = flat_depth - 1
@@ -317,6 +327,7 @@ function M.setup()
 
   vim.api.nvim_set_decoration_provider(ns_id, {
     on_win = function(_, winid, bufnr, topline, botline)
+      frame_cache = {} -- clear cache for this frame
       if not config.options.enabled then return false end
       local ft = vim.bo[bufnr].filetype
       if ft ~= "tex" and ft ~= "latex" and ft ~= "sty" then return false end
