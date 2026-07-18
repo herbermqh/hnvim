@@ -35,6 +35,16 @@ local function background_process_all(buf)
     process_next_chunk()
 end
 
+function M.reprocess_all_buffers()
+    if not M.active then return end
+    for buf, attached in pairs(attached_buffers) do
+        if attached and vim.api.nvim_buf_is_valid(buf) then
+            extmarks.clear(buf, 0, -1)
+            background_process_all(buf)
+        end
+    end
+end
+
 local function attach_to_buffer(buf)
     if attached_buffers[buf] then return end
     local ok = pcall(vim.api.nvim_buf_attach, buf, false, {
@@ -73,6 +83,8 @@ function M.enable()
                 attach_to_buffer(buf)
             end
         end
+        -- Fallback to reprocess everything attached (e.g. from BufEnter)
+        M.reprocess_all_buffers()
         
         vim.api.nvim_create_autocmd("BufEnter", {
             group = vim.api.nvim_create_augroup("ArtTexConcealAttach", { clear = true }),
@@ -108,6 +120,13 @@ function M.disable()
                 end)
             end
         end
+        
+        for buf, attached in pairs(attached_buffers) do
+            if attached and vim.api.nvim_buf_is_valid(buf) then
+                extmarks.clear(buf, 0, -1)
+            end
+        end
+        attached_buffers = {}
     end)
     if not ok then logger.error("Error in disable(): " .. tostring(err)) end
 end

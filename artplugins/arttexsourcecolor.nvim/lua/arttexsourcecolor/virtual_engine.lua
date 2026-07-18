@@ -489,6 +489,15 @@ function M.clear(bufnr)
   pcall(vim.cmd, "redraw")
 end
 
+function M.clear_all()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      pcall(vim.api.nvim_buf_clear_namespace, buf, ns_id, 0, -1)
+    end
+  end
+  pcall(vim.cmd, "redraw!")
+end
+
 function M.apply_virtuals(bufnr) end
 
 return M

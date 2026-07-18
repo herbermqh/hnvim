@@ -71,7 +71,7 @@ function M.open_menu()
           bridge.stop_sync()
           injector.clear_injection()
           highlights.clear_globals()
-          pcall(require("arttexsourcecolor.virtual_engine").clear, 0)
+          pcall(require("arttexsourcecolor.virtual_engine").clear_all)
         else
           highlights.apply_globals()
           bridge.sync_with_workspace(0)
@@ -145,7 +145,7 @@ function M.open_menu()
       action = function() 
         bridge.stop_sync()
         injector.clear_injection()
-        pcall(require("arttexsourcecolor.virtual_engine").clear, 0)
+        pcall(require("arttexsourcecolor.virtual_engine").clear_all)
         os.remove(config.config_file)
         config.options.enabled = true
         config.options.theme_name = "tokyonight"

@@ -108,7 +108,7 @@ function M.open_menu()
                         action = function()
                             config.options.enable_math_conceal = not config.options.enable_math_conceal
                             config.save_prefs()
-                            force_redraw()
+                            core.reprocess_all_buffers()
                             print("[ArtTexConceal] Math Conceal: " .. (config.options.enable_math_conceal and "ON" or "OFF"))
                         end
                     },
@@ -117,7 +117,7 @@ function M.open_menu()
                         action = function()
                             config.options.enable_format_bold = not config.options.enable_format_bold
                             config.save_prefs()
-                            force_redraw()
+                            core.reprocess_all_buffers()
                             print("[ArtTexConceal] Bold: " .. (config.options.enable_format_bold and "ON" or "OFF"))
                         end
                     },
@@ -126,7 +126,7 @@ function M.open_menu()
                         action = function()
                             config.options.enable_format_italic = not config.options.enable_format_italic
                             config.save_prefs()
-                            force_redraw()
+                            core.reprocess_all_buffers()
                             print("[ArtTexConceal] Italic: " .. (config.options.enable_format_italic and "ON" or "OFF"))
                         end
                     },
@@ -135,7 +135,7 @@ function M.open_menu()
                         action = function()
                             config.options.enable_format_mathsf = not config.options.enable_format_mathsf
                             config.save_prefs()
-                            force_redraw()
+                            core.reprocess_all_buffers()
                             print("[ArtTexConceal] Mathsf: " .. (config.options.enable_format_mathsf and "ON" or "OFF"))
                         end
                     },
