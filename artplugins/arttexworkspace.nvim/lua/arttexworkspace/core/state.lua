@@ -7,6 +7,8 @@ local M = {}
 M.projects = {}
 -- Memoria Virtual / Mapeo Rápido (Buffers locales -> Main)
 M.buffer_roots = {}
+-- Caché Reactiva de Archivos (Para el árbol semántico)
+M.file_nodes = {}
 
 -- dynamic_macros[root_path] = { ["macro_name"] = { "%s/file.tex" } }
 local dynamic_macros = {}

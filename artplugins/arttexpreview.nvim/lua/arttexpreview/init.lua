@@ -46,8 +46,8 @@ function M.setup(opts)
   if opts.auto_math ~= nil then config.settings.auto_math = opts.auto_math end
   if opts.auto_image ~= nil then config.settings.auto_image = opts.auto_image end
 
-  -- Crear el atajo de teclado para abrir el menú de configuración
-  vim.keymap.set("n", "<leader>lp", function()
+  -- Crear el comando para abrir el menú de configuración
+  vim.api.nvim_create_user_command("ArtTexPreviewConfig", function()
     menu.open_menu()
   end, { desc = "Menú de Configuración de ArtTeX Preview" })
   

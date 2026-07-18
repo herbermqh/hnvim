@@ -1,8 +1,13 @@
 local M = {}
 
+local uv = vim.uv or vim.loop
+local function fast_resolve(path)
+  return uv.fs_realpath(path) or path
+end
+
 local function file_exists(path)
-  local f = io.open(path, "r")
-  if f then io.close(f) return true else return false end
+  local stat = (vim.uv or vim.loop).fs_stat(path)
+  return stat ~= nil and stat.type == "file"
 end
 
 local function is_private_file(abs_path, root_dir)
@@ -25,7 +30,7 @@ local function parse_fls(fls_path, root_dir)
     local input_path = line:match("^INPUT%s+(.*)$")
     if input_path then
       if input_path:match("%.tex$") or input_path:match("%.cls$") or input_path:match("%.sty$") or input_path:match("%.def$") then
-        local abs_path = vim.fn.resolve(input_path)
+        local abs_path = fast_resolve(input_path)
         -- Solo aceptar archivos PRIVADOS (del usuario o librerías personales)
         if file_exists(abs_path) and is_private_file(abs_path, root_dir) then
           deps[abs_path] = true
@@ -92,7 +97,7 @@ function M.get_dependencies(main_path)
     end
   end
   
-  local semantic_deps = semantic_parser.parse(main_path, config)
+  local semantic_deps, semantic_tree = semantic_parser.parse(main_path, config)
   if semantic_deps then
     for _, dep in ipairs(semantic_deps) do
       deps_map[dep] = true
@@ -123,12 +128,14 @@ function M.get_dependencies(main_path)
     f_out:close()
   end
   
+
+  
   -- Generar FLS Sintético para inyectar la estructura actualizada a TexLab
   if final_deps and #final_deps > 0 then
     write_dummy_fls(fls_path, final_deps)
   end
   
-  return final_deps, method
+  return final_deps, method, semantic_tree
 end
 
 return M

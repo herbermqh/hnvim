@@ -71,7 +71,7 @@ function M.create_menu(opts)
   
   -- 4. Crear Ventana Flotante Centrada (Dimensiones Dinámicas)
   local height = #lines
-  local ui = vim.api.nvim_list_uis()[1]
+  local ui = vim.api.nvim_list_uis()[1] or { width = 80, height = 24 }
   
   local win_opts = {
     relative = "editor",
@@ -108,12 +108,21 @@ function M.create_menu(opts)
     -- Posicionar el cursor sobre la primera opción antes de adjuntar el plugin
     vim.api.nvim_win_set_cursor(win, {option_start_idx, 6})
     pill.attach()
+  else
+    vim.api.nvim_win_set_cursor(win, {option_start_idx, 6})
   end
   
   -- 6. Sistema de Navegación Universal
-  local current_choice = 1
+  local function get_current_idx()
+    local r = vim.api.nvim_win_get_cursor(win)[1]
+    local idx = r - option_start_idx + 1
+    if idx < 1 then return 1 end
+    if idx > #options then return #options end
+    return idx
+  end
   
-  local function close_and_call(idx)
+  local function close_and_call()
+    local idx = get_current_idx()
     vim.api.nvim_win_close(win, true)
     if options[idx] and options[idx].action then
       options[idx].action()
@@ -122,9 +131,10 @@ function M.create_menu(opts)
   
   local function move_down()
     local r = vim.api.nvim_win_get_cursor(win)[1]
-    if r < option_start_idx + #options - 1 then 
+    if r < option_start_idx then
+      vim.api.nvim_win_set_cursor(win, {option_start_idx, 6})
+    elseif r < option_start_idx + #options - 1 then 
       vim.api.nvim_win_set_cursor(win, {r + 1, 6}) 
-      current_choice = current_choice + 1
     end
   end
   
@@ -132,7 +142,8 @@ function M.create_menu(opts)
     local r = vim.api.nvim_win_get_cursor(win)[1]
     if r > option_start_idx then 
       vim.api.nvim_win_set_cursor(win, {r - 1, 6}) 
-      current_choice = current_choice - 1
+    else
+      vim.api.nvim_win_set_cursor(win, {option_start_idx, 6})
     end
   end
   
@@ -142,7 +153,16 @@ function M.create_menu(opts)
   vim.keymap.set("n", "k", move_up, { buffer = buf, nowait = true })
   vim.keymap.set("n", "<Up>", move_up, { buffer = buf, nowait = true })
   
-  vim.keymap.set("n", "<CR>", function() close_and_call(current_choice) end, { buffer = buf, nowait = true })
+  vim.keymap.set("n", "<CR>", close_and_call, { buffer = buf, nowait = true })
+  vim.keymap.set("n", "<kEnter>", close_and_call, { buffer = buf, nowait = true })
+  vim.keymap.set("n", "<2-LeftMouse>", close_and_call, { buffer = buf, nowait = true })
+  vim.keymap.set("n", "<LeftRelease>", function()
+    -- Click simple solo mueve el cursor y lo fuerza a estar en las opciones
+    local r = vim.api.nvim_win_get_cursor(win)[1]
+    if r < option_start_idx then vim.api.nvim_win_set_cursor(win, {option_start_idx, 6}) end
+    if r > option_start_idx + #options - 1 then vim.api.nvim_win_set_cursor(win, {option_start_idx + #options - 1, 6}) end
+  end, { buffer = buf, nowait = true })
+  
   vim.keymap.set("n", "q", function() vim.api.nvim_win_close(win, true) end, { buffer = buf, nowait = true })
   vim.keymap.set("n", "<Esc>", function() vim.api.nvim_win_close(win, true) end, { buffer = buf, nowait = true })
 end
@@ -213,22 +233,8 @@ end
 -- ==========================================
 -- WRAPPERS ESPECÍFICOS DE NEGOCIO
 -- ==========================================
--- Estos usan la API genérica de arriba
-function M.prompt_texlabroot(on_select)
-  M.create_menu({
-    title = "ArtTeX Root Resolver",
-    prompt = {
-      "TexLab no pudo encontrar la raíz del",
-      "proyecto. ¿Deseas configurarla ahora?"
-    },
-    options = {
-      { text = "󰈔  Seleccionar main", action = function() on_select(1) end },
-      { text = "󰅖  Ignorar por ahora", action = function() on_select(2) end }
-    }
-  })
-end
 
-function M.select_main_tex()
+function M.select_main_tex(current_filepath)
   local has_telescope, telescope = pcall(require, "telescope.builtin")
   local actions = require("telescope.actions")
   local action_state = require("telescope.actions.state")
@@ -243,7 +249,7 @@ function M.select_main_tex()
           local selection = action_state.get_selected_entry()
           if selection then
             local absolute_path = vim.fn.fnamemodify(selection.path or selection[1], ":p")
-            M.create_texlabroot(absolute_path)
+            M.create_texlabroot(absolute_path, current_filepath)
           end
         end)
         return true
@@ -256,13 +262,13 @@ function M.select_main_tex()
       default = vim.fn.expand('%:p:h') .. '/'
     }, function(input)
       if input and input ~= "" then
-        M.create_texlabroot(input)
+        M.create_texlabroot(input, current_filepath)
       end
     end)
   end
 end
 
-function M.create_texlabroot(filepath)
+function M.create_texlabroot(filepath, current_filepath)
   local target_dir = vim.fn.fnamemodify(filepath, ":p:h")
   local root_marker = target_dir .. "/.texlabroot"
   
@@ -271,11 +277,48 @@ function M.create_texlabroot(filepath)
   if f then
     f:write(filepath .. "\n")
     f:close()
+    
+    -- Si el usuario seleccionó esto manualmente, inyectar el archivo actual en el Grafo (Aprendizaje forzado)
+    if current_filepath then
+      local basename = vim.fn.fnamemodify(filepath, ":t:r")
+      local config_path = target_dir .. "/." .. basename .. ".arttex.json"
+      local uv = vim.uv or vim.loop
+      local abs_current = uv.fs_realpath(current_filepath) or current_filepath
+      
+      if vim.fn.filereadable(config_path) == 1 then
+        local f_in = io.open(config_path, "r")
+        if f_in then
+          local content = f_in:read("*all")
+          f_in:close()
+          local ok, parsed = pcall(vim.fn.json_decode, content)
+          if ok and type(parsed) == "table" then
+            parsed.project_tree = parsed.project_tree or {}
+            local exists = false
+            for _, dep in ipairs(parsed.project_tree) do
+              if (uv.fs_realpath(dep) or dep) == abs_current then exists = true break end
+            end
+            if not exists then
+              table.insert(parsed.project_tree, abs_current)
+              local f_out = io.open(config_path, "w")
+              if f_out then
+                f_out:write(require("arttexworkspace.core.json").encode(parsed))
+                f_out:close()
+              end
+            end
+          end
+        end
+      end
+    end
+
+    local ok, err = pcall(vim.cmd, "edit!")
+    if ok then
+      vim.notify("ArtTeX: Conectado con main de forma permanente", vim.log.levels.INFO)
+    else
+      vim.notify("ArtTeX: Falló al recargar el buffer. " .. tostring(err), vim.log.levels.WARN)
+    end
+  else
+    vim.notify("ArtTeX: Falló al crear el archivo .texlabroot en " .. target_dir, vim.log.levels.ERROR)
   end
-  
-  vim.notify("ArtTeX: ¡Éxito! Archivo '.texlabroot' creado en " .. target_dir, vim.log.levels.INFO)
-  vim.cmd("edit!")
-  vim.notify("ArtTeX: Buffer recargado. TexLab conectado a la nueva raíz.", vim.log.levels.INFO)
 end
 
 return M

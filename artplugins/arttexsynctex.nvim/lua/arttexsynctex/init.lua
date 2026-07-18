@@ -56,5 +56,6 @@ M.setup = function(opts)
 end
 
 M.api.forward_search = viewer.forward_search
+M.api.handle_inverse_search = server.handle_inverse_search
 
 return M

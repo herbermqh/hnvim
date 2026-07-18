@@ -7,7 +7,7 @@ require('nvim-treesitter.configs').setup({
   },
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = { "latex", "tex" }, -- Necesario para el Conceal de VimTeX y in_mathzone()
+    additional_vim_regex_highlighting = { "latex", "tex" },
   },
   indent = { 
     enable = true, 

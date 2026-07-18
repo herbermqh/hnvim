@@ -138,7 +138,7 @@ endfunction
 
 function! Gotofilecommand()
  " definir globalment la varible linetext
-  let linetext = getline('.') 
+  let linetext = getline('.')
   " detectar si linetext es vacio
   if linetext ==# ""
     echo "command invalid"
@@ -156,7 +156,7 @@ function! Gotofilecommand()
 endfunction
 
 function! Gotofilechapterfile()
-  let linetext = getline('.') 
+  let linetext = getline('.')
   let namechapter = linetext[match(linetext, '{')+1:match(linetext, '}')-1]
   let _directory= Setvardirectoryarchive(namechapter,"TEORIA")
   execute "find" _directory
@@ -178,7 +178,7 @@ function! Gotofileusarproblema()
 endfunction
 
 function! Gotofileusarexamen()
-  let linetext = getline('.') 
+  let linetext = getline('.')
   let linetext = substitute(linetext, '\[.*\]', '', '')"eliminar contenido del corchete
   let _directory = Construct_directory_usarexamen(linetext).file
   let name_exercise = Construct_directory_usarexamen(linetext).name_problem
@@ -186,7 +186,7 @@ function! Gotofileusarexamen()
 endfunction
 
 function! Gotofileusarpractica()
-  let linetext = getline('.') 
+  let linetext = getline('.')
   let name_practice = Get_arguments_usarpractica(linetext).name_practice
   let name_exercise = Get_arguments_usarpractica(linetext).name_exercise
   let _directory = Construct_directory_usarpractica(name_practice)
@@ -201,7 +201,7 @@ function! Gotofileloadbexam()
 endfunction
 
 function! Gotofileloadbbook()
-  let linetext = getline('.') 
+  let linetext = getline('.')
   let name_book = linetext[match(linetext, '{')+1:match(linetext, '}')-1]
   let _directory = expand('%:p:h:h') . '/problems-book/' . name_book . '/' . name_book . '.tex'
   " echo _directory

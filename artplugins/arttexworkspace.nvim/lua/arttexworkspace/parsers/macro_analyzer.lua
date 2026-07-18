@@ -2,6 +2,11 @@ local log = require("arttexworkspace.core.log")
 
 local M = {}
 
+local uv = vim.uv or vim.loop
+local function fast_resolve(path)
+  return uv.fs_realpath(path) or path
+end
+
 local function file_exists(path)
   local f = io.open(path, "r")
   if f then io.close(f) return true else return false end
@@ -29,8 +34,37 @@ local function extract_braces(text, start_pos)
   return nil, nil
 end
 
+local parsed_cache_dir = vim.fn.stdpath("data") .. "/arttex_ast_cache"
+if vim.fn.isdirectory(parsed_cache_dir) == 0 then
+  vim.fn.mkdir(parsed_cache_dir, "p")
+end
+
+local function get_cache_path(filepath)
+  local hash = vim.fn.sha256(filepath)
+  return parsed_cache_dir .. "/" .. hash .. ".json"
+end
+
 -- Abre un archivo .cls, .sty o .tex y extrae Conocimiento del Proyecto
 function M.analyze_file(filepath)
+  local stat = uv.fs_stat(filepath)
+  if not stat then return nil end
+
+  local cache_path = get_cache_path(filepath)
+  local cache_stat = uv.fs_stat(cache_path)
+
+  -- Si el caché existe y es más reciente que el archivo original, devolver caché
+  if cache_stat and cache_stat.mtime.sec >= stat.mtime.sec then
+    local cf = io.open(cache_path, "r")
+    if cf then
+      local cdata = cf:read("*all")
+      cf:close()
+      local ok, cached_knowledge = pcall(vim.fn.json_decode, cdata)
+      if ok and type(cached_knowledge) == "table" then
+        return cached_knowledge
+      end
+    end
+  end
+
   local f = io.open(filepath, "r")
   if not f then return nil end
   
@@ -159,11 +193,67 @@ function M.analyze_file(filepath)
   for len_name in content:gmatch("\\newlength%s*%{%s*\\([%a_]+)%s*%}") do
     knowledge.lengths[len_name] = true
   end
+
+  -- Extraer Booleanos (\newif\if..., \newtoggle{...}, \newboolean{...})
+  knowledge.booleans = {}
+  for bool_name in content:gmatch("\\newif%s*\\if([%a_]+)") do
+    knowledge.booleans[bool_name] = true
+  end
+  for bool_name in content:gmatch("\\newtoggle%s*%{%s*([%a_]+)%s*%}") do
+    knowledge.booleans[bool_name] = true
+  end
+  for bool_name in content:gmatch("\\newboolean%s*%{%s*([%a_]+)%s*%}") do
+    knowledge.booleans[bool_name] = true
+  end
+
+  -- Extraer Colores (\definecolor{nombre})
+  knowledge.colors = {}
+  for color_name in content:gmatch("\\definecolor%s*%{%s*([%a_-]+)%s*%}") do
+    knowledge.colors[color_name] = true
+  end
   
+  -- Guardar en caché
+  local cf_out = io.open(cache_path, "w")
+  if cf_out then
+    local ok, json_str = pcall(vim.fn.json_encode, knowledge)
+    if ok then cf_out:write(json_str) end
+    cf_out:close()
+  end
+
   return knowledge
 end
 
 -- Escanea el proyecto buscando archivos .cls, .sty, y .tex para auto-aprender
+-- Caché global en memoria de todos los paquetes locales del usuario (O(1) lookup, 0 lag)
+local local_packages_cache = nil
+local function get_local_packages()
+  if not local_packages_cache then
+    local_packages_cache = {}
+    if vim.fn.executable("rg") == 1 then
+      local plugin_config = require("arttexworkspace.core.config").options
+      local library_paths = plugin_config.library_paths or {}
+      
+      for _, search_dir in ipairs(library_paths) do
+        local expanded_dir = vim.fn.expand(search_dir)
+        if file_exists(expanded_dir) then
+          -- Escaneo ultra rápido para encontrar todos los paquetes del usuario en este directorio
+          local rg_cmd = string.format("rg -j 1 --files -g '*.sty' -g '*.cls' -g '*.def' %s", vim.fn.shellescape(expanded_dir))
+          local output = vim.fn.system(rg_cmd)
+          for p in output:gmatch("[^\r\n]+") do
+            local clean_path = p:gsub("^%s*(.-)%s*$", "%1")
+            local basename = clean_path:match("([^/]+)$")
+            if basename then
+              local_packages_cache[basename] = local_packages_cache[basename] or {}
+              table.insert(local_packages_cache[basename], clean_path)
+            end
+          end
+        end
+      end
+    end
+  end
+  return local_packages_cache
+end
+
 function M.auto_generate_config(main_path)
   local root_dir = vim.fn.fnamemodify(main_path, ":p:h")
   local basename = vim.fn.fnamemodify(main_path, ":t:r")
@@ -173,10 +263,12 @@ function M.auto_generate_config(main_path)
   local environments_found = {}
   local counters_found = {}
   local lengths_found = {}
+  local booleans_found = {}
+  local colors_found = {}
   local global_pending_aliases = {}
   
-  local function is_private_file(abs_path, root_dir)
-    if abs_path:sub(1, #root_dir) == root_dir then return true end
+  local function is_private_file(abs_path, r_dir)
+    if abs_path:sub(1, #r_dir) == r_dir then return true end
     local sys_keywords = { "texmf%-dist", "texlive", "miktex", "mactex", "texmf%-local", "/usr/", "/opt/", "/var/lib/" }
     local lower_path = abs_path:lower()
     for _, kw in ipairs(sys_keywords) do
@@ -210,6 +302,8 @@ function M.auto_generate_config(main_path)
       config.environments = parsed.environments or {}
       config.counters = parsed.counters or {}
       config.lengths = parsed.lengths or {}
+      config.booleans = parsed.booleans or {}
+      config.colors = parsed.colors or {}
     else
       -- ¡CRÍTICO! Si el JSON es inválido, ABORTAR
       vim.schedule(function()
@@ -220,36 +314,6 @@ function M.auto_generate_config(main_path)
   end
 
   local scanned_files = {}
-
-  -- Caché global en memoria de todos los paquetes locales del usuario (O(1) lookup, 0 lag)
-  local local_packages_cache = nil
-  local function get_local_packages()
-    if not local_packages_cache then
-      local_packages_cache = {}
-      if vim.fn.executable("rg") == 1 then
-        local plugin_config = require("arttexworkspace.core.config").options
-        local library_paths = plugin_config.library_paths or {}
-        
-        for _, search_dir in ipairs(library_paths) do
-          local expanded_dir = vim.fn.expand(search_dir)
-          if file_exists(expanded_dir) then
-            -- Escaneo ultra rápido para encontrar todos los paquetes del usuario en este directorio
-            local rg_cmd = string.format("rg --files -g '*.sty' -g '*.cls' -g '*.def' %s", vim.fn.shellescape(expanded_dir))
-            local output = vim.fn.system(rg_cmd)
-            for p in output:gmatch("[^\r\n]+") do
-              local clean_path = p:gsub("^%s*(.-)%s*$", "%1")
-              local basename = clean_path:match("([^/]+)$")
-              if basename then
-                local_packages_cache[basename] = local_packages_cache[basename] or {}
-                table.insert(local_packages_cache[basename], clean_path)
-              end
-            end
-          end
-        end
-      end
-    end
-    return local_packages_cache
-  end
 
   local function process_file(path)
     if scanned_files[path] then return end
@@ -262,6 +326,8 @@ function M.auto_generate_config(main_path)
       if k.environments then for env, _ in pairs(k.environments) do environments_found[env] = true end end
       if k.counters then for cnt, _ in pairs(k.counters) do counters_found[cnt] = true end end
       if k.lengths then for len, _ in pairs(k.lengths) do lengths_found[len] = true end end
+      if k.booleans then for b, _ in pairs(k.booleans) do booleans_found[b] = true end end
+      if k.colors then for col, _ in pairs(k.colors) do colors_found[col] = true end end
       if k.pending_aliases then
         for caller, callee_list in pairs(k.pending_aliases) do
           global_pending_aliases[caller] = global_pending_aliases[caller] or {}
@@ -321,7 +387,7 @@ function M.auto_generate_config(main_path)
     for line in fls_file:lines() do
       local input_path = line:match("^INPUT%s+(.*)$")
       if input_path then
-        local abs_path = vim.fn.resolve(input_path)
+        local abs_path = fast_resolve(input_path)
         if is_private_file(abs_path, root_dir) then
           if abs_path:match("%.cls$") or abs_path:match("%.sty$") or abs_path:match("%.tex$") or abs_path:match("%.def$") then
             process_file(abs_path)
@@ -396,6 +462,22 @@ function M.auto_generate_config(main_path)
   local len_list = {}
   for len, _ in pairs(lengths_found) do table.insert(len_list, len) end
   config.lengths = len_list
+  
+  local bool_list = {}
+  for b, _ in pairs(booleans_found) do table.insert(bool_list, b) end
+  config.booleans = bool_list
+
+  local col_list = {}
+  for col, _ in pairs(colors_found) do table.insert(col_list, col) end
+  config.colors = col_list
+  
+  -- Generar contextos (Preámbulo vs Cuerpo) usando el AST del proyecto
+  local ok_ctx, ctx_tracer = pcall(require, "arttexworkspace.parsers.context_tracer")
+  if ok_ctx and ctx_tracer then
+    local p_list, b_list = ctx_tracer.trace_contexts(main_path, macros_found)
+    config.preamble_files = p_list
+    config.body_files = b_list
+  end
   
   log.info("Knowledge Graph (Macros, Paquetes, Comandos) guardado en ." .. basename .. ".arttex.json.")
   

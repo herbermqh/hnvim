@@ -28,6 +28,7 @@ function M.error(msg)
 end
 
 function M.notify(msg, level, opts)
+  if type(msg) ~= "string" then msg = vim.inspect(msg) end
   level = level or vim.log.levels.INFO
   opts = opts or {}
   if opts.timeout == nil then opts.timeout = 8000 end -- 8 segundos de duración por defecto

@@ -78,101 +78,36 @@ function M.open_tree(root)
     table.insert(lines, "")
     table.insert(lines, "󰙅 Árbol Semántico del Documento (Tiempo Real):")
     
-    -- 1. Cargar Conocimiento de JSON
-    local root_dir = vim.fn.fnamemodify(root, ":p:h")
-    local basename = vim.fn.fnamemodify(root, ":t:r")
-    local config_path = root_dir .. "/." .. basename .. ".arttex.json"
-    local config = {}
-    local f_json = io.open(config_path, "r")
-    if f_json then
-      local ok, parsed = pcall(vim.fn.json_decode, f_json:read("*all"))
-      f_json:close()
-      if ok and type(parsed) == "table" then config = parsed end
+    -- 1. Extraer Árbol Semántico en vivo desde el motor central (Caché Reactiva)
+    local _, _, tree = structure.get_dependencies(root)
+    if not tree then 
+      tree = { filepath = root, children = {} }
     end
-    
-    local macros = { input = {"%s.tex"}, include = {"%s.tex"}, subfile = {"%s.tex"} }
-    if config.estructura_aprendida_ia then
-      for k, v in pairs(config.estructura_aprendida_ia) do macros[k] = v end
-    end
-    if config.estructura_manual_usuario then
-      for k, v in pairs(config.estructura_manual_usuario) do
-        if k ~= "_instruccion" and k ~= "_ejemplo_de_uso" then macros[k] = v end
-      end
-    end
-
-    -- 2. Parseo Recursivo Real
-    local visited = {}
-    local function parse_node(filepath)
-      local node = { path = filepath, children = {} }
-      if visited[filepath] then return node end
-      visited[filepath] = true
-
-      local f = io.open(filepath, "r")
-      if not f then return node end
-      local content = f:read("*all")
-      f:close()
-
-      -- Quitar comentarios
-      content = content:gsub("%%[^\r\n]*", "")
-
-      local calls = {}
-      for cmd, arg in content:gmatch("\\([a-zA-Z_@]+)%s*%{([^%}]*)%}") do
-        table.insert(calls, {cmd=cmd, arg=arg})
-      end
-      for cmd, arg in content:gmatch("\\([a-zA-Z_@]+)%s*%[.-%]%s*%{([^%}]*)%}") do
-        table.insert(calls, {cmd=cmd, arg=arg})
-      end
-
-      -- Prevenir dependencias circulares y llamadas excesivas (limitar el grafo para UI)
-      local seen_children = {}
-
-      for _, call in ipairs(calls) do
-        if macros[call.cmd] then
-          for _, pattern in ipairs(macros[call.cmd]) do
-            -- Si el argumento tiene comas (ej. una lista), puede fallar el gsub simple
-            -- Asumimos un argumento principal
-            local target = pattern:gsub("%%s", call.arg)
-            if not target:match("%.tex$") then target = target .. ".tex" end
-
-            local abs_target = root_dir .. "/" .. target
-            local relative_to_current = vim.fn.fnamemodify(filepath, ":p:h") .. "/" .. target
-
-            local final_path = nil
-            if file_exists(abs_target) then final_path = vim.fn.resolve(abs_target)
-            elseif file_exists(relative_to_current) then final_path = vim.fn.resolve(relative_to_current)
-            end
-
-            if final_path and not seen_children[final_path] then
-              seen_children[final_path] = true
-              table.insert(node.children, parse_node(final_path))
-            end
-          end
-        end
-      end
-      return node
-    end
-
-    local tree = parse_node(root)
 
     -- 3. Renderizar el Árbol
     local function render_node(node, prefix, is_last, is_root)
       local pointer = is_last and "└── " or "├── "
       if is_root then pointer = "" end
       
-      local display_name = node.path
+      local display_name = node.filepath
       if is_root then
-        display_name = vim.fn.fnamemodify(node.path, ":t")
+        display_name = vim.fn.fnamemodify(node.filepath, ":t")
       else
-        -- Mostrar la ruta relativa al directorio del proyecto para ver en qué capítulo estamos
-        display_name = vim.fn.fnamemodify(node.path, ":~:.")
-        if display_name == vim.fn.fnamemodify(node.path, ":p") then
-          display_name = vim.fn.fnamemodify(node.path, ":t")
+        display_name = vim.fn.fnamemodify(node.filepath, ":~:.")
+        if display_name == vim.fn.fnamemodify(node.filepath, ":p") then
+          display_name = vim.fn.fnamemodify(node.filepath, ":t")
         end
       end
       
-      local line = prefix .. pointer .. " " .. display_name
+      local icon = node.is_commented and "󰈉 " or " "
+      if node.is_asset then
+        icon = node.is_commented and "󰈉 " or " "
+      end
+      local suffix = node.is_commented and " (Comentado)" or ""
+      
+      local line = prefix .. pointer .. icon .. display_name .. suffix
       table.insert(lines, line)
-      line_to_node[#lines] = { type = "file", path = node.path }
+      line_to_node[#lines] = { type = "file", path = node.filepath }
       
       local child_prefix = prefix
       if not is_root then
@@ -208,12 +143,14 @@ function M.open_tree(root)
         pcall(vim.api.nvim_win_set_cursor, win, cursor)
       elseif node.type == "file" then
         vim.api.nvim_win_close(win, true)
-        vim.cmd("edit " .. node.path)
+        vim.cmd("edit " .. vim.fn.fnameescape(node.path))
       end
     end
   end
 
   vim.keymap.set('n', '<CR>', toggle_node, { buffer = buf, silent = true })
+  vim.keymap.set('n', '<kEnter>', toggle_node, { buffer = buf, silent = true })
+  vim.keymap.set('n', '<2-LeftMouse>', toggle_node, { buffer = buf, silent = true })
 end
 
 return M

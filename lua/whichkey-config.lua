@@ -99,40 +99,72 @@ wk.add({
 
   -- [g] Git
   { "<leader>g", group = "Git", icon = "󰊢" },
-  { "<leader>gg", "<cmd>FloatermNew lazygit<cr>", desc = "LazyGit", icon = "󰊢" },
+  { "<leader>gg", "<cmd>lua _lazygit_toggle()<cr>", desc = "LazyGit", icon = "󰊢" },
   { "<leader>gc", "<cmd>Commits<cr>", desc = "Commits", icon = "󰜘" },
   { "<leader>gb", "<cmd>BCommits<cr>", desc = "BCommits", icon = "󰓒" },
 
   -- [l] LaTeX (ArtTeX Ecosystem)
   { "<leader>l", group = "LaTeX (ArtTeX)", icon = "" },
-  { "<leader>lc", "<cmd>ArtTexCompile<cr>", desc = "Compile (Auto)", icon = "󰑐" },
-  { "<leader>lC", "<cmd>ArtTexCompilePlain<cr>", desc = "Compile (PlainTeX)", icon = "󰑐" },
-  { "<leader>ls", "<cmd>ArtTexStop<cr>", desc = "Stop Job", icon = "󰓛" },
-  { "<leader>lS", "<cmd>ArtTexStopAll<cr>", desc = "Stop All Jobs", icon = "󰓛" },
-  { "<leader>le", "<cmd>ArtTexErrors<cr>", desc = "Errors (Trouble)", icon = "󰒡" },
-  { "<leader>ll", "<cmd>ArtTexViewLog<cr>", desc = "View .log File", icon = "󰈙" },
-  { "<leader>ld", "<cmd>ArtTexClean<cr>", desc = "Clean Aux Files", icon = "󰃢" },
-  { "<leader>lo", "<cmd>ArtTexOutput<cr>", desc = "Toggle Output", icon = "󰍔" },
-  { "<leader>lO", "<cmd>ArtTexOutputClose<cr>", desc = "Close Output", icon = "󰅖" },
-  { "<leader>lI", "<cmd>ArtTexStatus<cr>", desc = "Compiler Status", icon = "󰋽" },
-  { "<leader>lw", "<cmd>ArtTexWorkspaceTree<cr>", desc = "Workspace Tree", icon = "󰙅" },
-  { "<leader>lv", "<cmd>ArtTexForwardSearch<cr>", desc = "PDF (Synctex)", icon = "󰈙" },
-  { "<leader>lV", "<cmd>ArtTexSelectViewer<cr>", desc = "Select PDF Viewer", icon = "󰈙" },
-  { "<leader>li", "<cmd>ToggleFileTexIllustrator<cr>", desc = "Illustrator", icon = "󰽉" },
-  { "<leader>lm", "<cmd>ArtTexMenuCompilatorConfig<cr>", desc = "Menu Compiler Config", icon = "" },
-  { "<leader>ln", group = "Snippets", icon = "󰩫" },
-  { "<leader>lne", "<cmd>ArtTexSnippetsEdit<cr>", desc = "Edit Módulos", icon = "󰏫" },
-  { "<leader>lns", "<cmd>ArtTexSnippetsSearch<cr>", desc = "Buscar Snippets", icon = "󰌵" },
-  { "<leader>lnc", "<cmd>ArtTexSnippetsConfig<cr>", desc = "Configuración", icon = "" },
-  { "<leader>lW", group = "Visual Wizards (UI)", icon = "󰕷" },
+  
+  -- Rápidos / Muy Frecuentes (Root)
+  { "<leader>lc", "<cmd>ArtTexCompile<cr>", desc = "Compilar (Auto)", icon = "󰑐" },
+  { "<leader>lv", "<cmd>ArtTexForwardSearch<cr>", desc = "Ver PDF (SyncTeX)", icon = "󰈙" },
+  { "<leader>lf", "<cmd>ArtTexFormat<cr>", desc = "Formatear Documento", icon = "󰉨" },
+  { "<leader>lT", "<cmd>ArtTexTOCToggle<cr>", desc = "Alternar Índice (TOC)", icon = "󰧮" },
+  { "<leader>li", "<cmd>ToggleFileTexIllustrator<cr>", desc = "Figura Illustrator", icon = "󰽉" },
+  { "<leader>lh", "<cmd>ArtTexHover<cr>", desc = "Info Comando (Hover)", icon = "󰋽" },
+  { "<leader>ld", "<cmd>ArtTexDocCTAN<cr>", desc = "Doc CTAN Paquete", icon = "󰈙" },
+
+  -- Grupo [p]: Procesos y Compilación
+  { "<leader>lp", group = "Procesos", icon = "󰓛" },
+  { "<leader>lpC", "<cmd>ArtTexCompilePlain<cr>", desc = "Compilar (PlainTeX)", icon = "󰑐" },
+  { "<leader>lps", "<cmd>ArtTexStop<cr>", desc = "Detener Trabajo", icon = "󰓛" },
+  { "<leader>lpS", "<cmd>ArtTexStopAll<cr>", desc = "Detener Todos", icon = "󰓛" },
+  { "<leader>lpi", "<cmd>ArtTexStatus<cr>", desc = "Estado Procesos", icon = "󰋽" },
+  { "<leader>lpx", "<cmd>ArtTexClean<cr>", desc = "Limpiar Auxiliares", icon = "󰃢" },
+  { "<leader>lpo", "<cmd>ArtTexOutput<cr>", desc = "Consola de Salida", icon = "󰍔" },
+  { "<leader>lpO", "<cmd>ArtTexOutputClose<cr>", desc = "Cerrar Consola Forzada", icon = "󰅖" },
+  { "<leader>lpl", "<cmd>ArtTexViewLog<cr>", desc = "Ver Archivo .log", icon = "󰈙" },
+  { "<leader>lpd", "<cmd>ArtTexDebugCommand<cr>", desc = "Ver Comando Shell", icon = "󰘚" },
+  { "<leader>lpe", "<cmd>ArtTexErrors<cr>", desc = "Ver Errores Quickfix", icon = "󰒡" },
+
+  -- Grupo [w]: Workspace y Sistema
+  { "<leader>lw", group = "Workspace", icon = "󰙅" },
+  { "<leader>lwt", "<cmd>ArtTexWorkspaceTree<cr>", desc = "Árbol Workspace", icon = "󰙅" },
+  { "<leader>lwv", "<cmd>ArtTexVerbatimEnvs<cr>", desc = "Entornos Verbatim", icon = "󰘚" },
+  { "<leader>lwn", "<cmd>ArtTexCreateProject<cr>", desc = "Crear Proyecto", icon = "󰏋" },
+  { "<leader>lwg", "<cmd>ArtTexVisualizeGraph<cr>", desc = "Grafo Dependencias", icon = "󰠘" },
+  { "<leader>lwc", "<cmd>ArtTexClearLog<cr>", desc = "Limpiar BD Interna", icon = "󰃢" },
+  { "<leader>lwr", "<cmd>ArtSourceColorSync<cr>", desc = "Refrescar Sintaxis", icon = "󰑐" },
+  { "<leader>lwl", "<cmd>ArtTexLint<cr>", desc = "Analizar Linter (ChkTeX)", icon = "󰃢" },
+  { "<leader>lwC", function() require('arttexconceal').toggle() end, desc = "Alternar Conceal", icon = "󰈈" },
+
+  -- Grupo [s]: Snippets
+  { "<leader>ls", group = "Snippets", icon = "󰩫" },
+  { "<leader>lse", "<cmd>ArtTexSnippetsEdit<cr>", desc = "Editar Módulos", icon = "󰏫" },
+  { "<leader>lss", "<cmd>ArtTexSnippetsSearch<cr>", desc = "Buscar Snippets", icon = "󰌵" },
+  { "<leader>lsc", "<cmd>ArtTexSnippetsConfig<cr>", desc = "Activar/Desactivar", icon = "" },
+
+  -- Grupo [W]: Visual Wizards
+  { "<leader>lW", group = "Visual Wizards", icon = "󰕷" },
   { "<leader>lWt", "<cmd>ArtTexVisualTable<cr>", desc = "Tablas (Grid)", icon = "󰓫" },
-  { "<leader>lWm", "<cmd>ArtTexVisualMath<cr>", desc = "Ecuaciones (RPC)", icon = "󰪚" },
+  { "<leader>lWm", "<cmd>ArtTexVisualMath<cr>", desc = "Matemáticas (Editor)", icon = "󰪚" },
   { "<leader>lWg", "<cmd>ArtTexVisualGraph<cr>", desc = "Gráficas TikZ", icon = "󰱨" },
-  { "<leader>lT", group = "Tabla de Contenidos", icon = "󰧮" },
-  { "<leader>lTt", "<cmd>ArtTexTOCToggle<cr>", desc = "Abrir/Cerrar TOC", icon = "󰧮" },
-  { "<leader>lTc", "<cmd>ArtTexTOCConfig<cr>", desc = "Configuración (Reglas)", icon = "" },
-  { "<leader>lp", desc = "Preview", icon = "󰇩" },
-  { "<leader>lt", function() require('arttexconceal').toggle() end, desc = "Toggle Conceal", icon = "󰈈" },
+
+  -- Grupo [O]: Opciones y Configuración
+  { "<leader>lO", group = "Configuraciones", icon = "" },
+  { "<leader>lOc", "<cmd>ArtTexMenuCompilatorConfig<cr>", desc = "Compilador", icon = "󰑐" },
+  { "<leader>lOa", "<cmd>ArtCmpConfig<cr>", desc = "Autocompletado", icon = "󰌌" },
+  { "<leader>lOC", "<cmd>ArtTeXConcealMenu<cr>", desc = "Conceal (Símbolos)", icon = "󰈈" },
+  { "<leader>lOh", "<cmd>ArtHoverConfig<cr>", desc = "Hover (Emergentes)", icon = "󰋽" },
+  { "<leader>lOl", "<cmd>ArtLinterConfig<cr>", desc = "Linter (ChkTeX)", icon = "󰃢" },
+  { "<leader>lOf", "<cmd>ArtFormatConfig<cr>", desc = "Formateador", icon = "󰉢" },
+  { "<leader>lOt", "<cmd>ArtTexTOCConfig<cr>", desc = "Índice (TOC)", icon = "󰧮" },
+  { "<leader>lOv", "<cmd>ArtTexSelectViewer<cr>", desc = "Visor PDF", icon = "󰈙" },
+  { "<leader>lOs", "<cmd>ArtSourceColorConfig<cr>", desc = "Source Color", icon = "󰏘" },
+  { "<leader>lOp", "<cmd>ArtTexPreviewConfig<cr>", desc = "Previsualizador", icon = "󰇩" },
+  { "<leader>lOr", "<cmd>ArtFormatEditRules<cr>", desc = "Editar Reglas YAML", icon = "󰏫" },
+
 
   -- [q] Quit
   { "<leader>q", group = "Quit", icon = "󰗼" },

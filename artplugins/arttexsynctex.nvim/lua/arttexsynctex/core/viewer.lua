@@ -16,8 +16,10 @@ function M.forward_search()
     return
   end
 
+  local uv = vim.uv or vim.loop
   local pdf_file = root_file:gsub("%.tex$", ".pdf")
-  if vim.fn.filereadable(pdf_file) == 0 then
+  local stat = uv.fs_stat(pdf_file)
+  if not stat or stat.type ~= "file" then
     log.warn("PDF no encontrado para Forward Search: " .. pdf_file)
     return
   end

@@ -16,6 +16,18 @@ M.options = {
     "~/texmf",
     "~/Documents/LaTeX"
   },
+  -- Manejadores personalizados para abrir tipos de archivo específicos (media_handlers)
+  -- Si no se define, se usará el visor por defecto del sistema (xdg-open / open).
+  media_handlers = {
+    -- Ejemplo:
+    -- pdf = function(filepath) vim.fn.jobstart({"zathura", filepath}) end,
+  },
+  
+  -- Entornos que deben ser ignorados por el analizador semántico 
+  -- (útil si pones código LaTeX dentro de minted o lstlisting)
+  verbatim_envs = {
+    "verbatim", "Verbatim", "lstlisting", "minted"
+  }
 }
 
 return M

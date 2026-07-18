@@ -11,8 +11,7 @@ toggleterm.setup({
       return vim.o.columns * 0.4
     end
   end,
-  -- Deshabilitar open_mapping nativo para controlarlo nosotros mismos con mayor precisión
-  -- open_mapping = [[<F1>]],
+  open_mapping = [[<F1>]],
   hide_numbers = true,
   shade_filetypes = {},
   shade_terminals = true,
@@ -33,12 +32,6 @@ toggleterm.setup({
   },
 })
 
--- ==========================================
--- ELIMINAR COMPLETAMENTE EL MANUAL CON F1
--- ==========================================
--- Mapamos F1 en todos los modos principales (Normal, Visual, Insert) para que SOLAMENTE abra o cierre ToggleTerm.
-vim.keymap.set({ "n", "v", "i" }, "<F1>", "<cmd>ToggleTerm<cr>", { noremap = true, silent = true, desc = "Terminal Toggle" })
-
 -- Recrear el comportamiento de Floaterm con F1-F4
 -- F1: Alternar terminal actual (Hecho arriba)
 -- F2: Renombrar terminal actual (ToggleTerm no itera de forma lineal tan fácil, esto es más útil)
@@ -54,8 +47,6 @@ function _G.set_terminal_keymaps()
   -- Salir del modo inserción en la terminal (volver a modo normal)
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
   
-  -- ¡CLAVE! Asegurar que F1 desde DENTRO de la terminal la oculte
-  vim.keymap.set('t', '<F1>', [[<C-\><C-n><cmd>ToggleTerm<cr>]], opts)
   
   -- Navegación para salir de la terminal a otros buffers usando hjkl
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
@@ -65,3 +56,34 @@ function _G.set_terminal_keymaps()
 end
 
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+
+-- Forzar siempre el modo de inserción al entrar a una terminal
+vim.api.nvim_create_autocmd({ "TermOpen", "BufEnter" }, {
+  pattern = "term://*",
+  callback = function()
+    vim.schedule(function()
+      vim.cmd("startinsert")
+    end)
+  end,
+})
+
+-- Integración con Lazygit
+local Terminal = require("toggleterm.terminal").Terminal
+local lazygit = Terminal:new({
+  cmd = "lazygit",
+  dir = "git_dir",
+  direction = "float",
+  float_opts = {
+    border = "double",
+  },
+  -- Opcional: Evitar mapeos conflictivos
+  on_open = function(term)
+    vim.cmd("startinsert!")
+  end,
+  -- Evitar que lazygit se cierre o borre al ocultarlo
+  hidden = true,
+})
+
+function _G._lazygit_toggle()
+  lazygit:toggle()
+end

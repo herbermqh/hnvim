@@ -16,7 +16,6 @@ local icons = {
   [5] = "󰍡", -- subparagraph
 }
 
-M.file_cache = {}
 M.folded_state = {}
 M.drawn_items = {}
 
@@ -43,7 +42,7 @@ function M.draw()
       if not hide_level then
         local key = item.filepath .. ":" .. item.title
         local is_folded = M.folded_state[key]
-        if is_folded == nil then is_folded = item.is_commented end
+        if is_folded == nil then is_folded = true end
         
         local has_children = M.items[i+1] and M.items[i+1].level > item.level
         
@@ -120,7 +119,7 @@ function M.toggle_fold()
     local item = M.drawn_items[row]
     local key = item.filepath .. ":" .. item.title
     if M.folded_state[key] == nil then
-      M.folded_state[key] = not item.is_commented
+      M.folded_state[key] = false
     else
       M.folded_state[key] = not M.folded_state[key]
     end
@@ -134,40 +133,33 @@ function M.refresh()
   local bufnr = vim.api.nvim_win_get_buf(M.main_win)
   local current_filepath = vim.api.nvim_buf_get_name(bufnr)
   
-  -- Solo invalidamos la caché del archivo en el que estamos trabajando (0 overhead)
-  M.file_cache[current_filepath] = nil
-  
   local workspace_ok, workspace = pcall(require, "arttexworkspace")
   if workspace_ok and workspace.api.is_ready(bufnr) then
     local root = workspace.api.get_root_file(bufnr)
-    local deps = workspace.api.get_project_tree(bufnr)
+    local deps, method, tree = workspace.api.get_project_tree(bufnr)
     
-    M.items = {}
-    
-    local function append_cache(file_path, valid_includes)
-      if not M.file_cache[file_path] then
-        if file_path == current_filepath then
-          M.file_cache[file_path] = parser.parse_buffer(bufnr, valid_includes)
-        else
-          M.file_cache[file_path] = parser.parse_file(file_path, false, {}, valid_includes)
-        end
-      end
-      for _, it in ipairs(M.file_cache[file_path]) do
-        table.insert(M.items, it)
-      end
-    end
-    
-    local valid_includes = parser.get_valid_includes()
-    append_cache(root, valid_includes)
-    if deps then
-      for _, dep in ipairs(deps) do
-        append_cache(dep, valid_includes)
-      end
+    if root == current_filepath then
+      M.items = parser.parse_buffer(bufnr, tree)
+    else
+      M.items = parser.parse_file(root, false, {}, tree)
     end
   else
-    M.file_cache[current_filepath] = parser.parse_buffer(bufnr)
-    M.items = M.file_cache[current_filepath]
+    M.items = parser.parse_buffer(bufnr)
   end
+  
+  -- Optimización de RAM: Limpiar estados obsoletos (secciones renombradas o eliminadas)
+  local valid_keys = {}
+  if M.items then
+    for _, item in ipairs(M.items) do
+      valid_keys[item.filepath .. ":" .. item.title] = true
+    end
+  end
+  for k, _ in pairs(M.folded_state) do
+    if not valid_keys[k] then
+      M.folded_state[k] = nil
+    end
+  end
+  
   M.draw()
   M.highlight_current_section()
 end
@@ -208,8 +200,11 @@ function M.highlight_current_section()
       
       -- Auto-scroll inteligente: Si la ventana del TOC está abierta, movemos su cursor para mantener la sección visible
       if M.toc_win and vim.api.nvim_win_is_valid(M.toc_win) then
-        -- Movemos el cursor sin cambiar el foco de la ventana activa
-        pcall(vim.api.nvim_win_set_cursor, M.toc_win, {best_idx, 0})
+        -- FIX: Solo auto-sincronizar el cursor del TOC si el usuario está trabajando en otra ventana (evita robarle el foco al navegar)
+        if vim.api.nvim_get_current_win() ~= M.toc_win then
+          -- Movemos el cursor sin cambiar el foco de la ventana activa
+          pcall(vim.api.nvim_win_set_cursor, M.toc_win, {best_idx, 0})
+        end
       end
     end
   end
@@ -238,21 +233,7 @@ function M.action_cr()
   local cursor = vim.api.nvim_win_get_cursor(0)
   local row = cursor[1]
   if row > 0 and row <= #M.drawn_items then
-    local item = M.drawn_items[row]
-    -- Determinar si tiene hijos en la lista original (M.items)
-    local has_children = false
-    for i, it in ipairs(M.items) do
-      if it == item then
-        has_children = M.items[i+1] and M.items[i+1].level > item.level
-        break
-      end
-    end
-    
-    if has_children then
-      M.toggle_fold()
-    else
-      M.jump_to_section()
-    end
+    M.jump_to_section()
   end
 end
 
@@ -263,7 +244,7 @@ function M.action_h()
     local item = M.drawn_items[row]
     local key = item.filepath .. ":" .. item.title
     local is_folded = M.folded_state[key]
-    if is_folded == nil then is_folded = item.is_commented end
+    if is_folded == nil then is_folded = true end
     
     -- Si está expandido y tiene hijos, lo colapsamos
     local has_children = false
@@ -299,7 +280,7 @@ function M.action_l()
     local item = M.drawn_items[row]
     local key = item.filepath .. ":" .. item.title
     local is_folded = M.folded_state[key]
-    if is_folded == nil then is_folded = item.is_commented end
+    if is_folded == nil then is_folded = true end
     
     local has_children = false
     for i, it in ipairs(M.items) do
@@ -339,6 +320,8 @@ function M.toggle()
   
   M.main_win = vim.api.nvim_get_current_win()
   local bufnr = vim.api.nvim_get_current_buf()
+  
+
   
   -- Solo permitir en archivos tex
   local ft = vim.bo[bufnr].filetype
@@ -454,12 +437,13 @@ function M.toggle()
     end,
   })
   
-  -- Mostrar tooltip para títulos largos al navegar DENTRO del TOC
+  -- Mostrar tooltip para títulos largos al navegar DENTRO del TOC y forzar redraw para lualine inactivo
   vim.api.nvim_create_autocmd("CursorMoved", {
     group = augroup,
     buffer = M.toc_buf,
     callback = function()
       M.show_tooltip()
+      pcall(vim.cmd, "redrawstatus")
     end,
   })
   

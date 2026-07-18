@@ -190,6 +190,9 @@ ins_left {
 --   color = { fg = colors.magenta, gui = 'bold' },
 -- }
 
+
+
+
 ins_left { 
   'location',
   color = { fg = colors.magenta, gui = 'bold' },

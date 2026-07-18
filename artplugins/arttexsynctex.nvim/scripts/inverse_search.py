@@ -31,8 +31,7 @@ def wsl_to_linux(win_path):
     except:
         return normalized
 
-def find_server_addr(tex_file):
-    registry_path = os.path.expanduser('~/.cache/nvim/arttex_sockets.json')
+def find_server_addr(tex_file, registry_path):
     if not os.path.exists(registry_path):
         return None
     
@@ -55,22 +54,23 @@ def find_server_addr(tex_file):
     return server_addr
 
 def main():
-    log_path = os.path.expanduser('~/.cache/nvim/inverse_search.log')
+    if len(sys.argv) < 4:
+        print("Error: Not enough arguments. Expected: tex_file line registry_path")
+        sys.exit(1)
+        
+    win_tex_file = sys.argv[1]
+    line = sys.argv[2]
+    registry_path = sys.argv[3]
+    
+    log_path = os.path.join(os.path.dirname(registry_path), 'inverse_search.log')
     with open(log_path, 'a') as log:
         log.write(f"\\n--- New Inverse Search ---\\n")
         log.write(f"Args: {sys.argv}\\n")
         
-        if len(sys.argv) < 3:
-            log.write("Error: Not enough arguments\\n")
-            sys.exit(1)
-            
-        win_tex_file = sys.argv[1]
-        line = sys.argv[2]
-        
         linux_tex_file = wsl_to_linux(win_tex_file)
         log.write(f"Linux path resolved: {linux_tex_file}\\n")
         
-        server_addr = find_server_addr(linux_tex_file)
+        server_addr = find_server_addr(linux_tex_file, registry_path)
         log.write(f"Server address found: {server_addr}\\n")
         
         if not server_addr:
@@ -78,7 +78,7 @@ def main():
             sys.exit(1)
             
         safe_file = linux_tex_file.replace("'", "\\'")
-        keys = f"<C-\\><C-N>:drop {safe_file}<CR>:{line}<CR>zz"
+        keys = f"<C-\\><C-N>:lua require('arttexsynctex').api.handle_inverse_search('{safe_file}', {line})<CR>"
         log.write(f"Sending keys to nvim --server {server_addr}: {keys}\\n")
         
         try:

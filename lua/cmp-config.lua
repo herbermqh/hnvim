@@ -50,6 +50,7 @@ cmp.setup({
     end, { 'i', 's' }),
   }),
   sources = cmp.config.sources({
+    { name = 'arttex' },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'copilot' },

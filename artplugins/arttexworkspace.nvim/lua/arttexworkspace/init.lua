@@ -1,7 +1,6 @@
 local log = require("arttexworkspace.core.log")
 local state = require("arttexworkspace.core.state")
 local resolver = require("arttexworkspace.discovery.root_resolver")
-local parser = require("arttexworkspace.parsers.preamble")
 local macro_analyzer = require("arttexworkspace.parsers.macro_analyzer")
 local goto_file = require("arttexworkspace.ui.goto_file")
 
@@ -30,18 +29,26 @@ end
 
 M.api.get_project_state = function(bufnr)
   local root = M.api.get_root_file(bufnr)
-  if root then return state.get_project(root) end
+  if root then return require("arttexworkspace.core.state").get_project(root) end
   return nil
+end
+
+M.api.smart_goto_file = function()
+  require("arttexworkspace.navigation").smart_goto_file()
+end
+
+M.api.smart_goto_definition = function()
+  require("arttexworkspace.navigation").smart_goto_definition()
 end
 
 M.api.get_project_tree = function(bufnr)
   local root = M.api.get_root_file(bufnr)
   if root then
     local structure = require("arttexworkspace.discovery.project_tree")
-    local deps, method = structure.get_dependencies(root)
-    return deps, method
+    local deps, method, tree = structure.get_dependencies(root)
+    return deps, method, tree
   end
-  return nil, nil
+  return nil, nil, nil
 end
 
 M.api.get_project_config = function(bufnr)
@@ -85,16 +92,8 @@ local function init_buffer()
       state.register_project(root)
       -- Dispara el parser y el analizador de macros en background
       vim.schedule(function()
-        local root_dir = vim.fn.fnamemodify(root, ":p:h")
-        local basename = vim.fn.fnamemodify(root, ":t:r")
-        local config_path = root_dir .. "/." .. basename .. ".arttex.json"
-        
-        -- El usuario especificó que la actualización del JSON debe iniciar
-        -- inmediatamente al abrir el proyecto para mantener la base de datos sincronizada
-        -- (Especialmente si hubo cambios externos o una nueva compilación de FLS)
-        macro_analyzer.auto_generate_config(root)
-        
-        parser.parse_project(root)
+        require("arttexworkspace.discovery.project_tree").get_dependencies(root)
+        require("arttexworkspace.parsers.macro_analyzer").auto_generate_config(root)
       end)
     end
   end
@@ -115,13 +114,10 @@ M.setup = function(opts)
       local filepath = vim.api.nvim_buf_get_name(0)
       local main = state.get_main_from_buffer(filepath)
       if main then
-        -- Actualizar el estado asíncronamente
+        -- Actualizar silenciosamente las dependencias y el FLS (O(1))
         vim.schedule(function()
-          macro_analyzer.auto_generate_config(main)
-          parser.parse_project(main)
-          
-          -- Actualizar silenciosamente las dependencias y el FLS
           require("arttexworkspace.discovery.project_tree").get_dependencies(main)
+          require("arttexworkspace.parsers.macro_analyzer").auto_generate_config(main)
         end)
       end
     end,
@@ -139,6 +135,21 @@ M.setup = function(opts)
     end
     require("arttexworkspace.ui.tree_viewer").open_tree(root)
   end, {})
+  
+  -- Comando para gestionar entornos verbatim
+  vim.api.nvim_create_user_command("ArtTexVerbatimEnvs", function()
+    require("arttexworkspace.ui.verbatim_manager").open_menu()
+  end, {})
+  
+  -- Comando para inicializar/andamiar nuevos proyectos (Scaffold)
+  vim.api.nvim_create_user_command("ArtTexCreateProject", function()
+    require("arttexworkspace.core.scaffold").create_project()
+  end, {})
+
+  -- Comando para Visualizar el Grafo del Proyecto (Mermaid)
+  vim.api.nvim_create_user_command("ArtTexVisualizeGraph", function()
+    require("arttexworkspace.ui.graph_visualizer").generate_graph()
+  end, { desc = "Genera un grafo Mermaid de las expansiones de macros y archivos" })
 end
 
 return M

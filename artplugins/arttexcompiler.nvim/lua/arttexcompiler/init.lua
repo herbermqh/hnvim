@@ -373,6 +373,7 @@ function M.setup(opts)
   vim.api.nvim_create_user_command("ArtTexCompilePlain", function() M.api.start_plain() end, {})
   vim.api.nvim_create_user_command("ArtTexStop", function() M.api.stop() end, {})
   vim.api.nvim_create_user_command("ArtTexStopAll", function() M.api.stop_all() end, {})
+  vim.api.nvim_create_user_command("ArtTexStatus", function() M.api.status() end, {})
   vim.api.nvim_create_user_command("ArtTexErrors", function() M.api.errors(0) end, {})
   vim.api.nvim_create_user_command("ArtTexClean", function() M.api.clean() end, {})
   vim.api.nvim_create_user_command("ArtTexOutput", function() M.api.toggle_output() end, {})
@@ -384,7 +385,8 @@ function M.setup(opts)
       local log_file = vim.fn.fnamemodify(root, ":r") .. ".log"
       if vim.fn.filereadable(log_file) == 1 then
         vim.cmd("edit " .. vim.fn.fnameescape(log_file))
-        vim.cmd("setlocal filetype=arttex_output")
+        vim.cmd("setlocal filetype=log")
+        vim.cmd("setlocal autoread") -- Ayuda a que se recargue automáticamente
         vim.cmd("setlocal readonly nomodifiable")
       else
         vim.notify("ArtTeX: No se encontró archivo .log (" .. log_file .. ")", vim.log.levels.WARN)

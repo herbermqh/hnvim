@@ -10,32 +10,8 @@ M.levels = {
   subparagraph = 5,
 }
 
-function M.get_valid_includes()
-  local valid = { input = { "%s.tex" }, include = { "%s.tex" }, subfile = { "%s.tex" } }
-  local ok, ws = pcall(require, "arttexworkspace")
-  if ok and ws.api and ws.api.get_project_config then
-    local bufnr = vim.api.nvim_get_current_buf()
-    local config = ws.api.get_project_config(bufnr)
-    
-    local resolve_patterns = config.resolve_patterns or { "%s.tex", "%s/CAPITULO.tex" }
-    
-    if config.custom_includes then
-      for _, v in ipairs(config.custom_includes) do valid[v] = resolve_patterns end
-    end
-    if config.estructura_manual_usuario then
-      for k, v in pairs(config.estructura_manual_usuario) do valid[k] = v end
-    end
-    if config.estructura_aprendida_ia then
-      for k, v in pairs(config.estructura_aprendida_ia) do valid[k] = v end
-    end
-  end
-  return valid
-end
-
---- Parsea un buffer de Neovim y extrae la estructura de secciones
---- @param bufnr number ID del buffer
---- @return table Lista de nodos de la tabla de contenidos
-function M.parse_file(filepath, is_inherited_comment, visited, valid_includes)
+--- Parsea un archivo y extrae la estructura de secciones (y recursivamente las dependencias del árbol)
+function M.parse_file(filepath, is_inherited_comment, visited, tree_node)
   visited = visited or {}
   if visited[filepath] then return {} end
   visited[filepath] = true
@@ -43,146 +19,246 @@ function M.parse_file(filepath, is_inherited_comment, visited, valid_includes)
   local toc_items = {}
   local file = io.open(filepath, "r")
   if not file then return toc_items end
+  local content = file:read("*all")
+  file:close()
+  
+  if not content or content == "" then return toc_items end
+  
+  local verbatim_envs = {}
+  pcall(function()
+    verbatim_envs = require("arttexworkspace.core.config").options.verbatim_envs or {}
+  end)
+  
+  local clean_content = content
+  pcall(function()
+    clean_content = require("arttexworkspace.parsers.verbatim").strip_verbatim(content, verbatim_envs)
+  end)
   
   local main_plugin = require("arttextoc")
   local custom_levels = (main_plugin.opts and main_plugin.opts.custom_levels) or {}
-  local dir = vim.fn.fnamemodify(filepath, ":p:h")
-  valid_includes = valid_includes or M.get_valid_includes()
   
   local i = 0
-  for line in file:lines() do
+  for line in clean_content:gmatch("([^\n]*)\n?") do
     i = i + 1
-    local line_is_comment = line:match("^%s*%%") ~= nil
-    local is_commented = is_inherited_comment or line_is_comment
     
-    -- Extraer Secciones (soporta \section{...} y también tolerante a %section{...} sin barra)
-    for sec_type, title in line:gmatch("\\([a-zA-Z]+)%*?%s*%{(.-)%}") do
-      local level = M.levels[sec_type] or custom_levels[sec_type]
-      if level then
-        table.insert(toc_items, {
-          type = sec_type,
-          level = level,
-          title = title,
-          lnum = i, -- 1-indexed
-          filepath = filepath,
-          is_commented = is_commented
-        })
-      end
-    end
+    local has_slash = line:find("\\", 1, true)
+    local has_percent = line:find("%", 1, true)
     
-    -- Tolerancia para secciones comentadas sin barra (ej: %section{titulo})
-    if line_is_comment then
-      for sec_type, title in line:gmatch("%%%s*([a-zA-Z]+)%*?%s*%{(.-)%}") do
-        local level = M.levels[sec_type] or custom_levels[sec_type]
-        if level then
-          table.insert(toc_items, {
-            type = sec_type,
-            level = level,
-            title = title,
-            lnum = i,
-            filepath = filepath,
-            is_commented = true
-          })
+    if has_slash or has_percent then
+      local might_have_sec = line:find("section", 1, true) or line:find("chapter", 1, true) or line:find("part", 1, true) or line:find("paragraph", 1, true)
+      if not might_have_sec then
+        for k, _ in pairs(custom_levels) do
+          if line:find(k, 1, true) then might_have_sec = true; break end
         end
       end
-    end
-    
-    -- Si es una línea comentada y contiene un macro de importación válido, explorarlo
-    if line_is_comment then
-      for inc_type, target_file in line:gmatch("\\([a-zA-Z]+)%*?%s*%{(.-)%}") do
-        local patterns = valid_includes[inc_type]
-        if patterns then
-          for _, pat in ipairs(patterns) do
-            local mapped = pat:gsub("%%s", target_file)
-            local p1 = dir .. "/" .. mapped
-            local p2 = vim.fn.getcwd() .. "/" .. mapped
-            
-            local abs_path = nil
-            if vim.fn.filereadable(p1) == 1 then abs_path = vim.fn.resolve(p1)
-            elseif vim.fn.filereadable(p2) == 1 then abs_path = vim.fn.resolve(p2)
-            elseif vim.fn.filereadable(mapped) == 1 then abs_path = vim.fn.resolve(mapped)
-            end
-            
-            if abs_path then
-              local sub_items = M.parse_file(abs_path, is_inherited_comment or line_is_comment, visited, valid_includes)
-              for _, sub_it in ipairs(sub_items) do
-                table.insert(toc_items, sub_it)
-              end
-              break -- Encontrado, no procesar más patrones
-            end
+      if tree_node and tree_node.resolved_includes then
+        for k, _ in pairs(tree_node.resolved_includes) do
+          if line:find(k, 1, true) then
+            might_have_inc = true
+            break
           end
         end
       end
+      
+      if might_have_sec or might_have_inc then
+        local line_is_comment = has_percent and line:match("^%s*%%") ~= nil
+        local is_commented = is_inherited_comment or line_is_comment
+        
+        -- Función local para extraer llaves balanceadas
+        local function extract_braces(text, start_pos)
+          local open_braces = 0
+          local end_pos = start_pos
+          for j = start_pos, #text do
+            local char = text:sub(j, j)
+            if char == "{" then open_braces = open_braces + 1
+            elseif char == "}" then
+              open_braces = open_braces - 1
+              if open_braces == 0 then return text:sub(start_pos + 1, j - 1), j end
+            end
+          end
+          return nil, nil
+        end
+        
+        -- Escáner de comandos (soporta anidamiento infinito, ej: \foreach{\section{}})
+        local function scan_line(text, is_com)
+          local pos = 1
+          while pos <= #text do
+            -- Encontrar el próximo macro, ignorando el `\` o `%` inicial
+            local start_idx, finish_idx, cmd
+            if not is_com then
+              start_idx, finish_idx, cmd = text:find("\\([a-zA-Z]+)%*?%s*", pos)
+            else
+              start_idx, finish_idx, cmd = text:find("%%%s*([a-zA-Z]+)%*?%s*", pos)
+            end
+            
+            if not start_idx then break end
+            
+            -- Saltar posibles opciones [...] y extraer su valor
+            local bracket_pos = finish_idx + 1
+            local opt_arg = nil
+            local char_after = text:sub(bracket_pos, bracket_pos)
+            if char_after == "[" then
+              local close_bracket = text:find("]", bracket_pos)
+              if close_bracket then 
+                opt_arg = text:sub(bracket_pos + 1, close_bracket - 1)
+                bracket_pos = close_bracket + 1 
+              end
+            end
+            
+            local brace_start = text:find("{", bracket_pos)
+            if brace_start and (brace_start - bracket_pos) < 5 then
+              local arg, brace_end = extract_braces(text, brace_start)
+              if arg then
+                -- 1. ¿Es una sección?
+                local level = M.levels[cmd] or custom_levels[cmd]
+                if might_have_sec and level then
+                  table.insert(toc_items, { type = cmd, level = level, title = arg, lnum = i, filepath = filepath, is_commented = is_commented })
+                end
+                
+                -- 2. ¿Es un include?
+                if might_have_inc and tree_node and tree_node.resolved_includes then
+                  local function check_resolved_child(child_name)
+                    if not child_name then return false end
+                    local resolved_child = tree_node.resolved_includes[child_name]
+                    if resolved_child then
+                      if resolved_child.filepath then
+                        local sub_items = M.parse_file(resolved_child.filepath, is_inherited_comment or resolved_child.is_commented, visited, resolved_child)
+                        for _, sub_it in ipairs(sub_items) do table.insert(toc_items, sub_it) end
+                      else
+                        for _, child in ipairs(resolved_child) do
+                          local sub_items = M.parse_file(child.filepath, is_inherited_comment or child.is_commented, visited, child)
+                          for _, sub_it in ipairs(sub_items) do table.insert(toc_items, sub_it) end
+                        end
+                      end
+                      return true
+                    end
+                    return false
+                  end
+                  
+                  local found = check_resolved_child(opt_arg)
+                  if not found then check_resolved_child(arg) end
+                end
+                
+                -- MAGIA: Avanzamos solo +1 para macros ANIDADOS
+                pos = start_idx + 1
+              else
+                pos = start_idx + 1
+              end
+            else
+              pos = start_idx + 1
+            end
+          end
+        end
+
+        if has_slash then scan_line(line, false) end
+        if line_is_comment then scan_line(line, true) end
+      end
     end
   end
-  file:close()
   return toc_items
 end
 
-function M.parse_buffer(bufnr, valid_includes)
-  local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+function M.parse_buffer(bufnr, tree_node)
+  local lines_table = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+  local content = table.concat(lines_table, "\n")
+  
+  local verbatim_envs = {}
+  pcall(function()
+    verbatim_envs = require("arttexworkspace.core.config").options.verbatim_envs or {}
+  end)
+  
+  local clean_content = content
+  pcall(function()
+    clean_content = require("arttexworkspace.parsers.verbatim").strip_verbatim(content, verbatim_envs)
+  end)
+  
+  local lines = {}
+  for line in clean_content:gmatch("([^\n]*)\n?") do
+    table.insert(lines, line)
+  end
+  
   local toc_items = {}
   local filepath = vim.api.nvim_buf_get_name(bufnr)
   
   local main_plugin = require("arttextoc")
   local custom_levels = (main_plugin.opts and main_plugin.opts.custom_levels) or {}
-  valid_includes = valid_includes or M.get_valid_includes()
+  local visited = {}
+  visited[filepath] = true
   
   for i, line in ipairs(lines) do
-    local is_commented = line:match("^%s*%%") ~= nil
-    local dir = vim.fn.fnamemodify(filepath, ":p:h")
-    for sec_type, title in line:gmatch("\\([a-zA-Z]+)%*?%s*%{(.-)%}") do
-      local level = M.levels[sec_type] or custom_levels[sec_type]
-      if level then
-        table.insert(toc_items, {
-          type = sec_type,
-          level = level,
-          title = title,
-          lnum = i,
-          filepath = filepath,
-          is_commented = is_commented
-        })
-      end
-    end
+    local has_slash = line:find("\\", 1, true)
+    local has_percent = line:find("%", 1, true)
     
-    -- Tolerancia para secciones comentadas sin barra (ej: %section{titulo})
-    if is_commented then
-      for sec_type, title in line:gmatch("%%%s*([a-zA-Z]+)%*?%s*%{(.-)%}") do
-        local level = M.levels[sec_type] or custom_levels[sec_type]
-        if level then
-          table.insert(toc_items, {
-            type = sec_type,
-            level = level,
-            title = title,
-            lnum = i,
-            filepath = filepath,
-            is_commented = true
-          })
+    if has_slash or has_percent then
+      local might_have_sec = line:find("section", 1, true) or line:find("chapter", 1, true) or line:find("part", 1, true) or line:find("paragraph", 1, true)
+      if not might_have_sec then
+        for k, _ in pairs(custom_levels) do
+          if line:find(k, 1, true) then might_have_sec = true; break end
         end
       end
-    end
-    
-    if is_commented then
-      for inc_type, target_file in line:gmatch("\\([a-zA-Z]+)%*?%s*%{(.-)%}") do
-        local patterns = valid_includes[inc_type]
-        if patterns then
-          for _, pat in ipairs(patterns) do
-            local mapped = pat:gsub("%%s", target_file)
-            local p1 = dir .. "/" .. mapped
-            local p2 = vim.fn.getcwd() .. "/" .. mapped
-            
-            local abs_path = nil
-            if vim.fn.filereadable(p1) == 1 then abs_path = vim.fn.resolve(p1)
-            elseif vim.fn.filereadable(p2) == 1 then abs_path = vim.fn.resolve(p2)
-            elseif vim.fn.filereadable(mapped) == 1 then abs_path = vim.fn.resolve(mapped)
+      if tree_node and tree_node.resolved_includes then
+        for k, _ in pairs(tree_node.resolved_includes) do
+          if line:find(k, 1, true) then
+            might_have_inc = true
+            break
+          end
+        end
+      end
+      
+      if might_have_sec or might_have_inc then
+        local line_is_comment = has_percent and line:match("^%s*%%") ~= nil
+        local is_commented = line_is_comment
+        
+        if might_have_sec and has_slash then
+          for sec_type, title in line:gmatch("\\([a-zA-Z]+)%*?%s*%{(.-)%}") do
+            local level = M.levels[sec_type] or custom_levels[sec_type]
+            if level then
+              table.insert(toc_items, { type = sec_type, level = level, title = title, lnum = i, filepath = filepath, is_commented = is_commented })
             end
-            
-            if abs_path then
-              local sub_items = M.parse_file(abs_path, true, {}, valid_includes)
-              for _, sub_it in ipairs(sub_items) do
-                table.insert(toc_items, sub_it)
+          end
+        end
+        
+        if might_have_sec and line_is_comment then
+          for sec_type, title in line:gmatch("%%%s*([a-zA-Z]+)%*?%s*%{(.-)%}") do
+            local level = M.levels[sec_type] or custom_levels[sec_type]
+            if level then
+              table.insert(toc_items, { type = sec_type, level = level, title = title, lnum = i, filepath = filepath, is_commented = true })
+            end
+          end
+        end
+
+        -- Procesar includes en el buffer
+        if might_have_inc and tree_node and tree_node.resolved_includes then
+          if has_slash then
+            for target_file in line:gmatch("\\%a+%*?%s*%{(.-)%}") do
+              local resolved_child = tree_node.resolved_includes[target_file]
+              if resolved_child then
+                if resolved_child.filepath then
+                  local sub_items = M.parse_file(resolved_child.filepath, is_commented or resolved_child.is_commented, visited, resolved_child)
+                  for _, sub_it in ipairs(sub_items) do table.insert(toc_items, sub_it) end
+                else
+                  for _, child in ipairs(resolved_child) do
+                    local sub_items = M.parse_file(child.filepath, is_commented or child.is_commented, visited, child)
+                    for _, sub_it in ipairs(sub_items) do table.insert(toc_items, sub_it) end
+                  end
+                end
               end
-              break -- Encontrado, no procesar más patrones
+            end
+          end
+          if line_is_comment then
+            for target_file in line:gmatch("%%%s*%a+%*?%s*%{(.-)%}") do
+              local resolved_child = tree_node.resolved_includes[target_file]
+              if resolved_child then
+                if resolved_child.filepath then
+                  local sub_items = M.parse_file(resolved_child.filepath, is_commented or resolved_child.is_commented, visited, resolved_child)
+                  for _, sub_it in ipairs(sub_items) do table.insert(toc_items, sub_it) end
+                else
+                  for _, child in ipairs(resolved_child) do
+                    local sub_items = M.parse_file(child.filepath, is_commented or child.is_commented, visited, child)
+                    for _, sub_it in ipairs(sub_items) do table.insert(toc_items, sub_it) end
+                  end
+                end
+              end
             end
           end
         end

@@ -42,6 +42,17 @@ lspconfig.texlab.setup({
   capabilities = capabilities,
   cmd = { "texlab" },
   filetypes = { "tex", "bib", "sty", "latex", "cls"},
+  settings = {
+    texlab = {
+      diagnostics = {
+        ignoredPatterns = { "ndefined reference", "nresolved reference", "Undefined", "Unresolved" }
+      },
+      chktex = {
+        onOpenAndSave = false, -- Apagar chktex de texlab para evitar duplicados
+        onEdit = false
+      }
+    }
+  }
 })
 
 -- 4. Diagnostics & Visuals
@@ -74,7 +85,23 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     local opts = { buffer = ev.buf, silent = true }
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    
+    local ft = vim.bo[ev.buf].filetype
+    if ft == "tex" or ft == "latex" or ft == "plaintex" then
+      -- gf: Ir a Archivo (Imágenes, Inputs, Bibliografías, etc.)
+      vim.keymap.set('n', 'gf', function()
+        local ok, workspace = pcall(require, "arttexworkspace")
+        if ok then workspace.api.smart_goto_file() else vim.cmd('normal! gf') end
+      end, opts)
+      
+      -- gd: Ir a Definición (Comandos y entornos personalizados)
+      vim.keymap.set('n', 'gd', function()
+        local ok, workspace = pcall(require, "arttexworkspace")
+        if ok then workspace.api.smart_goto_definition() else vim.lsp.buf.definition() end
+      end, opts)
+    else
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    end
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)

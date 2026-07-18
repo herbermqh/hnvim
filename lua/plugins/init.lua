@@ -546,6 +546,11 @@ require("lazy").setup({
           library_paths = {
             "~/Documents/LaTeX/paquetes", -- Ruta relativa sugerida por la IA
             "~/Documents/LaTeX/devclass", -- Ruta relativa sugerida por la IA
+          },
+          verbatim_envs = {
+            "verbatim", "Verbatim", "lstlisting", "minted",
+            "codetex", "codetexlong", "codetexcommentlong", "codexetexcommentlong",
+            "plaintex", "code", "texcode", "pseudocode"
           }
         })
       end
@@ -565,17 +570,37 @@ require("lazy").setup({
       dir = vim.fn.stdpath("config") .. "/artplugins/arttexconceal.nvim",
       ft = { "tex", "sty", "cls", "dtx" },
       config = function()
-        require("arttexconceal").setup()
+        require("arttexconceal").setup({
+          enable_script_conceal = false,
+          enable_env_conceal = false,
+          custom_symbols = {
+            -- Inclusión y Referencia
+            { pattern = "\\includegraphics", char = " ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
+            { pattern = "\\image",          char = " ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
+            -- Estructura
+            { pattern = "\\item",           char = " ", hl = "ArtTexConcealNote", is_regex = false, env = "text" },
+            -- Motores
+            { pattern = "\\LaTeX",          char = " ", hl = "ArtTexConcealSection", is_regex = false, env = "text" },
+            { pattern = "\\TeX",            char = " ", hl = "ArtTexConcealSection", is_regex = false, env = "text" },
+            -- TikZ
+            { pattern = "\\draw",           char = "󰌒 ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
+            { pattern = "\\node",           char = "󰆼 ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
+            -- Código (Expresión regular para atrapar el lenguaje, ej: \mintinline{latex})
+            { pattern = "\\mintinline%{[^}]+%}", char = " ", hl = "ArtTexConcealSpecial", is_regex = true, env = "text" },
+          }
+        })
       end,
     },
 
     -- ART-TEX MODULAR PLUGINS
     { dir = vim.fn.stdpath("config") .. "/artplugins/arttexsynctex.nvim", ft = "tex", dependencies = { "arttexworkspace" }, config = function() require("arttexsynctex").setup() end },
     { dir = vim.fn.stdpath("config") .. "/artplugins/arttexfolding.nvim", ft = "tex", config = function() require("arttexfolding").setup() end },
-    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexhover.nvim", ft = "tex", config = function() require("arttexhover").setup() end },
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexhover.nvim", ft = "tex", dependencies = { "arttexworkspace" }, config = function() require("arttexhover").setup() end },
     { dir = vim.fn.stdpath("config") .. "/artplugins/arttexsnippets.nvim", ft = "tex", config = function() require("arttexsnippets").setup() end },
     { dir = vim.fn.stdpath("config") .. "/artplugins/arttexformat.nvim", ft = "tex", config = function() require("arttexformat").setup() end },
     { dir = vim.fn.stdpath("config") .. "/artplugins/arttextoc.nvim", ft = "tex", config = function() require("arttextoc").setup() end },
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexcmp.nvim", ft = "tex", dependencies = { "arttexworkspace" }, config = function() require("arttexcmp").setup() end },
+    { dir = vim.fn.stdpath("config") .. "/artplugins/arttexlinter.nvim", ft = "tex", dependencies = { "arttexworkspace" }, config = function() require("arttexlinter").setup() end },
     
     {
       "jbyuki/nabla.nvim",
