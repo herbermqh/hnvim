@@ -190,7 +190,7 @@ function M.process_lines(buf, first_row, last_row)
                 local depth = get_unified_depth(node, buf)
                 local hl_idx = ((depth - 1) % 6) + 1
                 local sr, sc, er, ec = node:range()
-                extmarks.set(buf, sr, sc, er, ec, txt, "ArtTexConcealRainbow" .. hl_idx)
+                extmarks.set_hl(buf, sr, sc, er, ec, "ArtTexConcealRainbow" .. hl_idx)
             end
             
         elseif name == "delim" then
