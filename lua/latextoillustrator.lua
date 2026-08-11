@@ -134,4 +134,3 @@ vim.cmd([[
 
 vim.cmd([[nnoremap <F4> :ToggleFileTexIllustrator<CR>]])
 
-

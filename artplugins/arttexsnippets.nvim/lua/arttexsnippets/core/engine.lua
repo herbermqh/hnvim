@@ -140,4 +140,23 @@ M.setup_markdown = function(is_math, not_math, opts)
   })
 end
 
+M.reload = function()
+  for k, _ in pairs(package.loaded) do
+    if k:match("^arttexsnippets%.math") or k:match("^arttexsnippets%.custom") then
+      package.loaded[k] = nil
+    end
+  end
+  
+  local opts = require("arttexsnippets").opts
+  local utils = require("arttexsnippets.util.utils")
+  local is_math = utils.with_opts(utils.is_math, opts.use_treesitter)
+  local not_math = utils.with_opts(utils.not_math, opts.use_treesitter)
+  
+  M.setup_tex(is_math, not_math, opts)
+  if opts.allow_on_markdown then
+    M.setup_markdown(is_math, not_math, opts)
+  end
+  vim.notify("ArtTex snippets reloaded!", vim.log.levels.INFO)
+end
+
 return M

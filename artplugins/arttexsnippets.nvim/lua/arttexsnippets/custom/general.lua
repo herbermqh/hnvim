@@ -38,7 +38,8 @@ ${0}
   table.insert(normalsnippets,   parse_snippet({trig = [=[be(gin)?( (\S+))?]=], name = [=[begin{} / end{}]=], priority = 500, trigEngine = "ecma", wordTrig = false}, [=[\begin{${1:}}
 	${2:${TM_SELECTED_TEXT}}
 \end{$1}$0]=]))
-  table.insert(autosnippets,   parse_snippet({trig = [=["\"([a-zA-Z0-9\_\´\sáíóéúÁÉÍÓÚñ,.;:\-]+)\b\"\s"]=], name = [=[smart quotes]=], priority = 500, trigEngine = "ecma", wordTrig = false}, [=[\`\`''$0]=]))
+  table.insert(autosnippets,   parse_snippet({trig = [=["]=], name = [=[smart quotes]=], priority = 500, wordTrig = false, condition = function() return not env("tikzpicture")() end}, [=[``$1''$0]=]))
+  table.insert(autosnippets,   parse_snippet({trig = [=["]=], name = [=[smart quotes tikz]=], priority = 500, wordTrig = false, condition = env("tikzpicture")}, [=["$0]=]))
   table.insert(normalsnippets,   parse_snippet({trig = [=[text]=], name = [=[text]=], priority = 500, wordTrig = false, condition = is_math}, [=[\\text{${1:${VISUAL:text}}} ${0}]=]))
   table.insert(normalsnippets,   parse_snippet({trig = [=[textit]=], name = [=[italic text]=], priority = 500, wordTrig = false}, [=[\\textit{${1:${VISUAL:text}}} ${0}]=]))
   table.insert(normalsnippets,   parse_snippet({trig = [=[textbf]=], name = [=[bold face text]=], priority = 500, wordTrig = false}, [=[\\textbf{${1:${VISUAL:text}}} ${0}]=]))
@@ -141,7 +142,7 @@ ${0}
   table.insert(normalsnippets,   parse_snippet({trig = [=[exersec]=], name = [=[Ecuacion]=], priority = 500, trigEngine = "ecma", wordTrig = false}, [=[\sectionexercise{$0}]=]))
   table.insert(normalsnippets,   parse_snippet({trig = [=[exersubsec]=], name = [=[Ecuacion]=], priority = 500, trigEngine = "ecma", wordTrig = false}, [=[\subsectionexercise{$0}]=]))
   table.insert(normalsnippets,   parse_snippet({trig = [=[et]=], name = [=[Ecuacion]=], priority = 500, trigEngine = "ecma", wordTrig = false}, [=[\ltag{\marrow{${1:a}}}$0]=]))
-  table.insert(autosnippets,   parse_snippet({trig = [=[chapter]=], name = [=[chapter]=], priority = 500, wordTrig = false}, [=[\chapter{$0}]=]))
+  table.insert(normalsnippets,   parse_snippet({trig = [=[chapter]=], name = [=[chapter]=], priority = 500, wordTrig = false}, [=[\chapter{$0}]=]))
   table.insert(autosnippets,   parse_snippet({trig = [=[SSE]=], name = [=[section]=], priority = 500, wordTrig = false}, [=[\section{$0}]=]))
   table.insert(autosnippets,   parse_snippet({trig = [=[SSS]=], name = [=[subsection]=], priority = 500, wordTrig = false}, [=[\subsection{$0}]=]))
   table.insert(autosnippets,   parse_snippet({trig = [=[SS2]=], name = [=[subsubsection]=], priority = 500, wordTrig = false}, [=[\subsubsection{$0}]=]))

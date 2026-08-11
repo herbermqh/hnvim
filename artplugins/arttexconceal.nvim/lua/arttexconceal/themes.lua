@@ -22,6 +22,8 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#2ac3de" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
+        ArtTexConcealMathBf = { bold = true },
+        ArtTexConcealMathIt = { italic = true },
         ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#565f89" },
@@ -63,6 +65,8 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#94e2d5" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
+        ArtTexConcealMathBf = { bold = true },
+        ArtTexConcealMathIt = { italic = true },
         ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#6c7086" },
@@ -104,6 +108,8 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#bd93f9" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
+        ArtTexConcealMathBf = { bold = true },
+        ArtTexConcealMathIt = { italic = true },
         ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#6272a4" },
@@ -145,6 +151,8 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#5e81ac" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
+        ArtTexConcealMathBf = { bold = true },
+        ArtTexConcealMathIt = { italic = true },
         ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#4c566a" },
@@ -186,6 +194,8 @@ M.palette = {
         ArtTexConcealSpecial = { fg = "#56b6c2" },
         ArtTexConcealBold = { bold = true },
         ArtTexConcealItalic = { italic = true },
+        ArtTexConcealMathBf = { bold = true },
+        ArtTexConcealMathIt = { italic = true },
         ArtTexConcealMathsf = { italic = true },
         -- Semantic rainbow groups
         ArtTexConcealEnv = { fg = "#5c6370" },
@@ -227,7 +237,7 @@ function M.apply(theme_name)
 
     for name, hl in pairs(theme) do
         -- Explicitly apply Normal fg to text format groups
-        if name == "ArtTexConcealBold" or name == "ArtTexConcealItalic" or name == "ArtTexConcealMathsf" then
+        if name == "ArtTexConcealBold" or name == "ArtTexConcealItalic" or name == "ArtTexConcealMathBf" or name == "ArtTexConcealMathIt" or name == "ArtTexConcealMathsf" then
             if not hl.fg and fg_color then
                 hl.fg = fg_color
             end

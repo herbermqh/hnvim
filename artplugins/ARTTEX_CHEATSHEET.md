@@ -3,76 +3,79 @@
 Esta es la referencia oficial de tu entorno de trabajo. Todos los atajos están agrupados lógicamente bajo la tecla **`<leader>l`**.
 
 ## ⚡ Comandos de Acceso Rápido (Raíz)
-Los comandos que utilizarás constantemente están en el primer nivel del menú.
+Los comandos que utilizarás constantemente están en el primer nivel del menú (`<leader>l`).
 
 | Comando Neovim | Atajo | Descripción |
 | :--- | :--- | :--- |
-| `:ArtTexCompile` | `<leader>lc` | Iniciar compilador automático. |
-| `:ArtTexForwardSearch` | `<leader>lv` | Ver PDF (SyncTeX a la línea actual). |
-| `:ArtTexFormat` | `<leader>lf` | Formatear documento entero. |
-| `:ArtTexTOCToggle` | `<leader>lT` | Alternar panel lateral del índice (TOC). |
-| `:ToggleFileTexIllustrator` | `<leader>li` | Insertar/Editar figura de Illustrator. |
-| `:ArtTexHover` | `<leader>lh` | Ver ventana de información flotante. |
+| `:ArtTexCompile` | `<leader>lc` | Compilar (Auto) |
+| `:ArtTexForwardSearch` | `<leader>lv` | Ver PDF (SyncTeX) |
+| `:ArtTexFormat` | `<leader>lf` | Formatear Documento |
+| `:ArtTexTOCToggle` | `<leader>lt` | Alternar Índice (TOC) |
+| `:ArtTexStop` | `<leader>ls` | Detener Trabajo |
+| `:ArtTexStopAll` | `<leader>lS` | Detener Todos |
+| `:ArtTexViewLog` | `<leader>ll` | Ver Archivo .log |
+| `:ArtTexClean` | `<leader>ld` | Limpiar Auxiliares |
+| `:ArtTexErrors` | `<leader>le` | Ver Errores Quickfix |
+| `:ArtTexMenuCompilatorConfig` | `<leader>lC` | Compilador |
+
+## 🛠️ Utilidades (`<leader>lu`)
+Colección de herramientas adicionales y snippets.
+
+| Comando Neovim | Atajo | Descripción |
+| :--- | :--- | :--- |
+| `:ArtTexDocCTAN` | `<leader>lud` | Doc CTAN Paquete |
+| `:ArtTexSnippetsEdit` | `<leader>lue` | Editar Módulos |
+| `:ArtTexSnippetsSearch` | `<leader>lus` | Buscar Snippets |
+| `:ArtTexSnippetsConfig` | `<leader>luc` | Activar/Desactivar Snippets |
+| `:ArtSourceColorSync` | `<leader>lur` | Refrescar Sintaxis |
+| `:ArtTexLint` | `<leader>lul` | Analizar Linter (ChkTeX) |
+| `require('arttexconceal').toggle()` | `<leader>luC` | Alternar Conceal |
+| `:ToggleFileTexIllustrator` | `<leader>lui` | Figura Illustrator |
 
 ## ⚙️ Procesos y Compilación (`<leader>lp`)
 Administra los trabajos en segundo plano del compilador.
 
 | Comando Neovim | Atajo | Descripción |
 | :--- | :--- | :--- |
-| `:ArtTexCompilePlain` | `<leader>lpC` | Compilar en modo PlainTeX. |
-| `:ArtTexStop` | `<leader>lps` | Detener proceso de compilación actual. |
-| `:ArtTexStopAll` | `<leader>lpS` | Detener todos los procesos globales. |
-| `:ArtTexStatus` | `<leader>lpi` | Imprime el estado de procesos activos. |
-| `:ArtTexClean` | `<leader>lpx` | Limpiar archivos auxiliares de LaTeX. |
-| `:ArtTexOutput` | `<leader>lpo` | Alterna consola de salida. |
-| `:ArtTexOutputClose` | `<leader>lpO` | Cierra forzosamente consola de salida. |
-| `:ArtTexViewLog` | `<leader>lpl` | Abre el archivo `.log` de compilación. |
-| `:ArtTexDebugCommand` | `<leader>lpd` | Muestra comando Shell usado para compilar. |
-| `:ArtTexErrors` | `<leader>lpe` | Parsea errores y abre el Quickfix. |
+| `:ArtTexCompilePlain` | `<leader>lpC` | Compilar (PlainTeX) |
+| `:ArtTexStatus` | `<leader>lpi` | Estado Procesos |
+| `:ArtTexOutput` | `<leader>lpo` | Consola de Salida |
+| `:ArtTexOutputClose` | `<leader>lpO` | Cerrar Consola Forzada |
+| `:ArtTexDebugCommand` | `<leader>lpd` | Ver Comando Shell |
 
 ## 🗂️ Workspace y Sistema (`<leader>lw`)
 Gestión del árbol de tu proyecto global.
 
 | Comando Neovim | Atajo | Descripción |
 | :--- | :--- | :--- |
-| `:ArtTexWorkspaceTree` | `<leader>lwt` | Visualiza estructura y dependencias. |
-| `:ArtTexCreateProject` | `<leader>lwn` | Inicializa un nuevo proyecto raíz. |
-| `:ArtTexVisualizeGraph` | `<leader>lwg` | Genera y muestra grafo de dependencias. |
-| `:ArtTexClearLog` | `<leader>lwc` | Fuerza borrado de la BD interna del workspace. |
-| `:ArtSourceColorSync` | `<leader>lwr` | Refresca forzosamente colores (Tree-sitter). |
-| `:ArtTexLint` | `<leader>lwl` | Corre análisis semántico (ChkTeX) manualmente. |
-| `require('arttexconceal').toggle()` | `<leader>lwC` | Alterna visualización de caracteres (Conceal). |
+| `:ArtTexWorkspaceTree` | `<leader>lwt` | Árbol Workspace |
+| `:ArtTexVerbatimEnvs` | `<leader>lwv` | Entornos Verbatim |
+| `:ArtTexCreateProject` | `<leader>lwn` | Crear Proyecto |
+| `:ArtTexVisualizeGraph` | `<leader>lwg` | Grafo Dependencias |
+| `:ArtTexClearLog` | `<leader>lwc` | Limpiar BD Interna |
 
-## ✂️ Snippets Avanzados (`<leader>ls`)
-Manejo de plantillas modulares rápidas.
-
-| Comando Neovim | Atajo | Descripción |
-| :--- | :--- | :--- |
-| `:ArtTexSnippetsEdit` | `<leader>lse` | Edita módulo de snippets visualmente. |
-| `:ArtTexSnippetsSearch` | `<leader>lss` | Abre Telescope para buscar un snippet. |
-| `:ArtTexSnippetsConfig` | `<leader>lsc` | Activar/Desactivar módulos de snippets. |
-
-## 🪄 Asistentes Visuales (`<leader>lW`)
+## 🪄 Visual Wizards (`<leader>lW`)
 Interfaces gráficas para generar código complejo.
 
 | Comando Neovim | Atajo | Descripción |
 | :--- | :--- | :--- |
-| `:ArtTexVisualTable` | `<leader>lWt` | Generador gráfico en formato rejilla (Excel). |
-| `:ArtTexVisualMath` | `<leader>lWm` | Entorno de ecuaciones interactivas (RPC). |
-| `:ArtTexVisualGraph` | `<leader>lWg` | Creador visual interactivo de esquemas TikZ. |
+| `:ArtTexVisualTable` | `<leader>lWt` | Tablas (Grid) |
+| `:ArtTexVisualMath` | `<leader>lWm` | Matemáticas (Editor) |
+| `:ArtTexVisualGraph` | `<leader>lWg` | Gráficas TikZ |
 
-## 🔧 Configuraciones Globales (`<leader>lO`)
-Menús interactivos para personalizar el comportamiento del ecosistema.
+## 🔧 Ajustes y Configuración (`<leader>la`)
+Menús interactivos para personalizar el comportamiento del ecosistema. *(Nota: Observé en tu configuración que tienes asignado `<leader>lah` dos veces, una para `ArtTexHover` y otra para `ArtHoverConfig`. Es posible que quieras cambiar uno de ellos en el futuro).*
 
 | Comando Neovim | Atajo | Descripción |
 | :--- | :--- | :--- |
-| `:ArtTexMenuCompilatorConfig` | `<leader>lOc` | Opciones de backend de compilación. |
-| `:ArtCmpConfig` | `<leader>lOa` | Autocompletado, fuentes y latencias. |
-| `:ArtHoverConfig` | `<leader>lOh` | Retardos y ventana emergente de Hover. |
-| `:ArtLinterConfig` | `<leader>lOl` | Habilitar Linter automático y reglas. |
-| `:ArtFormatConfig` | `<leader>lOf` | Alternar auto-guardado del formateador. |
-| `:ArtTexTOCConfig` | `<leader>lOt` | Ajustar profundidad visual del Índice. |
-| `:ArtTexSelectViewer` | `<leader>lOv` | Selecciona visor PDF predeterminado. |
-| `:ArtSourceColorConfig` | `<leader>lOs` | Configura qué elementos se colorean dinámicamente. |
-| `:ArtTexPreviewConfig` | `<leader>lOp` | Configurar auto-previsualizador (imágenes/math). |
-| `:ArtFormatEditRules` | `<leader>lOr` | Abre el archivo YAML para editar estilo de texto. |
+| `:ArtTexHover` | `<leader>lah` | Info Comando (Hover) |
+| `:ArtCmpConfig` | `<leader>laa` | Autocompletado |
+| `:ArtTeXConcealMenu` | `<leader>laC` | Conceal (Símbolos) |
+| `:ArtHoverConfig` | `<leader>lah` | Hover (Emergentes) |
+| `:ArtLinterConfig` | `<leader>lal` | Linter (ChkTeX) |
+| `:ArtFormatConfig` | `<leader>laf` | Formateador |
+| `:ArtTexTOCConfig` | `<leader>lat` | Índice (TOC) |
+| `:ArtTexSelectViewer` | `<leader>lav` | Visor PDF |
+| `:ArtSourceColorConfig` | `<leader>las` | Source Color |
+| `:ArtTexPreviewConfig` | `<leader>lap` | Previsualizador |
+| `:ArtFormatEditRules` | `<leader>lar` | Editar Reglas YAML |

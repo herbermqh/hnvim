@@ -104,6 +104,11 @@ M.math_words = {
     ["\\ln"] = { char = "ln", hl = "ArtTexConcealMath" }, ["\\arg"] = { char = "arg", hl = "ArtTexConcealMath" },
     ["\\hom"] = { char = "hom", hl = "ArtTexConcealMath" }, ["\\Pr"] = { char = "Pr", hl = "ArtTexConcealMath" },
     ["\\bmod"] = { char = "mod", hl = "ArtTexConcealMath" },
+    
+    -- Style and Limits
+    ["\\displaystyle"] = { char = "", hl = "ArtTexConcealSpecial" }, ["\\textstyle"] = { char = "", hl = "ArtTexConcealSpecial" },
+    ["\\scriptstyle"] = { char = "", hl = "ArtTexConcealSpecial" }, ["\\scriptscriptstyle"] = { char = "", hl = "ArtTexConcealSpecial" },
+    ["\\limits"] = { char = "", hl = "ArtTexConcealSpecial" }, ["\\nolimits"] = { char = "", hl = "ArtTexConcealSpecial" },
 
     -- Dots, Hats and Accents
     ["\\dots"] = { char = "…", hl = "ArtTexConcealSpecial" }, ["\\cdots"] = { char = "⋯", hl = "ArtTexConcealSpecial" },
@@ -176,7 +181,12 @@ M.alphabets = {
     mathcal = {
         A="𝓐", B="𝓑", C="𝓒", D="𝓓", E="𝓔", F="𝓕", G="𝓖", H="𝓗", I="𝓘", J="𝓙", K="𝓚", L="𝓛", M="𝓜",
         N="𝓝", O="𝓞", P="𝓟", Q="𝓠", R="𝓡", S="𝓢", T="𝓣", U="𝓤", V="𝓥", W="𝓦", X="𝓧", Y="𝓨", Z="𝓩",
-    }
+    },
+    mathrm = {},
+    mathbf = {},
+    mathit = {},
+    mathtt = {},
+    text = {}
 }
 M.alphabets.mathscr = M.alphabets.mathcal
 

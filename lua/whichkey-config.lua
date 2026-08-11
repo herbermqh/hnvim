@@ -110,23 +110,34 @@ wk.add({
   { "<leader>lc", "<cmd>ArtTexCompile<cr>", desc = "Compilar (Auto)", icon = "󰑐" },
   { "<leader>lv", "<cmd>ArtTexForwardSearch<cr>", desc = "Ver PDF (SyncTeX)", icon = "󰈙" },
   { "<leader>lf", "<cmd>ArtTexFormat<cr>", desc = "Formatear Documento", icon = "󰉨" },
-  { "<leader>lT", "<cmd>ArtTexTOCToggle<cr>", desc = "Alternar Índice (TOC)", icon = "󰧮" },
-  { "<leader>li", "<cmd>ToggleFileTexIllustrator<cr>", desc = "Figura Illustrator", icon = "󰽉" },
-  { "<leader>lh", "<cmd>ArtTexHover<cr>", desc = "Info Comando (Hover)", icon = "󰋽" },
-  { "<leader>ld", "<cmd>ArtTexDocCTAN<cr>", desc = "Doc CTAN Paquete", icon = "󰈙" },
+  { "<leader>lt", "<cmd>ArtTexTOCToggle<cr>", desc = "Alternar Índice (TOC)", icon = "󰧮" },
+  { "<leader>ls", "<cmd>ArtTexStop<cr>", desc = "Detener Trabajo", icon = "󰓛" },
+  { "<leader>lS", "<cmd>ArtTexStopAll<cr>", desc = "Detener Todos", icon = "󰓛" },
+  { "<leader>ll", "<cmd>ArtTexViewLog<cr>", desc = "Ver Archivo .log", icon = "󰈙" },
+  { "<leader>ld", "<cmd>ArtTexClean<cr>", desc = "Limpiar Auxiliares", icon = "󰃢" },
+  { "<leader>le", "<cmd>ArtTexErrors<cr>", desc = "Ver Errores Quickfix", icon = "󰒡" },
+  { "<leader>lC", "<cmd>ArtTexMenuCompilatorConfig<cr>", desc = "Compilador", icon = "󰑐" },
+
+
+  -- Grupo [p]: Utilidades
+  { "<leader>lu", group = "Utilidades", icon = "󰓛" },
+  { "<leader>lud", "<cmd>ArtTexDocCTAN<cr>", desc = "Doc CTAN Paquete", icon = "󰈙" },
+  -- { "<leader>ls", group = "Snippets", icon = "󰩫" },
+  { "<leader>lue", "<cmd>ArtTexSnippetsEdit<cr>", desc = "Editar Módulos", icon = "󰏫" },
+  { "<leader>lus", "<cmd>ArtTexSnippetsSearch<cr>", desc = "Buscar Snippets", icon = "󰌵" },
+  { "<leader>luc", "<cmd>ArtTexSnippetsConfig<cr>", desc = "Activar/Desactivar", icon = "" },
+  { "<leader>lur", "<cmd>ArtSourceColorSync<cr>", desc = "Refrescar Sintaxis", icon = "󰑐" },
+  { "<leader>lul", "<cmd>ArtTexLint<cr>", desc = "Analizar Linter (ChkTeX)", icon = "󰃢" },
+  { "<leader>luC", function() require('arttexconceal').toggle() end, desc = "Alternar Conceal", icon = "󰈈" },
+  { "<leader>lui", "<cmd>ToggleFileTexIllustrator<cr>", desc = "Figura Illustrator", icon = "󰽉" },
 
   -- Grupo [p]: Procesos y Compilación
   { "<leader>lp", group = "Procesos", icon = "󰓛" },
   { "<leader>lpC", "<cmd>ArtTexCompilePlain<cr>", desc = "Compilar (PlainTeX)", icon = "󰑐" },
-  { "<leader>lps", "<cmd>ArtTexStop<cr>", desc = "Detener Trabajo", icon = "󰓛" },
-  { "<leader>lpS", "<cmd>ArtTexStopAll<cr>", desc = "Detener Todos", icon = "󰓛" },
   { "<leader>lpi", "<cmd>ArtTexStatus<cr>", desc = "Estado Procesos", icon = "󰋽" },
-  { "<leader>lpx", "<cmd>ArtTexClean<cr>", desc = "Limpiar Auxiliares", icon = "󰃢" },
   { "<leader>lpo", "<cmd>ArtTexOutput<cr>", desc = "Consola de Salida", icon = "󰍔" },
   { "<leader>lpO", "<cmd>ArtTexOutputClose<cr>", desc = "Cerrar Consola Forzada", icon = "󰅖" },
-  { "<leader>lpl", "<cmd>ArtTexViewLog<cr>", desc = "Ver Archivo .log", icon = "󰈙" },
   { "<leader>lpd", "<cmd>ArtTexDebugCommand<cr>", desc = "Ver Comando Shell", icon = "󰘚" },
-  { "<leader>lpe", "<cmd>ArtTexErrors<cr>", desc = "Ver Errores Quickfix", icon = "󰒡" },
 
   -- Grupo [w]: Workspace y Sistema
   { "<leader>lw", group = "Workspace", icon = "󰙅" },
@@ -135,15 +146,6 @@ wk.add({
   { "<leader>lwn", "<cmd>ArtTexCreateProject<cr>", desc = "Crear Proyecto", icon = "󰏋" },
   { "<leader>lwg", "<cmd>ArtTexVisualizeGraph<cr>", desc = "Grafo Dependencias", icon = "󰠘" },
   { "<leader>lwc", "<cmd>ArtTexClearLog<cr>", desc = "Limpiar BD Interna", icon = "󰃢" },
-  { "<leader>lwr", "<cmd>ArtSourceColorSync<cr>", desc = "Refrescar Sintaxis", icon = "󰑐" },
-  { "<leader>lwl", "<cmd>ArtTexLint<cr>", desc = "Analizar Linter (ChkTeX)", icon = "󰃢" },
-  { "<leader>lwC", function() require('arttexconceal').toggle() end, desc = "Alternar Conceal", icon = "󰈈" },
-
-  -- Grupo [s]: Snippets
-  { "<leader>ls", group = "Snippets", icon = "󰩫" },
-  { "<leader>lse", "<cmd>ArtTexSnippetsEdit<cr>", desc = "Editar Módulos", icon = "󰏫" },
-  { "<leader>lss", "<cmd>ArtTexSnippetsSearch<cr>", desc = "Buscar Snippets", icon = "󰌵" },
-  { "<leader>lsc", "<cmd>ArtTexSnippetsConfig<cr>", desc = "Activar/Desactivar", icon = "" },
 
   -- Grupo [W]: Visual Wizards
   { "<leader>lW", group = "Visual Wizards", icon = "󰕷" },
@@ -152,18 +154,18 @@ wk.add({
   { "<leader>lWg", "<cmd>ArtTexVisualGraph<cr>", desc = "Gráficas TikZ", icon = "󰱨" },
 
   -- Grupo [O]: Opciones y Configuración
-  { "<leader>lO", group = "Configuraciones", icon = "" },
-  { "<leader>lOc", "<cmd>ArtTexMenuCompilatorConfig<cr>", desc = "Compilador", icon = "󰑐" },
-  { "<leader>lOa", "<cmd>ArtCmpConfig<cr>", desc = "Autocompletado", icon = "󰌌" },
-  { "<leader>lOC", "<cmd>ArtTeXConcealMenu<cr>", desc = "Conceal (Símbolos)", icon = "󰈈" },
-  { "<leader>lOh", "<cmd>ArtHoverConfig<cr>", desc = "Hover (Emergentes)", icon = "󰋽" },
-  { "<leader>lOl", "<cmd>ArtLinterConfig<cr>", desc = "Linter (ChkTeX)", icon = "󰃢" },
-  { "<leader>lOf", "<cmd>ArtFormatConfig<cr>", desc = "Formateador", icon = "󰉢" },
-  { "<leader>lOt", "<cmd>ArtTexTOCConfig<cr>", desc = "Índice (TOC)", icon = "󰧮" },
-  { "<leader>lOv", "<cmd>ArtTexSelectViewer<cr>", desc = "Visor PDF", icon = "󰈙" },
-  { "<leader>lOs", "<cmd>ArtSourceColorConfig<cr>", desc = "Source Color", icon = "󰏘" },
-  { "<leader>lOp", "<cmd>ArtTexPreviewConfig<cr>", desc = "Previsualizador", icon = "󰇩" },
-  { "<leader>lOr", "<cmd>ArtFormatEditRules<cr>", desc = "Editar Reglas YAML", icon = "󰏫" },
+  { "<leader>la", group = "Ajustes", icon = "" },
+  { "<leader>lah", "<cmd>ArtTexHover<cr>", desc = "Info Comando (Hover)", icon = "󰋽" },
+  { "<leader>laa", "<cmd>ArtCmpConfig<cr>", desc = "Autocompletado", icon = "󰌌" },
+  { "<leader>laC", "<cmd>ArtTeXConcealMenu<cr>", desc = "Conceal (Símbolos)", icon = "󰈈" },
+  { "<leader>lah", "<cmd>ArtHoverConfig<cr>", desc = "Hover (Emergentes)", icon = "󰋽" },
+  { "<leader>lal", "<cmd>ArtLinterConfig<cr>", desc = "Linter (ChkTeX)", icon = "󰃢" },
+  { "<leader>laf", "<cmd>ArtFormatConfig<cr>", desc = "Formateador", icon = "󰉢" },
+  { "<leader>lat", "<cmd>ArtTexTOCConfig<cr>", desc = "Índice (TOC)", icon = "󰧮" },
+  { "<leader>lav", "<cmd>ArtTexSelectViewer<cr>", desc = "Visor PDF", icon = "󰈙" },
+  { "<leader>las", "<cmd>ArtSourceColorConfig<cr>", desc = "Source Color", icon = "󰏘" },
+  { "<leader>lap", "<cmd>ArtTexPreviewConfig<cr>", desc = "Previsualizador", icon = "󰇩" },
+  { "<leader>lar", "<cmd>ArtFormatEditRules<cr>", desc = "Editar Reglas YAML", icon = "󰏫" },
 
 
   -- [q] Quit
@@ -211,7 +213,7 @@ wk.add({
   { "<leader>u", group = "UI", icon = "󰏘" },
   { "<leader>uc", "<cmd>Telescope colorscheme<cr>", desc = "Theme", icon = "󰸌" },
   { "<leader>uz", "<cmd>ZenMode<cr>", desc = "Zen", icon = "󰘖" },
-  { "<leader>us", "<cmd>Dashboard<cr>", desc = "Start", icon = "󰋜" },
+  { "<leader>us", "<cmd>Alpha<cr>", desc = "Start", icon = "󰋜" },
 
   -- [w] Window
   { "<leader>w", group = "Window", icon = "󰖲" },

@@ -55,8 +55,8 @@ M.options = {
     semantic_envs = true,  -- Fondos de teoremas y cajas matemáticas
     virtual_text = {
       references = true,   -- Validación de \ref (iconos y colores)
-      resources = true,    -- Iconos para \includegraphics e \input
-      structs = true,      -- Texto virtual para \chapter y \section
+      resources = false,   -- Iconos para \includegraphics e \input (desactivado por defecto)
+      structs = false,     -- Texto virtual para \chapter y \section (desactivado por defecto)
     },
     syntax_errors = true,
   },

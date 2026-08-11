@@ -1,4 +1,4 @@
-require("tokyonight").setup({
+require("tknvivid").setup({
       -- your configuration comes here
       -- or leave it empty to use the default settings
       style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
@@ -104,7 +104,7 @@ require("tokyonight").setup({
         hl.BufferVisibleHINT = { bg = c.bg_highlight, fg = c.hint }
         
         -- NvimTree full width cursor block
-        hl.NvimTreeCursorLine = { bg = "#292e42", bold = true }
+        hl.NvimTreeCursorLine = { bg = "#1d1e2e", bold = true }
         
         -- LSP Virtual Text (hacer que el fondo de las advertencias sea transparente)
         hl.DiagnosticVirtualTextError = { bg = "none", fg = c.error }
@@ -126,11 +126,11 @@ require("tokyonight").setup({
 vim.api.nvim_create_autocmd({"UIEnter", "ColorScheme"}, {
   pattern = "*",
   callback = function()
-    if vim.g.colors_name ~= "tokyonight" then return end
+    if vim.g.colors_name ~= "tknvivid" then return end
     vim.schedule(function()
-      local blue = "#7aa2f7"
-      local bg_highlight = "#292e42"
-      local bg_dark = "#1f2335" -- Color del texto en la pestaña activa
+      local blue = "#689dff"
+      local bg_highlight = "#1d1e2e"
+      local bg_dark = "#0e1017" -- Color del texto en la pestaña activa
       
       local set_hl = vim.api.nvim_set_hl
       

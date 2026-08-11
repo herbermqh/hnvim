@@ -9,7 +9,18 @@ require("transparent").setup({ -- Optional, you don't have to run setup.
   extra_groups = {
     "NormalFloat", -- plugins which have float panel such as Lazy, Mason, LspInfo
     "NvimTreeNormal", -- NvimTree
-    "BufferTabpageFill"
+    "BufferTabpageFill",
+    "RenderMarkdownH1Bg",
+    "RenderMarkdownH2Bg",
+    "RenderMarkdownH3Bg",
+    "RenderMarkdownH4Bg",
+    "RenderMarkdownH5Bg",
+    "RenderMarkdownH6Bg",
+    "RenderMarkdownCode",
+    "RenderMarkdownCodeInline",
+    "RenderMarkdownTableHead",
+    "RenderMarkdownTableRow",
+    "RenderMarkdownTableFill",
   }, -- table: additional groups that should be cleared
   exclude_groups = {
     'BufferCurrent', 'BufferCurrentIndex', 'BufferCurrentMod', 'BufferCurrentTarget', 'BufferCurrentIcon', 'BufferCurrentBtn', 'BufferCurrentModBtn', 'BufferCurrentPinBtn', 
@@ -26,6 +37,5 @@ require('transparent').clear_prefix('Buffer')
 require('transparent').clear_prefix('NeoTree')
 require('transparent').clear_prefix('lualine')
 
--- execute TransparentEnable
-vim.cmd('autocmd ColorScheme * lua require("transparent").enable()')
+
 -- `

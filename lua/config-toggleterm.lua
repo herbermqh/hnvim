@@ -79,6 +79,8 @@ local lazygit = Terminal:new({
   -- Opcional: Evitar mapeos conflictivos
   on_open = function(term)
     vim.cmd("startinsert!")
+    -- Remove the global <Esc> terminal mapping so lazygit can use it to go back
+    pcall(vim.keymap.del, "t", "<esc>", { buffer = term.bufnr })
   end,
   -- Evitar que lazygit se cierre o borre al ocultarlo
   hidden = true,

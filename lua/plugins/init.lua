@@ -102,6 +102,7 @@ require("lazy").setup({
         "nvim-lua/plenary.nvim",
       },
       build = "make tiktoken",
+      config = function() require('config.copilot') end,
     },
 
     -- Utilities
@@ -111,6 +112,7 @@ require("lazy").setup({
     {
       'kevinhwang91/nvim-bqf',
       ft = "qf",
+      config = function() require('config-bqf') end
     },
     {
         'AckslD/nvim-neoclip.lua',
@@ -132,7 +134,7 @@ require("lazy").setup({
       event = {"BufReadPre", "BufNewFile"},
       dependencies = {'nvim-lua/plenary.nvim'},
       config = function()
-        require('gitsigns').setup()
+        require('gitsigns-config')
       end
     },
     'mfussenegger/nvim-dap',
@@ -143,7 +145,10 @@ require("lazy").setup({
             require('kommentary.config').use_extended_mappings()
         end
     }) ]]
-    'rcarriga/nvim-notify',
+    {
+      'rcarriga/nvim-notify',
+      config = function() require('config-notify') end,
+    },
 
     -- {'nacro90/numb.nvim', config = function() require('numb').setup() end},
     -- folders
@@ -182,7 +187,7 @@ require("lazy").setup({
     },
     {
       "3rd/image.nvim",
-      lazy = false,
+      event = "VeryLazy",
       dependencies = { "vhyrro/luarocks.nvim" },
       opts = {
         backend = "kitty", -- WezTerm entiende perfectamente el protocolo de Kitty
@@ -203,12 +208,17 @@ require("lazy").setup({
     -- HERRAMIENTA VISUAL PARA ERRORES (Trouble)
     {
       "romgrk/barbar.nvim",
-      event = { "BufReadPre", "BufNewFile" },
+      event = "VeryLazy",
       config = function()
         require("babar")
+        if vim.bo.filetype == "dashboard" or vim.bo.filetype == "alpha" then
+          vim.opt.showtabline = 0
+        end
         vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
           callback = function()
-            if vim.bo.filetype ~= "dashboard" and vim.bo.filetype ~= "alpha" then
+            if vim.bo.filetype == "dashboard" or vim.bo.filetype == "alpha" then
+              vim.opt.showtabline = 0
+            elseif vim.bo.buftype == "" or vim.bo.buftype == "terminal" then
               vim.opt.showtabline = 2
             end
           end
@@ -244,24 +254,28 @@ require("lazy").setup({
       end
     },
     --typing
-    'terryma/vim-multiple-cursors',
-    'alvan/vim-closetag',
-    'tpope/vim-surround',
+    { 'terryma/vim-multiple-cursors', event = "VeryLazy" },
+    { 'alvan/vim-closetag', event = "InsertEnter" },
+    { 'tpope/vim-surround', event = "VeryLazy" },
 
     -- Syntax Highlighting
     -- 'airblade/vim-gitgutter',
 
     -- UI Plugins
+    -- {
+    --   'nvimdev/dashboard-nvim',
+    --   event = 'VimEnter',
+    --   config = function()
+    --     require('dashboard-config')
+    --   end,
+    -- },
     {
-      'nvimdev/dashboard-nvim',
-      -- event = 'VimEnter',
-      -- config = function()
-      --   require('dashboard').setup {
-      --     theme = 'hyoer',
-      --   },
-      -- end,
+      'goolord/alpha-nvim',
+      event = 'VimEnter',
+      config = function()
+        require('alpha-nvim-config')
+      end
     },
-    'goolord/alpha-nvim',
     --{
     --    'glepnir/galaxyline.nvim',
     --    branch = 'main',
@@ -303,7 +317,14 @@ require("lazy").setup({
     -- 'mhinz/vim-startify',
     { "norcalli/nvim-colorizer.lua", event = "BufReadPre", config = function() require("colorizer-config") end },
     -- {'marko-cerovac/material.nvim', lazy = false, as = 'material'},
-    'folke/tokyonight.nvim',
+    {
+      'folke/tokyonight.nvim',
+      config = function() require('tokyonight-config') end
+    },
+    {
+      dir = vim.fn.stdpath("config") .. "/artplugins/tknvivid",
+      config = function() require('tknvivid-config') end
+    },
     -- 'herbermqh/tokyonight.nvim',
     -- 'Mofiqul/vscode.nvim',
     -- 'bluz71/vim-moonfly-colors',
@@ -341,21 +362,7 @@ require("lazy").setup({
     {
       "xiyaowong/transparent.nvim",
       config = function()
-        require("transparent").setup({
-          extra_groups = {
-            "RenderMarkdownH1Bg",
-            "RenderMarkdownH2Bg",
-            "RenderMarkdownH3Bg",
-            "RenderMarkdownH4Bg",
-            "RenderMarkdownH5Bg",
-            "RenderMarkdownH6Bg",
-            "RenderMarkdownCode",
-            "RenderMarkdownCodeInline",
-            "RenderMarkdownTableHead",
-            "RenderMarkdownTableRow",
-            "RenderMarkdownTableFill",
-          },
-        })
+        require("transparent-config")
       end
     },
     -- 'micha/vim-colors-solarized',
@@ -363,15 +370,27 @@ require("lazy").setup({
     -- 'arzg/vim-colors-xcode',
     { "lukas-reineke/indent-blankline.nvim", event = "BufReadPre", config = function() require("indentline") end },
     { "windwp/nvim-autopairs", event = "InsertEnter", config = function() require("autopairs-config") end },
-    'tpope/vim-sensible',
-    'tpope/vim-unimpaired',
+    { 'tpope/vim-sensible', event = "VeryLazy" },
+    { 'tpope/vim-unimpaired', event = "VeryLazy" },
     {
       "folke/persistence.nvim",
-      event = "BufReadPre", -- starts automatically when opening a file
-      opts = { options = {"buffers", "curdir", "tabpages", "winsize"} }
+      event = { "BufReadPre", "BufNewFile" }, -- starts automatically when opening or creating a file
+      config = function(_, opts)
+        require("persistence").setup(opts)
+        -- Evitar que NvimTree corrompa la sesión al guardar
+        vim.api.nvim_create_autocmd("VimLeavePre", {
+          callback = function()
+            local nvim_tree_view_loaded, view = pcall(require, "nvim-tree.view")
+            if nvim_tree_view_loaded and view.is_visible() then
+              vim.cmd("NvimTreeClose")
+            end
+          end,
+        })
+      end,
+      opts = { options = {"buffers", "curdir", "tabpages", "winsize", "globals"} }
     },
-    'tpope/vim-commentary',
-    'tpope/vim-repeat',
+    { 'tpope/vim-commentary', event = "VeryLazy" },
+    { 'tpope/vim-repeat', event = "VeryLazy" },
     -- {
     --   'VonHeikemen/fine-cmdline.nvim',
     --   dependencies = {
@@ -566,31 +585,31 @@ require("lazy").setup({
         })
       end
     },
-    {
-      dir = vim.fn.stdpath("config") .. "/artplugins/arttexconceal.nvim",
-      ft = { "tex", "sty", "cls", "dtx" },
-      config = function()
-        require("arttexconceal").setup({
-          enable_script_conceal = false,
-          enable_env_conceal = false,
-          custom_symbols = {
-            -- Inclusión y Referencia
-            { pattern = "\\includegraphics", char = " ", hl = "ArtTexConcealImage", is_regex = false, env = "text" },
-            { pattern = "\\image",          char = " ", hl = "ArtTexConcealImage", is_regex = false, env = "text" },
-            -- Estructura
-            { pattern = "\\item",           char = " ", hl = "ArtTexConcealNote", is_regex = false, env = "text" },
-            -- Motores
-            { pattern = "\\LaTeX",          char = " ", hl = "ArtTexConcealSection", is_regex = false, env = "text" },
-            { pattern = "\\TeX",            char = " ", hl = "ArtTexConcealSection", is_regex = false, env = "text" },
-            -- TikZ
-            { pattern = "\\draw",           char = "󰌒 ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
-            { pattern = "\\node",           char = "󰆼 ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
-            -- Código (Expresión regular para atrapar el lenguaje, ej: \mintinline{latex})
-            { pattern = "\\mintinline%{[^}]+%}", char = " ", hl = "ArtTexConcealSpecial", is_regex = true, env = "text" },
-          }
-        })
-      end,
-    },
+    -- {
+    --   dir = vim.fn.stdpath("config") .. "/artplugins/arttexconceal.nvim",
+    --   ft = { "tex", "sty", "cls", "dtx" },
+    --   config = function()
+    --     require("arttexconceal").setup({
+    --       enable_script_conceal = false,
+    --       enable_env_conceal = false,
+    --       custom_symbols = {
+    --         -- Inclusión y Referencia
+    --         { pattern = "\\includegraphics", char = " ", hl = "ArtTexConcealImage", is_regex = false, env = "text" },
+    --         { pattern = "\\image",          char = " ", hl = "ArtTexConcealImage", is_regex = false, env = "text" },
+    --         -- Estructura
+    --         { pattern = "\\item",           char = " ", hl = "ArtTexConcealNote", is_regex = false, env = "text" },
+    --         -- Motores
+    --         { pattern = "\\LaTeX",          char = " ", hl = "ArtTexConcealSection", is_regex = false, env = "text" },
+    --         { pattern = "\\TeX",            char = " ", hl = "ArtTexConcealSection", is_regex = false, env = "text" },
+    --         -- TikZ
+    --         { pattern = "\\draw",           char = "󰌒 ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
+    --         { pattern = "\\node",           char = "󰆼 ", hl = "ArtTexConcealRef", is_regex = false, env = "text" },
+    --         -- Código (Expresión regular para atrapar el lenguaje, ej: \mintinline{latex})
+    --         { pattern = "\\mintinline%{[^}]+%}", char = " ", hl = "ArtTexConcealSpecial", is_regex = true, env = "text" },
+    --       }
+    --     })
+    --   end,
+    -- },
 
     -- ART-TEX MODULAR PLUGINS
     { dir = vim.fn.stdpath("config") .. "/artplugins/arttexsynctex.nvim", ft = "tex", dependencies = { "arttexworkspace" }, config = function() require("arttexsynctex").setup() end },

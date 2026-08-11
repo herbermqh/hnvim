@@ -1,0 +1,6 @@
+vim.opt.runtimepath:append("/home/userh/.config/nvim/artplugins/arttexconceal.nvim")
+require("arttexconceal").setup()
+local hl = vim.api.nvim_get_hl(0, {name = "ArtTexConcealBold"})
+print("Bold:", vim.inspect(hl))
+local hl2 = vim.api.nvim_get_hl(0, {name = "ArtTexConcealRainbow1"})
+print("Rainbow1:", vim.inspect(hl2))

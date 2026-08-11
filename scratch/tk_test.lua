@@ -1,0 +1,8 @@
+local tokyonight = require("tokyonight.colors").setup()
+print("red:", tokyonight.red)
+print("orange:", tokyonight.orange)
+print("magenta:", tokyonight.magenta)
+local hl1 = vim.api.nvim_get_hl(0, {name = "@markup.strong"})
+print("@markup.strong", vim.inspect(hl1))
+local hl2 = vim.api.nvim_get_hl(0, {name = "@markup.italic"})
+print("@markup.italic", vim.inspect(hl2))

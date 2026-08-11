@@ -1,0 +1,7 @@
+vim.cmd("colorscheme tokyonight")
+local hl = vim.api.nvim_get_hl(0, {name = "ArtTexConcealBold"})
+print("Bold:", vim.inspect(hl))
+local hl2 = vim.api.nvim_get_hl(0, {name = "ArtTexConcealItalic"})
+print("Italic:", vim.inspect(hl2))
+local hl3 = vim.api.nvim_get_hl(0, {name = "@markup.strong"})
+print("@markup.strong:", vim.inspect(hl3))

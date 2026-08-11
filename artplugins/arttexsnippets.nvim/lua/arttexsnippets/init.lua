@@ -43,6 +43,22 @@ M.setup = function(opts)
       end,
     })
   end
+
+  vim.api.nvim_create_user_command("ArtTexSnippetsReload", function()
+    require("arttexsnippets.core.engine").reload()
+  end, {})
+
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = {
+      "*/arttexsnippets/custom/*.lua",
+      "*/arttexsnippets/math/*.lua",
+      "*/.arttex/snippets/*.lua"
+    },
+    group = augroup,
+    callback = function()
+      require("arttexsnippets.core.engine").reload()
+    end,
+  })
 end
 
 return M

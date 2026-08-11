@@ -9,6 +9,13 @@ function M.get_math_zones(buf, root, first_row, last_row)
         (math_environment) @math
         (inline_formula) @math
         (displayed_equation) @math
+        (generic_environment
+            begin: (begin
+                name: (curly_group_text
+                    text: (text) @env_name (#match? @env_name "^(dmath\\*?|math|displaymath|equation\\*?|eqnarray\\*?|multline\\*?|gather\\*?|align\\*?|flalign\\*?|alignat\\*?|split\\*?|array|matrix|pmatrix|bmatrix|vmatrix|Vmatrix|Bmatrix|smallmatrix|cases|aligned|gathered|lgathered|rgathered|subarray|CD|empheq)$")
+                )
+            )
+        ) @math
     ]]
     local ok, q = pcall(vim.treesitter.query.parse, "latex", query_str)
     if not ok then return zones end

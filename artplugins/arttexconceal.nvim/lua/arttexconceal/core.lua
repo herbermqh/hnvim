@@ -7,6 +7,7 @@ local extmarks = require("arttexconceal.extmarks")
 local M = {}
 M.active = false
 local attached_buffers = {}
+local debounce_timers = {}
 
 function M.setup_highlights()
     local ok, err = pcall(function()
@@ -26,7 +27,11 @@ local function background_process_all(buf)
         if not M.active or not vim.api.nvim_buf_is_valid(buf) then return end
         if current_row >= total_lines then return end
         local end_row = math.min(current_row + chunk_size, total_lines)
+        
+        -- Clear the current chunk before processing to clean orphaned extmarks without global flicker
+        extmarks.clear(buf, current_row, end_row)
         scanner.process_lines(buf, current_row, end_row)
+        
         current_row = end_row
         if current_row < total_lines then
             vim.defer_fn(process_next_chunk, 10)
@@ -39,7 +44,6 @@ function M.reprocess_all_buffers()
     if not M.active then return end
     for buf, attached in pairs(attached_buffers) do
         if attached and vim.api.nvim_buf_is_valid(buf) then
-            extmarks.clear(buf, 0, -1)
             background_process_all(buf)
         end
     end
@@ -51,11 +55,29 @@ local function attach_to_buffer(buf)
         on_lines = function(_, _, _, firstline, _, new_lastline)
             if not M.active then return true end
             vim.schedule(function()
+                if not vim.api.nvim_buf_is_valid(buf) then return end
+                -- Immediate update for modified lines
+                extmarks.clear(buf, firstline, new_lastline)
                 scanner.process_lines(buf, firstline, new_lastline)
+                
+                -- Debounce full sweep to clear orphans
+                if debounce_timers[buf] then
+                    debounce_timers[buf]:stop()
+                end
+                debounce_timers[buf] = vim.loop.new_timer()
+                debounce_timers[buf]:start(500, 0, vim.schedule_wrap(function()
+                    if M.active and vim.api.nvim_buf_is_valid(buf) then
+                        background_process_all(buf)
+                    end
+                end))
             end)
         end,
         on_detach = function()
             attached_buffers[buf] = nil
+            if debounce_timers[buf] then
+                debounce_timers[buf]:stop()
+                debounce_timers[buf] = nil
+            end
         end
     })
     if ok then

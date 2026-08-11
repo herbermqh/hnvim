@@ -1,0 +1,1 @@
+{"reference_commands": ["ref", "eqref", "autoref", "nameref", "pageref", "cref", "Cref", "eref"], "citation_commands": ["cite", "parencite", "footcite", "textcite", "smartcite", "autocite", "artcite"], "include_commands": ["input", "include", "includeonly"], "graphics_commands": ["includegraphics"]}

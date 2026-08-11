@@ -53,7 +53,7 @@ require('pill-highlighter').setup({
   rounded = true
 })
 
--- Consumir el API del plugin al cargar el dashboard
+-- Consumir el API del plugin al cargar el dashboard (pill-highlighter)
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "dashboard",
   callback = function()

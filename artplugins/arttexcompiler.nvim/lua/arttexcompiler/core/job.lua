@@ -152,15 +152,21 @@ function M.start_compilation(main_path, engine)
         output.append_output(main_path, data)
         for _, line in ipairs(data) do
           if line:match("Latexmk: applying rule") or line:match("Latexmk: File changed") then
+            state.update_status(main_path, "running")
+            log.info("Compiler: Detectados cambios, iniciando recompilación...")
           elseif line:match("arttex_success") then
-            log.info("Compiler: Éxito reportado por latexmk.")
-            state.update_status(main_path, "success")
-            require("arttexcompiler.ui.quickfix").clear_errors()
+            if state.get_job_info(main_path).status ~= "success" then
+              log.info("Compiler: Éxito reportado por latexmk.")
+              state.update_status(main_path, "success")
+              require("arttexcompiler.ui.quickfix").clear_errors()
+            end
           elseif line:match("arttex_failure") then
-            log.error("Compiler: Fallo reportado por latexmk.")
-            state.update_status(main_path, "failed")
-            log.notify("Error de Compilación", vim.log.levels.ERROR, { title = filename, icon = "❌", timeout = 5000 })
-            require("arttexcompiler.ui.quickfix").parse_log(main_path)
+            if state.get_job_info(main_path).status ~= "failed" then
+              log.error("Compiler: Fallo reportado por latexmk.")
+              state.update_status(main_path, "failed")
+              log.notify("Error", vim.log.levels.ERROR, { title = filename, icon = "❌", timeout = 5000 })
+              require("arttexcompiler.ui.quickfix").parse_log(main_path)
+            end
           end
         end
       end
@@ -174,6 +180,8 @@ function M.start_compilation(main_path, engine)
     end,
     on_exit = function(jid, code)
       local current_info = state.get_job_info(main_path)
+      local was_stopped = current_info and current_info.status == "stopped"
+
       if current_info and current_info.job_id == jid then
         state.unregister_job(main_path)
       end
@@ -182,8 +190,11 @@ function M.start_compilation(main_path, engine)
         output.append_output(main_path, { "", "=== Compilación Finalizada con Éxito ===" })
         log.info("Compiler: Proceso terminado exitosamente.")
         state.update_status(main_path, "success")
-        log.notify("Compilación Exitosa", vim.log.levels.INFO, { title = filename, icon = "󰄴", timeout = 3000 })
+        log.notify("Éxito", vim.log.levels.INFO, { title = filename, icon = "󰄴", timeout = 3000 })
         require("arttexcompiler.ui.quickfix").clear_errors()
+      elseif was_stopped then
+        output.append_output(main_path, { "", "=== Compilación Cancelada ===" })
+        log.info("Compiler: El compilador fue detenido por el usuario.")
       else
         output.append_output(main_path, { "", "=== Falló la compilación (Code: " .. code .. ") ===" })
         log.error("Compiler: El compilador terminó con error. Code: " .. tostring(code))
@@ -199,7 +210,7 @@ function M.start_compilation(main_path, engine)
             dump_f:close()
           end
         end
-        log.notify("Error de Compilación", vim.log.levels.ERROR, { title = filename, icon = "󰅙", timeout = 5000 })
+        log.notify("Error", vim.log.levels.ERROR, { title = filename, icon = "󰅙", timeout = 5000 })
         require("arttexcompiler.ui.quickfix").parse_log(main_path)
       end
     end
@@ -220,6 +231,7 @@ end
 function M.stop_compilation(main_path)
   local info = state.get_job_info(main_path)
   if info and info.job_id then
+    state.update_status(main_path, "stopped")
     local pid = vim.fn.jobpid(info.job_id)
     if pid and pid > 0 then
       -- Matar agresivamente el proceso y todos sus hijos (latexmk + pdflatex)
@@ -243,6 +255,7 @@ function M.stop_all()
   local count = 0
   for path, info in pairs(jobs) do
     if info.job_id then
+      state.update_status(path, "stopped")
       if vim.fn.has("win32") == 0 then
         local pid = vim.fn.jobpid(info.job_id)
         if pid and pid > 0 then

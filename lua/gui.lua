@@ -35,4 +35,5 @@ vim.o.termguicolors = true
 
 -- setup must be called before loading
 
-
+-- Tema por defecto al iniciar (Nativo de Lua en Neovim)
+vim.cmd.colorscheme("tknvivid")

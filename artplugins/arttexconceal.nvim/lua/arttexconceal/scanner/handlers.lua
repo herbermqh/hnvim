@@ -54,7 +54,7 @@ function M.dispatch.cmd(node, buf, name, math_zones, handled_literals, container
     local cmd_text = vim.treesitter.get_node_text(cmd_node, buf)
     local cmd_in_math = mathzone.is_in_mathzone_list(math_zones, cmd_node:range())
     
-    if cmd_text == "\\frac" or cmd_text == "\\dfrac" or cmd_text == "\\tfrac" or cmd_text == "\\cfrac" or cmd_text == "\\binom" or cmd_text == "\\dbinom" or cmd_text == "\\tbinom" then
+    if cmd_text == "\\frac" or cmd_text == "\\dfrac" or cmd_text == "\\tfrac" or cmd_text == "\\cfrac" or cmd_text == "\\binom" or cmd_text == "\\dbinom" or cmd_text == "\\tbinom" or cmd_text == "\\splitfrac" or cmd_text == "\\splitdfrac" then
         if cmd_in_math and config.options.enable_math_conceal then
             local depth = depth_module.get_unified_depth(cmd_node, buf, container_cache)
             local hl_idx = ((depth - 1) % 6) + 1
@@ -104,8 +104,8 @@ function M.dispatch.cmd(node, buf, name, math_zones, handled_literals, container
             if (cmd_text == "\\textsf" or cmd_text == "\\ttfamily") and config.options.enable_format_mathsf then hl = "ArtTexConcealMathsf" end
             if cmd_text == "\\note" or cmd_text == "\\note*" then 
                 hl = "ArtTexConcealNote"
-                icon = "󰈉 [ "
-                right_brace = " ]"
+                icon = "󰈉 ["
+                right_brace = "]"
             end
             if cmd_text == "\\caption" or cmd_text == "\\caption*" or cmd_text == "\\captionof" then
                 hl = "ArtTexConcealSpecial"
@@ -134,21 +134,24 @@ function M.dispatch.cmd(node, buf, name, math_zones, handled_literals, container
                 end
                 
                 if target_group then
-                    for cg_child in target_group:iter_children() do
-                        local t = cg_child:type()
-                        local csr, csc, cer, cec = cg_child:range()
-                        if t == "{" then
-                            extmarks.set(buf, csr, csc, cer, cec, left_brace, hl)
-                        elseif t == "}" then
-                            extmarks.set(buf, csr, csc, cer, cec, right_brace, hl)
-                        else
-                            extmarks.set_hl(buf, csr, csc, cer, cec, hl)
+                    local tsr, tsc, ter, tec = target_group:range()
+                    if (ter - tsr) <= 20 then
+                        for cg_child in target_group:iter_children() do
+                            local t = cg_child:type()
+                            local csr, csc, cer, cec = cg_child:range()
+                            if t == "{" then
+                                extmarks.set(buf, csr, csc, cer, cec, left_brace, hl)
+                            elseif t == "}" then
+                                extmarks.set(buf, csr, csc, cer, cec, right_brace, hl)
+                            else
+                                extmarks.set_hl(buf, csr, csc, cer, cec, hl)
+                            end
                         end
                     end
                 end
             end
         end
-    elseif cmd_text:match("^\\math") then
+    elseif cmd_text:match("^\\math") or cmd_text == "\\text" then
         if cmd_in_math and config.options.enable_math_conceal then
             local depth = depth_module.get_unified_depth(cmd_node, buf, container_cache)
             local hl_idx = ((depth - 1) % 6) + 1
@@ -167,7 +170,7 @@ function M.dispatch.cmd(node, buf, name, math_zones, handled_literals, container
                     end
                 end
                 
-                local alpha_type = cmd_text:sub(2)
+                local alpha_type = cmd_text == "\\text" and "text" or cmd_text:sub(2)
                 local alpha_map = symbols.alphabets[alpha_type]
                 if alpha_map then
                     local replaced = ""
@@ -182,7 +185,8 @@ function M.dispatch.cmd(node, buf, name, math_zones, handled_literals, container
                     end
                     local sr3, sc3 = node:range()
                     local _, _, er3, ec3 = arg:range()
-                    extmarks.set(buf, sr3, sc3, er3, ec3, replaced, "ArtTexConcealMath" .. alpha_type:sub(5):gsub("^%l", string.upper))
+                    local hl_group = alpha_type == "text" and "ArtTexConcealSpecial" or ("ArtTexConcealMath" .. alpha_type:sub(5):gsub("^%l", string.upper))
+                    extmarks.set(buf, sr3, sc3, er3, ec3, replaced, hl_group)
                 end
             end
         end
@@ -211,11 +215,14 @@ function M.dispatch.cmd(node, buf, name, math_zones, handled_literals, container
                     end
                 end
                 if target_group then
-                    for cg_child in target_group:iter_children() do
-                        local t = cg_child:type()
-                        if t == "{" or t == "}" then
-                            local csr, csc, cer, cec = cg_child:range()
-                            extmarks.set(buf, csr, csc, cer, cec, "", nil)
+                    local tsr, tsc, ter, tec = target_group:range()
+                    if (ter - tsr) <= 20 then
+                        for cg_child in target_group:iter_children() do
+                            local t = cg_child:type()
+                            if t == "{" or t == "}" then
+                                local csr, csc, cer, cec = cg_child:range()
+                                extmarks.set(buf, csr, csc, cer, cec, "", nil)
+                            end
                         end
                     end
                 end
@@ -261,13 +268,16 @@ function M.dispatch.structural(node, buf, name, math_zones)
     
     for child in node:iter_children() do
         if child:type() == "curly_group" or child:type() == "curly_group_text" or child:type() == "curly_group_text_list" or child:type() == "curly_group_path" then
-            for cg_child in child:iter_children() do
-                local t = cg_child:type()
-                local csr, csc, cer, cec = cg_child:range()
-                if t == "{" or t == "}" then
-                    extmarks.set(buf, csr, csc, cer, cec, "", nil)
-                else
-                    extmarks.set_hl(buf, csr, csc, cer, cec, hl)
+            local tsr, tsc, ter, tec = child:range()
+            if (ter - tsr) <= 20 then
+                for cg_child in child:iter_children() do
+                    local t = cg_child:type()
+                    local csr, csc, cer, cec = cg_child:range()
+                    if t == "{" or t == "}" then
+                        extmarks.set(buf, csr, csc, cer, cec, "", nil)
+                    else
+                        extmarks.set_hl(buf, csr, csc, cer, cec, hl)
+                    end
                 end
             end
         end

@@ -110,8 +110,8 @@ local config = {
     component_separators = '',
     section_separators = '',
     disabled_filetypes = {
-      statusline = { 'dashboard' },
-      winbar = { 'dashboard' },
+      statusline = { 'dashboard', 'alpha' },
+      winbar = { 'dashboard', 'alpha' },
     },
     theme = {
       -- We are going to use lualine_c an lualine_x as left and
