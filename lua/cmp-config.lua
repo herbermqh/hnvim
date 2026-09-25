@@ -53,7 +53,7 @@ cmp.setup({
     { name = 'arttex' },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'copilot' },
+    -- { name = 'copilot' },
     { name = 'nvim_lsp_signature_help' },
     { name = 'latex_symbols' },
   }, {

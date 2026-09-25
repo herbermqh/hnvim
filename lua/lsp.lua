@@ -16,7 +16,7 @@ require("mason").setup({
 require("mason-lspconfig").setup({
   -- Ensure these language servers are automatically installed
   ensure_installed = { 
-    "html", "pyright", "ts_ls", "bashls", "vimls", "cssls", "marksman" 
+    "html", "pyright", "ts_ls", "bashls", "vimls", "cssls" 
   },
 })
 
@@ -30,7 +30,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
 
-local servers = { "html", "pyright", "ts_ls", "bashls", "vimls", "cssls", "marksman" }
+local servers = { "html", "pyright", "ts_ls", "bashls", "vimls", "cssls" }
 for _, server in ipairs(servers) do
   lspconfig[server].setup({
     capabilities = capabilities,

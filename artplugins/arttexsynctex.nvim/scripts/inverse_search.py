@@ -64,17 +64,17 @@ def main():
     
     log_path = os.path.join(os.path.dirname(registry_path), 'inverse_search.log')
     with open(log_path, 'a') as log:
-        log.write(f"\\n--- New Inverse Search ---\\n")
-        log.write(f"Args: {sys.argv}\\n")
+        log.write(f"\n--- New Inverse Search ---\n")
+        log.write(f"Args: {sys.argv}\n")
         
         linux_tex_file = wsl_to_linux(win_tex_file)
-        log.write(f"Linux path resolved: {linux_tex_file}\\n")
+        log.write(f"Linux path resolved: {linux_tex_file}\n")
         
         server_addr = find_server_addr(linux_tex_file, registry_path)
-        log.write(f"Server address found: {server_addr}\\n")
+        log.write(f"Server address found: {server_addr}\n")
         
         if not server_addr:
-            log.write(f"Error: No active Neovim session found for {linux_tex_file}\\n")
+            log.write(f"Error: No active Neovim session found for {linux_tex_file}\n")
             sys.exit(1)
             
         safe_file = linux_tex_file.replace("'", "\\'")
@@ -82,12 +82,25 @@ def main():
         log.write(f"Sending keys to nvim --server {server_addr}: {keys}\\n")
         
         try:
-            result = subprocess.run(['nvim', '--server', server_addr, '--remote-send', keys], capture_output=True, text=True)
-            log.write(f"Neovim remote send return code: {result.returncode}\\n")
+            # Timeout de 2 segundos: si nvim se queda congelado intentando enviar
+            # los comandos, el timeout aborta la ejecución y MATA automáticamente
+            # el proceso para evitar dejar un 'nvim' huérfano en la memoria.
+            log.write(f"Ejecutando proceso nvim con timeout de 2s...\n")
+            result = subprocess.run(
+                ['nvim', '--server', server_addr, '--remote-send', keys], 
+                capture_output=True, 
+                text=True,
+                timeout=2
+            )
+            log.write(f"Neovim remote send return code: {result.returncode}\n")
             if result.stderr:
-                log.write(f"Neovim stderr: {result.stderr}\\n")
+                log.write(f"Neovim stderr: {result.stderr}\n")
+                
+        except subprocess.TimeoutExpired as e:
+            log.write(f"[ERROR CRÍTICO] El comando remoto de Neovim se congeló tras 2 segundos.\n")
+            log.write(f"[SISTEMA ANTI-ORPHAN] Matando forzosamente el subproceso nvim generado para prevenir fugas de RAM.\n")
         except Exception as e:
-            log.write(f"Exception launching nvim: {e}\\n")
+            log.write(f"[EXCEPCIÓN] Error inesperado lanzando nvim: {e}\n")
 
 if __name__ == '__main__':
     main()

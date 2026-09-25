@@ -13,7 +13,7 @@ local M = {}
 local function kill_zombies(main_path)
   if vim.fn.has("win32") == 1 then return end
   local safe_path = main_path:gsub("'", "'\\''")
-  local sweep_cmd = string.format('for pid in $(pgrep -f "latexmk.*%s"); do pkill -9 -P $pid 2>/dev/null; kill -9 $pid 2>/dev/null; done', safe_path)
+  local sweep_cmd = string.format('for pid in $(pgrep -f "(latexmk|xelatex|pdflatex|lualatex|pdftex|luatex|xetex|tectonic).*%s"); do pkill -9 -P $pid 2>/dev/null; kill -9 $pid 2>/dev/null; done', safe_path)
   os.execute(sweep_cmd)
 end
 
@@ -260,6 +260,7 @@ function M.stop_all()
         local pid = vim.fn.jobpid(info.job_id)
         if pid and pid > 0 then
           os.execute("pkill -9 -P " .. tostring(pid) .. " 2>/dev/null")
+          os.execute("kill -9 " .. tostring(pid) .. " 2>/dev/null")
         end
       end
       vim.fn.jobstop(info.job_id)

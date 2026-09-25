@@ -35,7 +35,7 @@ function M.build_forward_search(pdf_file, tex_file, line, col)
       'If args.Count >= 2 Then',
       '    tex_file = args(0)',
       '    line = args(1)',
-      '    cmd = "wsl python3 ' .. python_script .. ' """ & tex_file & """ " & line & " ""' .. require("arttexsynctex.config").options.registry_file .. '"""',
+      '    cmd = "wsl -d Arch python3 ' .. python_script .. ' """ & tex_file & """ " & line & " ""' .. require("arttexsynctex.config").options.registry_file .. '"""',
       '    objShell.Run cmd, 0, False',
       'End If'
     }

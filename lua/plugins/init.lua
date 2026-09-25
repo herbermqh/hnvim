@@ -85,25 +85,25 @@ require("lazy").setup({
       end,
     },
 
-    {
-      'github/copilot.vim',
-      depth = 1,
-      event = "InsertEnter",
-    },
-    {
-      'CopilotC-Nvim/CopilotChat.nvim',
-      cmd = {
-        "CopilotChat",
-        "CopilotChatOpen",
-        "CopilotChatToggle",
-      },
-      dependencies = {
-        "github/copilot.vim",
-        "nvim-lua/plenary.nvim",
-      },
-      build = "make tiktoken",
-      config = function() require('config.copilot') end,
-    },
+    -- {
+    --   'github/copilot.vim',
+    --   depth = 1,
+    --   event = "InsertEnter",
+    -- },
+    -- {
+    --   'CopilotC-Nvim/CopilotChat.nvim',
+    --   cmd = {
+    --     "CopilotChat",
+    --     "CopilotChatOpen",
+    --     "CopilotChatToggle",
+    --   },
+    --   dependencies = {
+    --     "github/copilot.vim",
+    --     "nvim-lua/plenary.nvim",
+    --   },
+    --   build = "make tiktoken",
+    --   config = function() require('config.copilot') end,
+    -- },
 
     -- Utilities
     'duane9/nvim-rg',
@@ -177,31 +177,31 @@ require("lazy").setup({
         open_for_directories = true,
       },
     },
-    {
-      "vhyrro/luarocks.nvim",
-      priority = 1001,
-      opts = {
-        rocks = { "magick" },
-      },
-      config = true,
-    },
-    {
-      "3rd/image.nvim",
-      event = "VeryLazy",
-      dependencies = { "vhyrro/luarocks.nvim" },
-      opts = {
-        backend = "kitty", -- WezTerm entiende perfectamente el protocolo de Kitty
-        integrations = {
-          markdown = { enabled = true, clear_in_insert_mode = false, download_remote_images = true },
-          neorg = { enabled = true, clear_in_insert_mode = false },
-        },
-        max_width = nil,
-        max_height = nil,
-        max_width_window_percentage = nil,
-        max_height_window_percentage = 50,
-        window_overlap_clear_enabled = true,
-      }
-    },
+    -- {
+    --   "vhyrro/luarocks.nvim",
+    --   priority = 1001,
+    --   opts = {
+    --     rocks = { "magick" },
+    --   },
+    --   config = true,
+    -- },
+    -- {
+    --   "3rd/image.nvim",
+    --   event = "VeryLazy",
+    --   dependencies = { "vhyrro/luarocks.nvim" },
+    --   opts = {
+    --     backend = "kitty", -- WezTerm entiende perfectamente el protocolo de Kitty
+    --     integrations = {
+    --       markdown = { enabled = true, clear_in_insert_mode = false, download_remote_images = true },
+    --       neorg = { enabled = true, clear_in_insert_mode = false },
+    --     },
+    --     max_width = nil,
+    --     max_height = nil,
+    --     max_width_window_percentage = nil,
+    --     max_height_window_percentage = 50,
+    --     window_overlap_clear_enabled = true,
+    --   }
+    -- },
     -- 'rbgrouleff/bclose.vim',
     -- 'nvim-lua/popup.nvim',
     -- 'nvim-lua/plenary.nvim',
@@ -633,6 +633,12 @@ require("lazy").setup({
       dependencies = { "jbyuki/nabla.nvim", "arttexworkspace" },
       config = function() require("arttexpreview").setup() end 
     },
-
+    
+    -- MONITOREO DE RECURSOS
+    { 
+      dir = vim.fn.stdpath("config") .. "/artplugins/resourcemon.nvim", 
+      cmd = "MonitorRecursos",
+      config = function() require("resourcemon").setup() end 
+    },
 
 })

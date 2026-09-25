@@ -46,8 +46,7 @@ function _G.set_terminal_keymaps()
   local opts = {buffer = 0, noremap = true, silent = true}
   -- Salir del modo inserción en la terminal (volver a modo normal)
   vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-  
-  
+
   -- Navegación para salir de la terminal a otros buffers usando hjkl
   vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
   vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
